@@ -89,24 +89,12 @@ TestAsset::register($this);
                 <?php endif; ?>
                 <li class="divider"></li>
                 <li>
-                    <a href="javascript:;">Activity Log</a>
-                </li>
-                <li>
-                    <a href="javascript:;">Settings</a>
-                </li>
-                <li>
-                    <a href="javascript:;">System Reports</a>
-                </li>
-                <li class="divider"></li>
-                <li>
                     <a href="javascript:;">Help</a>
-                </li>
-                <li>
-                    <a href="javascript:;">Report a Problem</a>
                 </li>
             </ul>
         </li>
 
+        <?php if (!Yii::$app->user->isGuest): ?>
         <li class="notifications dropdown">
             <a href="javascript:;" data-toggle="dropdown">
                 <i class="ti-bell"></i>
@@ -171,7 +159,6 @@ TestAsset::register($this);
                 </div>
             </div>
         </li>
-        <?php if (!Yii::$app->user->isGuest): ?>
         <li class="off-right">
             <a href="javascript:;" data-toggle="dropdown">
                 <img src="<?= Yii::getAlias('@web') ?>/img/faceless.jpg" class="header-avatar img-circle" alt="user" title="user">
@@ -213,7 +200,7 @@ TestAsset::register($this);
 <ul class="nav">
 <!-- dashboard -->
 <li>
-    <a href="index.html">
+    <a href="<?= Yii::getAlias('@web')?>/index.php">
         <i class="ti-home"></i>
         <span>Dashboard</span>
     </a>
@@ -330,7 +317,7 @@ TestAsset::register($this);
 <!-- /components -->
 
 <!-- forms -->
-<li class="open">
+<li>
     <a href="javascript:;">
         <i class="toggle-accordion"></i>
         <i class="ti-folder"></i>
@@ -367,7 +354,7 @@ TestAsset::register($this);
                 <span>Content Editable</span>
             </a>
         </li>
-        <li class="active">
+        <li>
             <a href="form_dropzone.html">
                 <span>Dropzone</span>
             </a>

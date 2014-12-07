@@ -32,7 +32,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'password', [
                     'inputOptions' => [
                         'placeholder' => 'Enter Password',
-                    ],])->passwordInput() ?>
+                    ],
+                ])->passwordInput() ?>
 
                 <?= $form->field($model, 'rememberMe')->checkbox() ?>
 
