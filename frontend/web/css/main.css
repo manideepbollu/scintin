@@ -159,10 +159,19 @@ blockquote {
 blockquote:before {
   color: #E2E4E9;
   font-family: Georgia, serif;
-  content: "“";
+  content: "\201C";
   font-size: 40px;
   margin-right: 10px;
   float: left;
+  line-height: 1;
+}
+blockquote:after {
+  color: #E2E4E9;
+  font-family: Georgia, serif;
+  content: "\201D";
+  font-size: 40px;
+  margin-left: 10px;
+  float: right;
   line-height: 1;
 }
 blockquote p {
@@ -1696,7 +1705,7 @@ aside > .fffix > footer p {
  *
  */
 .bg-success {
-  background-color: #15db81;
+  background-color: #13c976;
   color: #ffffff;
 }
 .bg-success a {
@@ -2324,10 +2333,10 @@ label.checkbox {
 .has-success .checkbox,
 .has-success .radio-inline,
 .has-success .checkbox-inline {
-  color: #15db81;
+  color: #008A11;
 }
 .has-success .form-control {
-  border-color: #15db81;
+  border-color: #008A11;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
 }
 .has-success .form-control:focus {
@@ -2456,6 +2465,11 @@ label.checkbox {
 .progress-bar-success {
   background-color: #15db81;
 }
+
+.progress-bar-white {
+  background-color: #f6f6f6;
+}
+
 .progress-striped .progress-bar-success {
   background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, rgba(255, 255, 255, 0.15)), color-stop(0.25, transparent), color-stop(0.5, transparent), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(0.75, rgba(255, 255, 255, 0.15)), color-stop(0.75, transparent), to(transparent));
   background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
