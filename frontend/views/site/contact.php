@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php else: ?>
         <section class="panel">
             <header class="panel-heading">
-                <h1 style="margin-top: 0px"><?= Html::encode($this->title) ?></h1>
+                <h1 class="scintin-h1"><?= Html::encode($this->title) ?></h1>
                 If you have business inquiries or other questions, please fill out the following form to contact us.
             </header>
             <div class="panel-body">

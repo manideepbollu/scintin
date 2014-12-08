@@ -18,3 +18,11 @@ encountered in Yii and Sublime integration are recorded in scintin.css
 .scintin-pull-right{
     float: right;
 }
+
+.sc-no-m-top{
+    margin-top: 0px;
+}
+
+.sc-no-m-bottom{
+    margin-bottom: 0px;
+}
