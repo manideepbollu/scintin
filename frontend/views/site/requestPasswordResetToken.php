@@ -7,21 +7,36 @@ use yii\bootstrap\ActiveForm;
 /* @var $model \frontend\models\PasswordResetRequestForm */
 
 $this->title = 'Request password reset';
-$this->params['breadcrumbs'][] = $this->title;
+/* @var $this->params['login', 'signup'] - Manually introduced variables to toggle "Active class" between
+ * login and Signup pages at layout.*/
+$this->params = [
+    'login' => 'active',
+    'signup' => '',
+];
 ?>
-<div class="site-request-password-reset">
-    <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Please fill out your email. A link to reset password will be sent there.</p>
+<!-- New version -->
+<p class="text-center mb25">Lost your password? Please enter your email address. You will receive a link to create a new password.</p>
 
-    <div class="row">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'request-password-reset-form']); ?>
-                <?= $form->field($model, 'email') ?>
-                <div class="form-group">
-                    <?= Html::submitButton('Send', ['class' => 'btn btn-primary']) ?>
-                </div>
-            <?php ActiveForm::end(); ?>
-        </div>
-    </div>
-</div>
+<?php $form = ActiveForm::begin([
+    'id' => 'request-password-reset-form',
+    'fieldConfig' => [
+        'template' => '{input}<div class="help-block help-block-error main-login-help">{error}</div>',
+    ],
+]); ?>
+
+<?= $form->field($model, 'email', [
+    'inputOptions' => [
+        'placeholder' => 'Email address',
+        'class' => 'form-control input-lg mb25 mb25-scintin',
+    ],
+]) ?>
+
+<?= Html::submitButton('send', [
+    'class' => 'btn btn-primary btn-lg btn-block',
+    'name' => 'login-button',
+    'type' => 'submit',
+]) ?>
+
+<?php ActiveForm::end(); ?>
+

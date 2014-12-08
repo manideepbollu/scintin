@@ -1,0 +1,20 @@
+/*
+* scintin.css is the most specific style set for the application. All the style changes
+encountered in Yii and Sublime integration are recorded in scintin.css
+* Version: 1.0
+* Author: Bollu & Kalyan
+*/
+
+/* Help text in main login page */
+.main-login-help{
+    margin-bottom: 25px;
+}
+
+/* Removed Margin-bottom for input field and added the same for help text in the above block of code */
+.mb25-scintin{
+    margin-bottom: 0px;
+}
+
+.scintin-pull-right{
+    float: right;
+}

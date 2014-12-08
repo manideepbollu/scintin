@@ -7,47 +7,54 @@ use yii\bootstrap\ActiveForm;
 /* @var $model \frontend\models\SignupForm */
 
 $this->title = 'Signup';
-$this->params['breadcrumbs'][] = $this->title;
+/* @var $this->params['login', 'signup'] - Manually introduced variables to toggle "Active class" between
+ * login and Signup pages at layout.*/
+$this->params = [
+    'login' => '',
+    'signup' => 'active',
+];
 ?>
+
 <!-- B - New Division -->
-<div class="row">
-    <div class="col-lg-6">
-        <section class="panel">
-            <header class="panel-heading">
-                <h1 style="margin-top: 0px"><?= Html::encode($this->title) ?></h1>
-                Please fill in the below fields to signup
-            </header>
-            <div class="panel-body">
-                <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
+<?php $form = ActiveForm::begin([
+    'id' => 'form-signup',
+    'fieldConfig' => [
+    'template' => '{input}<div class="help-block help-block-error main-login-help">{error}</div>',
+    ],
+]); ?>
 
-                <?= $form->field($model, 'username', [
-                    'inputOptions' => [
-                        'placeholder' => 'Enter Username',
-                    ],
-                ]) ?>
+<?= $form->field($model, 'username', [
+    'inputOptions' => [
+        'placeholder' => 'Choose a username',
+        'class' => 'form-control input-lg mb25 mb25-scintin',
+    ],
+]) ?>
 
-                <?= $form->field($model, 'email', [
-                    'inputOptions' => [
-                        'placeholder' => 'Enter email',
-                    ],
-                ]) ?>
+<?= $form->field($model, 'email', [
+    'inputOptions' => [
+        'placeholder' => 'Enter your email',
+        'class' => 'form-control input-lg mb25 mb25-scintin',
+    ],
+]) ?>
 
-                <?= $form->field($model, 'password', [
-                    'inputOptions' => [
-                        'placeholder' => 'Enter Password',
-                    ],
-                ])->passwordInput() ?>
+<?= $form->field($model, 'password', [
+    'inputOptions' => [
+        'placeholder' => 'Choose a Password',
+        'class' => 'form-control input-lg mb25 mb25-scintin',
+    ],
+])->passwordInput() ?>
 
-                <div class="form-group">
-                    <?= Html::submitButton('Signup', [
-                        'class' => 'btn btn-default',
-                        'name' => 'signup-button',
-                        'type' => 'submit',
-                    ]) ?>
-                </div>
+<?= $form->field($model, 'password_repeat', [
+    'inputOptions' => [
+        'placeholder' => 'Repeat your Password',
+        'class' => 'form-control input-lg mb25 mb25-scintin',
+    ],
+])->passwordInput() ?>
 
-                <?php ActiveForm::end(); ?>
-            </div>
-        </section>
-    </div>
-</div>
+<?= Html::submitButton('Login', [
+    'class' => 'btn btn-primary btn-lg btn-block',
+    'name' => 'login-button',
+    'type' => 'submit',
+]) ?>
+
+<?php ActiveForm::end(); ?>

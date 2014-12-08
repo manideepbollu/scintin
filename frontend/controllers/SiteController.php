@@ -26,15 +26,14 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
                 'rules' => [
                     [
-                        'actions' => ['signup'],
+                        'actions' => ['signup','login', 'request-password-reset'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout', 'login', 'index', 'contact', 'about', 'captcha'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -72,6 +71,8 @@ class SiteController extends Controller
 
     public function actionLogin()
     {
+        $this->layout = 'login';
+
         if (!\Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -118,6 +119,8 @@ class SiteController extends Controller
 
     public function actionSignup()
     {
+        $this->layout = 'login';
+
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
@@ -134,6 +137,7 @@ class SiteController extends Controller
 
     public function actionRequestPasswordReset()
     {
+        $this->layout = 'login';
         $model = new PasswordResetRequestForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {

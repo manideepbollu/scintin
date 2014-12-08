@@ -24,6 +24,7 @@ class TestAsset extends AssetBundle
         'css/skins/palette.css',
         'css/fonts/font.css',
         'css/main.css',
+        'css/scintin.css',
 
     ];
     public $js = [

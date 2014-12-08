@@ -70,23 +70,14 @@ TestAsset::register($this);
             <a href="javascript:;" data-toggle="dropdown">
                 <i class="ti-more-alt"></i>
             </a>
-            <ul class="dropdown-menu animated zoomIn">
+            <ul class="dropdown-menu animated fadeInLeft">
                 <li class="dropdown-header">Quick Links</li>
                 <li>
-                    <a href="<?= Yii::getAlias('@web')?>/index.php?r=site/about">About</a>
+                    <a href="<?= Yii::$app->urlManager->createUrl('site/about') ?>">About</a>
                 </li>
                 <li>
-                    <a href="<?= Yii::getAlias('@web')?>/index.php?r=site/contact">Contact</a>
+                    <a href="<?= Yii::$app->urlManager->createUrl('site/contact') ?>">Contact</a>
                 </li>
-                <?php if (Yii::$app->user->isGuest): ?>
-                <li class="divider"></li>
-                <li>
-                    <a href="<?= Yii::getAlias('@web')?>/index.php?r=site/signup">Signup</a>
-                </li>
-                <li>
-                    <a href="<?= Yii::getAlias('@web')?>/index.php?r=site/login">Login</a>
-                </li>
-                <?php endif; ?>
                 <li class="divider"></li>
                 <li>
                     <a href="javascript:;">Help</a>
@@ -94,7 +85,6 @@ TestAsset::register($this);
             </ul>
         </li>
 
-        <?php if (!Yii::$app->user->isGuest): ?>
         <li class="notifications dropdown">
             <a href="javascript:;" data-toggle="dropdown">
                 <i class="ti-bell"></i>
@@ -165,12 +155,12 @@ TestAsset::register($this);
                 <span class="hidden-xs ml10"><?= Yii::$app->user->identity->username ?></span>
                 <i class="ti-angle-down ti-caret hidden-xs"></i>
             </a>
-            <ul class="dropdown-menu animated fadeInRight">
+            <ul class="dropdown-menu animated fadeInLeft">
                 <li>
-                    <a href="javascript:;">Settings</a>
+                    <a href="javascript:;">Preferences</a>
                 </li>
                 <li>
-                    <a href="javascript:;">Upgrade</a>
+                    <a href="javascript:;">Report an issue</a>
                 </li>
                 <li>
                     <a href="javascript:;">
@@ -179,14 +169,10 @@ TestAsset::register($this);
                     </a>
                 </li>
                 <li>
-                    <a href="javascript:;">Help</a>
-                </li>
-                <li>
-                    <a href="<?= Yii::getAlias('@web')?>/index.php?r=site/logout">Logout</a>
+                    <a href="<?= Yii::$app->urlManager->createUrl('site/logout') ?>">Logout</a>
                 </li>
             </ul>
         </li>
-        <?php endif; ?>
     </ul>
 </header>
 <!-- /top header -->
@@ -198,480 +184,72 @@ TestAsset::register($this);
 <nav class="main-navigation" data-height="auto" data-size="6px" data-distance="0" data-rail-visible="true" data-wheel-step="10">
 <p class="nav-title">MENU</p>
 <ul class="nav">
-<!-- dashboard -->
-<li>
-    <a href="<?= Yii::getAlias('@web')?>/index.php">
-        <i class="ti-home"></i>
-        <span>Dashboard</span>
-    </a>
-</li>
-<!-- /dashboard -->
-
-<!-- ui -->
-<li>
-    <a href="javascript:;">
-        <i class="toggle-accordion"></i>
-        <i class="ti-layout-media-overlay-alt-2"></i>
-        <span>UI Elements</span>
-    </a>
-    <ul class="sub-menu">
-        <li>
-            <a href="buttons.html">
-                <span>Buttons</span>
-            </a>
-        </li>
-        <li>
-            <a href="general.html">
-                <span>General Elements</span>
-            </a>
-        </li>
-        <li>
-            <a href="typography.html">
-                <span>Typography</span>
-            </a>
-        </li>
-        <li>
-            <a href="tabs_accordion.html">
-                <span>Tabs &amp; Accordions</span>
-            </a>
-        </li>
-        <li>
-            <a href="icons.html">
-                <span>Fontawesome</span>
-            </a>
-        </li>
-        <li>
-            <a href="themify_icons.html">
-                <span>Themify Icons</span>
-            </a>
-        </li>
-        <li>
-            <a href="grid.html">
-                <span>Grid Layout</span>
-            </a>
-        </li>
-        <li>
-            <a href="widgets.html">
-                <span>Widgets</span>
-            </a>
-        </li>
-    </ul>
-</li>
-<!-- /ui -->
-
-<!-- Components -->
-<li>
-    <a href="javascript:;">
-        <i class="toggle-accordion"></i>
-        <i class="ti-support"></i>
-        <span>Components</span>
-    </a>
-    <ul class="sub-menu">
-        <li>
-            <a href="calendar.html">
-                <span>Calendar</span>
-            </a>
-        </li>
-        <li>
-            <a href="gallery.html">
-                <span>Gallery</span>
-            </a>
-        </li>
-        <li>
-            <a href="sortable.html">
-                <span>Sortable &amp; Nestable Lists</span>
-            </a>
-        </li>
-        <li>
-            <a href="chart.html">
-                <span>Charts</span>
-            </a>
-        </li>
-        <li>
-            <a href="progress_slider.html">
-                <span>Progress bars &amp; Sliders</span>
-            </a>
-        </li>
-        <li>
-            <a href="tree.html">
-                <span>Tree View</span>
-            </a>
-        </li>
-        <li>
-            <a href="notifications.html">
-                <span>Notifications</span>
-            </a>
-        </li>
-        <li>
-            <a href="animated.html">
-                <span>Animated Elements</span>
-            </a>
-        </li>
-        <li>
-            <a href="tour.html">
-                <span>Tour</span>
-            </a>
-        </li>
-    </ul>
-</li>
-<!-- /components -->
-
-<!-- forms -->
-<li>
-    <a href="javascript:;">
-        <i class="toggle-accordion"></i>
-        <i class="ti-folder"></i>
-        <span>Forms</span>
-    </a>
-    <ul class="sub-menu">
-        <li>
-            <a href="forms.html">
-                <span>Forms Elements</span>
-            </a>
-        </li>
-        <li>
-            <a href="form_custom.html">
-                <span>Customized Elements</span>
-            </a>
-        </li>
-        <li>
-            <a href="form_validation.html">
-                <span>Form Validation</span>
-            </a>
-        </li>
-        <li>
-            <a href="form_wizard.html">
-                <span>Form Wizards</span>
-            </a>
-        </li>
-        <li>
-            <a href="form_wysiwyg.html">
-                <span>WYSIWYG/Markdown Editors</span>
-            </a>
-        </li>
-        <li>
-            <a href="form_inline.html">
-                <span>Content Editable</span>
-            </a>
-        </li>
-        <li>
-            <a href="form_dropzone.html">
-                <span>Dropzone</span>
-            </a>
-        </li>
-        <li>
-            <a href="xeditable.html">
-                <span>X-Editable</span>
-            </a>
-        </li>
-        <li>
-            <a href="form_masks.html">
-                <span>Input Masks</span>
-            </a>
-        </li>
-        <li>
-            <a href="form_pickers.html">
-                <span>Form Pickers</span>
-            </a>
-        </li>
-        <li>
-            <a href="form_crop.html">
-                <span>Image Crop</span>
-            </a>
-        </li>
-    </ul>
-</li>
-<!-- /forms -->
-
-<!-- tables -->
-<li>
-    <a href="javascript:;">
-        <i class="toggle-accordion"></i>
-        <i class="ti-window"></i>
-        <span>Tables</span>
-    </a>
-    <ul class="sub-menu">
-        <li>
-            <a href="table_basic.html">
-                <span>Basic Tables</span>
-            </a>
-        </li>
-        <li>
-            <a href="table_responsive.html">
-                <span>Resonsive Table</span>
-            </a>
-        </li>
-        <li>
-            <a href="datatable.html">
-                <span>Data Tables</span>
-            </a>
-        </li>
-        <li>
-            <a href="table_editable.html">
-                <span>Editable Table</span>
-            </a>
-        </li>
-    </ul>
-</li>
-<!-- /tables -->
-
-<!-- maps -->
-<li>
-    <a href="javascript:;">
-        <i class="toggle-accordion"></i>
-        <i class="ti-map"></i>
-        <span>Maps</span>
-    </a>
-    <ul class="sub-menu">
-        <li>
-            <a href="google_maps.html">
-                <span>Google Maps</span>
-            </a>
-        </li>
-        <li>
-            <a href="vector.html">
-                <span>Vector Maps</span>
-            </a>
-        </li>
-    </ul>
-</li>
-<!-- /maps -->
+    <!-- dashboard -->
+    <li>
+        <a href="<?= Yii::getAlias('@web')?>">
+            <i class="ti-home"></i>
+            <span>Dashboard</span>
+        </a>
+    </li>
+    <!-- /dashboard -->
+    <!-- courses overview -->
+    <li>
+        <a href="javascript:;">
+            <i class="toggle-accordion"></i>
+            <i class="fa fa-pie-chart"></i>
+            <span>Courses</span>
+        </a>
+        <ul class="sub-menu">
+            <li>
+                <a href="#">
+                    <span>Add a course</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <!-- /courses overview -->
+    <!-- Transport overview -->
+    <li>
+        <a href="javascript:;">
+            <i class="toggle-accordion"></i>
+            <i class="fa fa-bus"></i>
+            <span>Transport</span>
+        </a>
+        <ul class="sub-menu">
+            <li>
+                <a href="#">
+                    <span>Add a route</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <!-- /Transport overview -->
+    <!-- User Management -->
+    <li>
+        <a href="javascript:;">
+            <i class="toggle-accordion"></i>
+            <i class="fa fa-user"></i>
+            <span>User Management</span>
+        </a>
+        <ul class="sub-menu">
+            <li>
+                <a href="#">
+                    <span>Admit a Student</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <!-- /User Management -->
 </ul>
 
-<p class="nav-title">MORE</p>
-<ul class="nav">
-<!-- pages -->
-<li>
-    <a href="javascript:;">
-        <i class="toggle-accordion"></i>
-        <i class="ti-layers"></i>
-        <span>Ready Pages</span>
-    </a>
-    <ul class="sub-menu">
-        <li>
-            <a href="mail.html">
-                <span>Mailbox</span>
-            </a>
-        </li>
-        <li>
-            <a href="mail_view.html">
-                <span>Mail View</span>
-            </a>
-        </li>
-        <li>
-            <a href="compose.html">
-                <span>Compose</span>
-            </a>
-        </li>
-        <li>
-            <a href="profile.html">
-                <span>Profile</span>
-            </a>
-        </li>
-        <li>
-            <a href="invoice.html">
-                <span>Invoice</span>
-            </a>
-        </li>
-        <li>
-            <a href="signin.html">
-                <span>Signin</span>
-            </a>
-        </li>
-        <li>
-            <a href="signup.html">
-                <span>Signup</span>
-            </a>
-        </li>
-        <li>
-            <a href="forgot.html">
-                <span>Forgot Password</span>
-            </a>
-        </li>
-        <li>
-            <a href="lock.html">
-                <span>Lock Screen</span>
-            </a>
-        </li>
-        <li>
-            <a href="404.html">
-                <span>404 Page</span>
-            </a>
-        </li>
-        <li>
-            <a href="500.html">
-                <span>500 Page</span>
-            </a>
-        </li>
-        <li>
-            <a href="changelog.html">
-                <span class="pull-right small label label-danger">Updated</span>
-                <span>Change Log</span>
-            </a>
-        </li>
-        <li>
-            <a href="timeline.html">
-                <span>Timeline</span>
-            </a>
-        </li>
-        <li>
-            <a href="catalog.html">
-                <span>Catalog</span>
-            </a>
-        </li>
-        <li>
-            <a href="chat.html">
-                <span>Chat</span>
-            </a>
-        </li>
 
-    </ul>
-</li>
-<!-- /pages -->
-
-<!-- layouts -->
-<li>
-    <a href="javascript:;">
-        <i class="toggle-accordion"></i>
-        <i class="ti-layout"></i>
-        <span>Layouts</span>
-    </a>
-    <ul class="sub-menu">
-        <li>
-            <a href="small_menu.html">
-                <span>Small Menu</span>
-            </a>
-        </li>
-        <li>
-            <a href="right_menu.html">
-                <span>Right Side Menu</span>
-            </a>
-        </li>
-        <li>
-            <a href="push_sidebar.html">
-                <span>Chat Sidebar</span>
-            </a>
-        </li>
-        <li>
-            <a href="language_bar.html">
-                <span>Language Switcher</span>
-            </a>
-        </li>
-        <li>
-            <a href="footer_layout.html">
-                <span>Layout With Footer</span>
-            </a>
-        </li>
-        <li>
-            <a href="horizontal_menu.html">
-                <span>Horizontal Menu</span>
-            </a>
-        </li>
-        <li>
-            <a href="boxed.html">
-                <span>Boxed Layout</span>
-            </a>
-        </li>
-        <li>
-            <a href="horizontal_menu_boxed.html">
-                <span>Horizontal Boxed</span>
-            </a>
-        </li>
-        <li>
-            <a href="fixed_scroll.html">
-                <span>Fixed Header &amp; Scrollable Layout</span>
-            </a>
-        </li>
-        <li>
-            <a href="blank.html">
-                <span>Blank Page</span>
-            </a>
-        </li>
-    </ul>
-</li>
-<!-- /layouts -->
-
-<!-- multi level menu -->
-<li>
-    <a href="javascript:;">
-        <i class="toggle-accordion"></i>
-        <i class="ti-menu-alt"></i>
-        <span>Multi Level Menu</span>
-    </a>
-    <ul class="sub-menu">
-        <li>
-            <a href="javascript:;">
-                <i class="toggle-accordion"></i>
-                <span>Menu Link 1</span>
-            </a>
-            <ul class="sub-menu">
-                <li>
-                    <a href="javascript:;">
-                        <span>Menu Link 1.1</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:;">
-                        <span>Menu Link 1.2</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:;">
-                        <span>Menu Link 1.3</span>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <a href="javascript:;">
-                <i class="toggle-accordion"></i>
-                <span>Menu Link 2</span>
-            </a>
-            <ul class="sub-menu">
-                <li>
-                    <a href="javascript:;">
-                        <span>Menu Link 2.1</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:;">
-                        <span>Menu Link 2.2</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:;">
-                        <span>Menu Link 2.3</span>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <a href="javascript:;">
-                <span>Menu Link 3</span>
-            </a>
-        </li>
-    </ul>
-</li>
-<!-- /multi level menu -->
 </ul>
 <p class="nav-title">LABELS</p>
 <ul class="nav">
     <li>
         <a href="javascript:;">
-            <i class="ti-control-record text-warning"></i>
-            <span>Projects</span>
-        </a>
-    </li>
-    <li>
-        <a href="javascript:;">
             <i class="ti-control-record text-success"></i>
-            <span>Apps</span>
-        </a>
-    </li>
-    <li>
-        <a href="javascript:;">
-            <i class="ti-control-record text-danger"></i>
-            <span>Support</span>
+            <span>Sample</span>
         </a>
     </li>
 </ul>
@@ -685,7 +263,7 @@ TestAsset::register($this);
     <!-- content wrapper -->
     <div class="content-wrap">
 
-        <!-- inner content wrapper -->
+        <!-- inner content wrapper - View content i.e. $content is being passed here -->
         <div class="wrapper">
 
             <?= Breadcrumbs::widget([

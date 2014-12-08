@@ -4,49 +4,54 @@ use yii\bootstrap\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
-/* @var $model app\models\LoginForm */
+/* @var $model common\models\LoginForm */
 
 $this->title = 'Login';
-$this->params['breadcrumbs'][] = $this->title;
+
+/* @var $this->params['login', 'signup'] - Manually introduced variables to toggle "Active class" between
+ * login and Signup pages at layout.*/
+$this->params = [
+    'login' => 'active',
+    'signup' => '',
+];
 ?>
 <!-- B - New Division -->
-<div class="row">
-    <div class="col-lg-6">
-        <section class="panel">
-            <header class="panel-heading">
-                <h1 style="margin-top: 0px"><?= Html::encode($this->title) ?></h1>
-                Please help us validate your credentials
-            </header>
-            <div class="panel-body">
-                <?php $form = ActiveForm::begin([
-                    'id' => 'login-form',
-                    'layout' => 'default',
-                ]); ?>
 
-                <?= $form->field($model, 'username', [
-                    'inputOptions' => [
-                        'placeholder' => 'Enter Username',
-                    ],
-                ]) ?>
+<?php $form = ActiveForm::begin([
+    'id' => 'login-form',
+    'layout' => 'default',
+    'fieldConfig' => [
+        'template' => '{input}<div class="help-block help-block-error main-login-help">{error}</div>',
+    ],
+]); ?>
 
-                <?= $form->field($model, 'password', [
-                    'inputOptions' => [
-                        'placeholder' => 'Enter Password',
-                    ],
-                ])->passwordInput() ?>
+<?= $form->field($model, 'username', [
+    'inputOptions' => [
+        'placeholder' => 'Enter Username',
+        'class' => 'form-control input-lg mb25 mb25-scintin',
+    ],
+]) ?>
 
-                <?= $form->field($model, 'rememberMe')->checkbox() ?>
+<?= $form->field($model, 'password', [
+    'inputOptions' => [
+        'placeholder' => 'Enter Password',
+        'class' => 'form-control input-lg mb25 mb25-scintin',
+    ],
+])->passwordInput() ?>
 
-                <div class="form-group">
-                    <?= Html::submitButton('Login', [
-                        'class' => 'btn btn-default',
-                        'name' => 'login-button',
-                        'type' => 'submit',
-                    ]) ?>
-                </div>
-
-                <?php ActiveForm::end(); ?>
-            </div>
-        </section>
-    </div>
+<div class="scintin-pull-right">
+    <a href="<?= Yii::$app->urlManager->createUrl('site/request-password-reset') ?>">Forgot password?</a>
 </div>
+
+<div class="form-group">
+    <?= Html::checkbox('LoginForm[rememberMe]',true); ?>
+    <?= 'Remember me' ?>
+</div>
+
+<?= Html::submitButton('Login', [
+    'class' => 'btn btn-primary btn-lg btn-block',
+    'name' => 'login-button',
+    'type' => 'submit',
+]) ?>
+
+<?php ActiveForm::end(); ?>
