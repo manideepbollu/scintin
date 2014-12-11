@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\behaviors\BlameableBehavior;
 
 /**
  * This is the model class for table "courses".
@@ -15,11 +17,13 @@ use Yii;
  * @property string $grading_system
  * @property string $elective_enabled
  * @property string $created_at
- * @property integer $created_by
+ * @property User $created_by
  * @property string $updated_at
- * @property integer $updated_by
+ * @property User $updated_by
  *
  * @property Batches[] $batches
+ * @property User $updatedBy
+ * @property User $createdBy
  */
 class Courses extends \yii\db\ActiveRecord
 {
@@ -48,6 +52,20 @@ class Courses extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => TimestampBehavior::className(),
+                'value' => function(){return date('d/m/Y H:i:s');}, /* Ex: 01/01/2015 22:10:05 */
+            ],
+            BlameableBehavior::className(),
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function attributeLabels()
     {
         return [
@@ -62,15 +80,9 @@ class Courses extends \yii\db\ActiveRecord
             'created_by' => 'Created By',
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
+            'createdBy.username' => 'Created By',
+            'updatedBy.username' => 'Updated By',
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getBatches()
-    {
-        return $this->hasMany(Batches::className(), ['course_id' => 'id']);
     }
 
     /**
@@ -97,13 +109,20 @@ class Courses extends \yii\db\ActiveRecord
         return ['General' => 'General', 'CBSE' => 'CBSE', 'ICSE' => 'ICSE'];
     }
 
-    public static function getList(){
-
-        $courses;
+    /**
+     * @return Array - All the active courses in [id => course_name] pair.
+     * Suitable for displaying dropdown lists. Displayed in create Batches form.
+     */
+    public static function getActiveCourses()
+    {
+        $courses = NULL;
 
         $multiArray =  Courses::find()
             ->asArray()
             ->select(['id','course_name'])
+            ->where([
+                'isactive' => 'Active',
+            ])
            ->all();
 
         foreach($multiArray as $singleArray)
@@ -111,4 +130,38 @@ class Courses extends \yii\db\ActiveRecord
 
         return $courses;
     }
+
+    /**
+     * @return Integer - Returns the number of active courses available in the table.
+     */
+    public static function getActiveCount()
+    {
+        $courses = self::getActiveCourses();
+        return count($courses);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBatches()
+    {
+        return $this->hasMany(Batches::className(), ['course_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUpdatedBy()
+    {
+        return $this->hasOne(User::className(), ['id' => 'updated_by']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCreatedBy()
+    {
+        return $this->hasOne(User::className(), ['id' => 'created_by']);
+    }
+
 }

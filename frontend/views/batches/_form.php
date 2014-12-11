@@ -2,11 +2,13 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use \common\models\Courses;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Batches */
 /* @var $form yii\widgets\ActiveForm */
+
+/* Date Picker asset has been added to support Date picking feature */
+$this->registerAssetBundle('app\assets\DatePickerAsset');
 ?>
 
     <!-- Form -->
@@ -22,13 +24,21 @@ use \common\models\Courses;
 
     <?= $form->field($model, 'batch_name')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'course_id')->dropDownList(Courses::getList()) ?>
+    <?= $form->field($model, 'course_id')->dropDownList($courseList) ?>
 
     <?= $form->field($model, 'head_teacher')->textInput() ?>
 
-    <?= $form->field($model, 'start_date')->textInput() ?>
+    <?= $form->field($model, 'start_date', [
+        'inputOptions' => [
+            'class' => 'form-control datepicker',
+        ],
+    ])->textInput() ?>
 
-    <?= $form->field($model, 'end_date')->textInput() ?>
+    <?= $form->field($model, 'end_date', [
+        'inputOptions' => [
+            'class' => 'form-control datepicker',
+        ]
+    ])->textInput() ?>
 
 
     <div class="form-group">

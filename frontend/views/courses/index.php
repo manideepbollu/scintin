@@ -8,12 +8,13 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Courses';
+$this->params['breadcrumbs'][] = ['label' => 'Courses + Batches', 'url' => ['overview']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <!-- New version -->
 <section class="panel panel-default">
     <div class="panel-heading">
-        <h1 class="sc-no-m-top sc-no-m-bottom"><?= Html::encode($this->title) ?></h1>
+        <h1 class="no-m"><?= Html::encode($this->title) ?></h1>
         <?php //echo $this->render('_search', ['model' => $searchModel]); ?>
     </div>
     <div class="panel-body">

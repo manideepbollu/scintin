@@ -2,21 +2,34 @@
 
 namespace frontend\controllers;
 
+use common\models\Batches;
 use Yii;
 use common\models\Courses;
 use common\models\CoursesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * CoursesController implements the CRUD actions for Courses model.
  */
 class CoursesController extends Controller
 {
+    public $defaultAction = 'overview';
+
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -38,6 +51,24 @@ class CoursesController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * Shows Courses + Batches Overview.
+     * @return mixed
+     */
+    public function actionOverview()
+    {
+        $counters = [
+            'activeCourses' => Courses::getActiveCount(),
+            'activeBatches' => Batches::getActiveCount(),
+            'subjects' => 109,
+            'activeStudents' => 927,
+        ];
+
+        return $this->render('overview', [
+            'counters' => $counters,
         ]);
     }
 

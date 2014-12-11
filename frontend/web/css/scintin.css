@@ -19,10 +19,7 @@ encountered in Yii and Sublime integration are recorded in scintin.css
     float: right;
 }
 
-.sc-no-m-top{
-    margin-top: 0px;
-}
-
-.sc-no-m-bottom{
-    margin-bottom: 0px;
+.sc-border-primary,
+.sc-border-primary:focus{
+    border-color: #1582dc;
 }

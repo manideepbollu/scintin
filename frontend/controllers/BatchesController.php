@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use Yii;
 use common\models\Batches;
 use common\models\BatchesSearch;
+use common\models\Courses;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -65,9 +66,15 @@ class BatchesController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            $courseList = Courses::getActiveCourses();
+            //Checks if there are any active courses available before creating a batch
+            if($courseList!==NULL)
+                return $this->render('create', [
+                    'model' => $model,
+                    'courseList' => $courseList,
+                ]);
+            Yii::$app->session->setFlash('noCourses', 'There must be atleast one <b>active course</b> before creating a batch');
+            return Yii::$app->response->redirect(['courses/overview']);
         }
     }
 
@@ -84,8 +91,10 @@ class BatchesController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            return $this->render('update', [
+            $courseList = Courses::getActiveCourses();
+            return $this->render('create', [
                 'model' => $model,
+                'courseList' => $courseList,
             ]);
         }
     }

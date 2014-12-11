@@ -1,12 +1,12 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\Breadcrumbs;
-use app\assets\TestAsset;
+use app\assets\CoreAsset;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-TestAsset::register($this);
+CoreAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -197,12 +197,12 @@ TestAsset::register($this);
         <a href="javascript:;">
             <i class="toggle-accordion"></i>
             <i class="fa fa-pie-chart"></i>
-            <span>Courses</span>
+            <span>Courses + Batches</span>
         </a>
         <ul class="sub-menu">
             <li>
-                <a href="#">
-                    <span>Add a course</span>
+                <a href="<?= Yii::$app->urlManager->createUrl('courses/overview') ?>">
+                    <span>Overview</span>
                 </a>
             </li>
         </ul>

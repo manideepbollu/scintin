@@ -21,6 +21,9 @@ use yii\web\IdentityInterface;
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
+ *
+ * @property Batches[] $batches
+ * @property Courses[] $courses
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -189,5 +192,32 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    /**
+     * @param integer $id - user ID
+     * @return string - username of the user
+     * Converts ID to username
+     */
+
+    /**
+     * Begin relation based methods
+     */
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+
+    public function getBatches()
+    {
+        return $this->hasMany(Batches::className(), ['updated_by' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCourses()
+    {
+        return $this->hasMany(Courses::className(), ['created_by' => 'id']);
     }
 }

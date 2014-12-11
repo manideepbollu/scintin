@@ -10,7 +10,7 @@ namespace app\assets;
 
 use yii\web\AssetBundle;
 
-class TestAsset extends AssetBundle
+class CoreAsset extends AssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
@@ -43,7 +43,6 @@ class TestAsset extends AssetBundle
 
         'js/offscreen.js',
         'js/main.js',
-
 
     ];
     public $depends = [

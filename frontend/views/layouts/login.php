@@ -1,6 +1,6 @@
 <?php
 use yii\helpers\Html;
-use app\assets\TestAsset;
+use app\assets\CoreAsset;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -8,7 +8,7 @@ use app\assets\TestAsset;
  * These variables are introduced manually to toggle "Active class" between login and signup
  * as per the page position. These values must be set in the views of login and signup actions */
 
-TestAsset::register($this);
+CoreAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>

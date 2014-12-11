@@ -53,17 +53,17 @@ class BatchesSearch extends Batches
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'course_id' => $this->course_id,
+            'course_id' => $this->course->course_name,
             'head_teacher' => $this->head_teacher,
-            'start_date' => $this->start_date,
-            'end_date' => $this->end_date,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
         ]);
 
-        $query->andFilterWhere(['like', 'batch_name', $this->batch_name]);
+        $query->andFilterWhere(['like', 'batch_name', $this->batch_name])
+            ->andFilterWhere(['like', 'start_date', $this->start_date])
+            ->andFilterWhere(['like', 'end_date', $this->end_date]);
 
         return $dataProvider;
     }

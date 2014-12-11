@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <!-- New version -->
 <section class="panel panel-default">
     <div class="panel-heading">
-        <h1 class="sc-no-m-top sc-no-m-bottom"><?= Html::encode($this->title) ?></h1>
+        <h1 class="no-m"><?= Html::encode($this->title) ?></h1>
         <?php //echo $this->render('_search', ['model' => $searchModel]); ?>
     </div>
     <div class="panel-body">
@@ -24,11 +24,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'dataProvider' => $dataProvider,
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
-
-                'id',
                 'batch_name',
-                'course_id',
-                'head_teacher',
+                'course.course_name',
+                'headTeacher.username',
                 'start_date',
                 'end_date',
                 // 'created_at',
