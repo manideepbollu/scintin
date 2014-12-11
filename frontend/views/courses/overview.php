@@ -2,7 +2,7 @@
 
 /* @var $this yii\web\View */
 
-// Bollu - AssetBundle specific to CounTo Plugin is loaded
+// Bollu - AssetBundle specific to CountTo Plugin is loaded
 $this->registerAssetBundle('app\assets\CountToAsset');
 
 // Bollu - In page JS loaded for CountTo Application i.e.
@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <!-- Begin flash messages if any -->
 <?php
     foreach (Yii::$app->session->getAllFlashes() as $key => $message) {
-        echo '<div class="alert alert-danger">' . $message . '</div>';
+        echo '<div class="alert alert-'. $key .'">' . $message . '</div>';
 }
 ?>
 <!-- End flash messages -->

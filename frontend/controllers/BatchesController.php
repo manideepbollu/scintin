@@ -73,7 +73,7 @@ class BatchesController extends Controller
                     'model' => $model,
                     'courseList' => $courseList,
                 ]);
-            Yii::$app->session->setFlash('noCourses', 'There must be atleast one <b>active course</b> before creating a batch');
+            Yii::$app->session->setFlash('danger', 'There must be atleast one <b>active course</b> before creating a batch');
             return Yii::$app->response->redirect(['courses/overview']);
         }
     }

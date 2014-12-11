@@ -28,6 +28,8 @@ class m141208_002325_create_courses_table extends Migration
             'updated_at' => Schema::TYPE_DATETIME,
             'updated_by' => Schema::TYPE_INTEGER,
         ], $tableOptions);
+
+        $this->addForeignKey('')
     }
 
     public function down()
