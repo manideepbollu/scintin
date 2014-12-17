@@ -164,4 +164,20 @@ class Courses extends \yii\db\ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'created_by']);
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getElectiveGroups()
+    {
+        return $this->hasMany(ElectiveGroups::className(), ['course_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSubjects()
+    {
+        return $this->hasMany(Subjects::className(), ['course_id' => 'id']);
+    }
+
 }

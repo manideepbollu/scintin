@@ -220,4 +220,20 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->hasMany(Courses::className(), ['created_by' => 'id']);
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getElectiveGroups()
+    {
+        return $this->hasMany(ElectiveGroups::className(), ['updated_by' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSubjects()
+    {
+        return $this->hasMany(Subjects::className(), ['updated_by' => 'id']);
+    }
 }

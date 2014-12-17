@@ -100,7 +100,7 @@ class Batches extends \yii\db\ActiveRecord
 
         foreach($multiArray as $singleArray)
         {
-            if(Batches::findOne($singleArray['id'])->course->isactive === 'Active')
+            if(Batches::findOne($singleArray['id'])->course->isactive)
             {
                 $startDate = strtotime($singleArray['start_date']);
                 $endDate = strtotime($singleArray['end_date']);
@@ -155,4 +155,20 @@ class Batches extends \yii\db\ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'updated_by']);
     }
 
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getElectiveGroups()
+    {
+        return $this->hasMany(ElectiveGroups::className(), ['batch_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSubjects()
+    {
+        return $this->hasMany(Subjects::className(), ['batch_id' => 'id']);
+    }
 }
