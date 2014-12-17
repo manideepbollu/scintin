@@ -53,7 +53,7 @@ class BatchesSearch extends Batches
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'course_id' => $this->course->course_name,
+            'course_id' => $this->course_id,
             'head_teacher' => $this->head_teacher,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
