@@ -6,7 +6,10 @@ use Yii;
 use common\models\Batches;
 use common\models\BatchesSearch;
 use common\models\Courses;
+use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -18,6 +21,22 @@ class BatchesController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['create', 'delete'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['create'],
+                        'roles' => ['createBatch'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['delete'],
+                        'roles' => ['deleteBatch'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -46,12 +65,21 @@ class BatchesController extends Controller
      * Displays a single Batches model.
      * @param integer $id
      * @return mixed
+     * @throws ForbiddenHttpException
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        $model = $this->findModel($id);
+
+        if(Yii::$app->user->can('viewBatch', ['batch' => $model])) {
+            return $this->render('view', [
+                'model' => $model,
+            ]);
+        }
+        else
+        {
+            throw new ForbiddenHttpException('You are not authorized to perform this action.');
+        }
     }
 
     /**
@@ -83,19 +111,26 @@ class BatchesController extends Controller
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
+     * @throws ForbiddenHttpException
      */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            $courseList = Courses::getActiveCourses();
-            return $this->render('create', [
-                'model' => $model,
-                'courseList' => $courseList,
-            ]);
+        if(Yii::$app->user->can('updateBatch', ['batch' => $model]))
+        {
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                $courseList = Courses::getActiveCourses();
+                return $this->render('create', [
+                    'model' => $model,
+                    'courseList' => $courseList,
+                ]);
+            }
+        }else
+        {
+            throw new ForbiddenHttpException('You are not authorized to perform this action.');
         }
     }
 
