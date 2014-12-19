@@ -94,14 +94,14 @@ class BatchesController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            $courseList = Courses::getActiveCourses();
+            $courseList = Courses::getSpecificCourses(['isactive' => 'Active']);
             //Checks if there are any active courses available before creating a batch
-            if($courseList!==NULL)
+            if($courseList !== null)
                 return $this->render('create', [
                     'model' => $model,
                     'courseList' => $courseList,
                 ]);
-            Yii::$app->session->setFlash('danger', 'There must be atleast one <b>active course</b> before creating a batch');
+            Yii::$app->session->setFlash('danger', 'There must be atleast one <b>active course</b> registered in the database before creating a batch');
             return Yii::$app->response->redirect(['courses/overview']);
         }
     }
@@ -122,7 +122,7 @@ class BatchesController extends Controller
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
-                $courseList = Courses::getActiveCourses();
+                $courseList = Courses::getSpecificCourses(['isactive' => 'Active']);
                 return $this->render('create', [
                     'model' => $model,
                     'courseList' => $courseList,

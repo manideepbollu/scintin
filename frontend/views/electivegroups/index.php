@@ -8,6 +8,7 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Elective Groups';
+$this->params['breadcrumbs'][] = ['label' => 'Courses + Batches', 'url' => ['courses/overview']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <!-- New version -->
@@ -21,29 +22,31 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Html::a('Create Elective Groups', ['create'], ['class' => 'btn btn-success']) ?>
         </p>
 
-        <?= GridView::widget([
-            'dataProvider' => $dataProvider,
-            'columns' => [
-                [
-                    'class' => 'yii\grid\SerialColumn',
-                    'header' => 'S.No'
+        <div class="table-responsive">
+            <?= GridView::widget([
+                'dataProvider' => $dataProvider,
+                'columns' => [
+                    [
+                        'class' => 'yii\grid\SerialColumn',
+                        'header' => 'S.No'
+                    ],
+
+                    'group_name',
+                    'parent_type',
+                    'course.course_name',
+                    'batch.batch_name',
+                    'max_subjects',
+                    'min_subjects',
+                    'isactive',
+                    // 'created_at',
+                    // 'created_by',
+                    // 'updated_at',
+                    // 'updated_by',
+
+                    ['class' => 'yii\grid\ActionColumn'],
                 ],
-
-                'group_name',
-                'parent_type',
-                'course_id',
-                'batch_id',
-                // 'max_subjects',
-                // 'min_subjects',
-                // 'isactive',
-                // 'created_at',
-                // 'created_by',
-                // 'updated_at',
-                // 'updated_by',
-
-                ['class' => 'yii\grid\ActionColumn'],
-            ],
-        ]); ?>
+            ]); ?>
+        </div>
     </div>
 </section>
 

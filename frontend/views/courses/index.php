@@ -21,29 +21,32 @@ $this->params['breadcrumbs'][] = $this->title;
         <p>
             <?= Html::a('Create Courses', ['create'], ['class' => 'btn btn-success']) ?>
         </p>
-        <?= GridView::widget([
-            'dataProvider' => $dataProvider,
-            'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
-                'course_name',
-                // 'section_name',
-                'course_code',
-                'isactive',
-                'grading_system',
-                'elective_enabled',
-                // 'created_at',
-                // 'created_by',
-                // 'updated_at',
-                // 'updated_by',
 
-                [
-                    'class' => 'yii\grid\ActionColumn',
-                    'contentOptions' => [
-                        'class' => 'text-center',
+        <div class="table-responsive">
+            <?= GridView::widget([
+                'dataProvider' => $dataProvider,
+                'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
+                    'course_name',
+                    // 'section_name',
+                    'course_code',
+                    'isactive',
+                    'grading_system',
+                    'elective_enabled',
+                    // 'created_at',
+                    // 'created_by',
+                    // 'updated_at',
+                    // 'updated_by',
+
+                    [
+                        'class' => 'yii\grid\ActionColumn',
+                        'contentOptions' => [
+                            'class' => 'text-center',
+                        ],
                     ],
                 ],
-            ],
-        ]); ?>
+            ]); ?>
+        </div>
     </div>
 </section>
 

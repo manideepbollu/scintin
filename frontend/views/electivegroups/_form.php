@@ -3,6 +3,32 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
+$this->registerJs('jQuery(function ($) {
+
+        function hideCourseBatch(){
+            if($("#electivegroups-parent_type").val() == "Course"){
+                $(".field-electivegroups-course_id").slideDown();
+                $(".field-electivegroups-batch_id").slideUp();
+            }
+            else if($("#electivegroups-parent_type").val() == "Batch"){
+                $(".field-electivegroups-batch_id").slideDown();
+                $(".field-electivegroups-course_id").slideUp();
+            }
+            else{
+                $(".field-electivegroups-course_id").slideUp();
+                $(".field-electivegroups-batch_id").slideUp();
+            }
+        }
+
+        hideCourseBatch();
+
+        //Toggle Course / batch dropDownList fields as per parent type selection
+        $("#electivegroups-parent_type").change(function(){
+                hideCourseBatch();
+        });
+
+    });');
+
 /* @var $this yii\web\View */
 /* @var $model common\models\ElectiveGroups */
 /* @var $form yii\widgets\ActiveForm */
@@ -20,18 +46,11 @@ use yii\bootstrap\ActiveForm;
 
     <?= $form->field($model, 'group_name')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'parent_type')->dropDownList([
-        'Course' => 'Course',
-        'Batch' => 'Batch',
-    ]) ?>
+    <?= $form->field($model, 'parent_type')->dropDownList($parentOptions) ?>
 
-    <?php if($listCourses !== NULL): ?>
     <?= $form->field($model, 'course_id')->dropDownList($listCourses) ?>
-    <?php endif; ?>
 
-    <?php if($listBatches !== NULL):  ?>
     <?= $form->field($model, 'batch_id')->dropDownList($listBatches) ?>
-    <?php endif;  ?>
 
 
     <?= $form->field($model, 'max_subjects')->textInput() ?>
@@ -55,5 +74,9 @@ use yii\bootstrap\ActiveForm;
     </div>
 
     <?php ActiveForm::end(); ?>
+
+
+
+
 
 

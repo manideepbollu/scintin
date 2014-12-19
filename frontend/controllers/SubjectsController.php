@@ -66,7 +66,9 @@ class SubjectsController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            $activeElectiveGroups = ElectiveGroups::getActiveElectiveGroups();
+            if(!($activeElectiveGroups = ElectiveGroups::getActiveElectiveGroups()))
+                $activeElectiveGroups = ['Not available' => 'No options available'];
+
             return $this->render('create', [
                 'model' => $model,
                 'activeElectiveGroups' => $activeElectiveGroups
@@ -87,8 +89,12 @@ class SubjectsController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
+            if(!($activeElectiveGroups = ElectiveGroups::getActiveElectiveGroups()))
+                $activeElectiveGroups = ['Not available' => 'No options available'];
+
             return $this->render('update', [
                 'model' => $model,
+                'activeElectiveGroups' => $activeElectiveGroups
             ]);
         }
     }

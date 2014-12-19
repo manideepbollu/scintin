@@ -86,7 +86,8 @@ class Courses extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return Array - Course status in readable text
+     * @return array
+     * - Course status options
      */
     public function getCourseStatus()
     {
@@ -94,7 +95,8 @@ class Courses extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return Array - whether the electives allowed or not in this course
+     * @return array
+     * - Elective allowed status options
      */
     public function getElectiveStatus()
     {
@@ -102,7 +104,8 @@ class Courses extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return Array - Grading system status
+     * @return array
+     * - Grading systems available
      */
     public function getGradingSystems()
     {
@@ -110,19 +113,21 @@ class Courses extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return Array - All the active courses in [id => course_name] pair.
-     * Suitable for displaying dropdown lists. Displayed in create Batches form.
+     * @return array
+     * - Returns an array of courses in [id => course_name] pair.
+     * Results can be filtered by passing params in Array format.
+     * @param array $filter
+     * - This can be an array of columns with their desired values
+     * to filter while fetching the table for data
      */
-    public static function getActiveCourses()
+    public static function getSpecificCourses($filter = [])
     {
-        $courses = NULL;
+        $courses = null;
 
         $multiArray =  Courses::find()
             ->asArray()
             ->select(['id','course_name'])
-            ->where([
-                'isactive' => 'Active',
-            ])
+            ->where($filter)
            ->all();
 
         foreach($multiArray as $singleArray)
@@ -132,11 +137,15 @@ class Courses extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return Integer - Returns the number of active courses available in the table.
+     * @return integer
+     * - Returns the number of records satisfy the given filter.
+     * @param array $filter
+     * - This can be an array of columns with their desired values
+     * to filter while fetching the table for data
      */
-    public static function getActiveCount()
+    public static function getSpecificCount($filter = [])
     {
-        $courses = self::getActiveCourses();
+        $courses = self::getSpecificCourses($filter);
         return count($courses);
     }
 

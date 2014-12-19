@@ -61,8 +61,8 @@ class CoursesController extends Controller
     public function actionOverview()
     {
         $counters = [
-            'activeCourses' => Courses::getActiveCount(),
-            'activeBatches' => Batches::getActiveCount(),
+            'activeCourses' => Courses::getSpecificCount(['isactive' => 'Active']),
+            'activeBatches' => Batches::getSpecificCount(),
             'subjects' => 109,
             'activeStudents' => 927,
         ];

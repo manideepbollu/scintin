@@ -6056,6 +6056,9 @@ a.fc-event,
 .icheckbox.checked.disabled {
   background-position: -80px 0;
 }
+.icheckbox.indeterminate {
+    background-position: -180px 0;
+}
 .iradio {
   background-position: -100px 0;
 }

@@ -8,6 +8,7 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Batches';
+$this->params['breadcrumbs'][] = ['label' => 'Courses + Batches', 'url' => ['courses/overview']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <!-- New version -->
@@ -20,27 +21,29 @@ $this->params['breadcrumbs'][] = $this->title;
         <p>
             <?= Html::a('Create a Batch', ['create'], ['class' => 'btn btn-success']) ?>
         </p>
-        <?= GridView::widget([
-            'dataProvider' => $dataProvider,
-            'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
-                'batch_name',
-                'course.course_name',
-                'headTeacher.username',
-                'start_date',
-                'end_date',
-                // 'created_at',
-                // 'created_by',
-                // 'updated_at',
-                // 'updated_by',
+        <div class="table-responsive">
+            <?= GridView::widget([
+                'dataProvider' => $dataProvider,
+                'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
+                    'batch_name',
+                    'course.course_name',
+                    'headTeacher.username',
+                    'start_date',
+                    'end_date',
+                    // 'created_at',
+                    // 'created_by',
+                    // 'updated_at',
+                    // 'updated_by',
 
-                [
-                    'class' => 'yii\grid\ActionColumn',
-                    'contentOptions' => [
-                        'class' => 'text-center',
+                    [
+                        'class' => 'yii\grid\ActionColumn',
+                        'contentOptions' => [
+                            'class' => 'text-center',
+                        ],
                     ],
                 ],
-            ],
-        ]); ?>
+            ]); ?>
+        </div>
     </div>
 </section>

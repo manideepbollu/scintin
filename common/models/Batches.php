@@ -86,10 +86,14 @@ class Batches extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return Array - All the active batches in [id => course_name] pair.
-     * Suitable for displaying dropdown lists. Displayed in create Subjects form.
+     * @return array
+     * - Returns an array of specific records as per the filters passed.
+     * @param array $filter
+     * - Takes the array of filters that can be used in Where clause of query
+     * @param array $parentFilters
+     * - Takes an array of filters that can be applied on it's parent data.
      */
-    public static function getActiveBatches()
+    public static function getSpecificBatches($filter = [], $parentFilters = [])
     {
         $batches = NULL;
 
@@ -100,8 +104,17 @@ class Batches extends \yii\db\ActiveRecord
 
         foreach($multiArray as $singleArray)
         {
-            if(Batches::findOne($singleArray['id'])->course->isactive)
+            while(current($parentFilters))
             {
+                $keyName = key($parentFilters);
+                if(!(Batches::findOne($singleArray['id'])->course->$keyName === current($parentFilters))){
+                    $flag = 1;
+                    break;
+                }
+                next($parentFilters);
+
+            }
+            if(!isset($flag)){
                 $startDate = strtotime($singleArray['start_date']);
                 $endDate = strtotime($singleArray['end_date']);
                 $now = strtotime('now');
@@ -109,17 +122,24 @@ class Batches extends \yii\db\ActiveRecord
                 if($startDate < $now && $now < $endDate)
                     $batches[$singleArray['id']] = $singleArray['batch_name'];
             }
+            else
+                unset($flag);
+            reset($parentFilters);
         }
 
         return $batches;
     }
 
     /**
-     * @return Integer - Returns the number of active batches available in the table.
+     * @return Integer - Returns the number of batches found in the table as per the filters.
+     * @param array $filter
+     * - Takes the array of filters that can be used in Where clause of query
+     * @param array $parentFilters
+     * - Takes an array of filters that can be applied on it's parent data.
      */
-    public static function getActiveCount()
+    public static function getSpecificCount($filter = [], $parentFilters = [])
     {
-        $batches = self::getActiveBatches();
+        $batches = self::getSpecificBatches($filter = [], $parentFilters = []);
         return count($batches);
     }
 

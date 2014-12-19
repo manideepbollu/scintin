@@ -63,14 +63,36 @@ class ElectiveGroupsController extends Controller
     public function actionCreate()
     {
         $model = new ElectiveGroups();
+        $parentOptions['Global'] = 'Global';
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
+
+            //Course filters - { Must be active, Must be Elective enabled }
+            $filter = [
+                'isactive' => 'Active',
+                'elective_enabled' => 'Allowed',
+            ];
+
+            //Fetching list of courses using defined filters
+            if($listCourses = Courses::getSpecificCourses($filter))
+                $parentOptions['Course'] = 'Course';
+            else
+                $listCourses = [];
+
+            //parentOptions are being populated as per the availability of items i.e. Courses / Batches
+            //Fetching list of batches using defined parent filters
+            if($listBatches = Batches::getSpecificBatches([], $filter))
+                $parentOptions['Batch'] = 'Batch';
+            else
+                $listBatches = [];
+
             return $this->render('create', [
                 'model' => $model,
-                'listCourses' => Courses::getActiveCourses(),
-                'listBatches' => Batches::getActiveBatches(),
+                'parentOptions' => $parentOptions,
+                'listCourses' => $listCourses,
+                'listBatches' => $listBatches,
             ]);
         }
     }
@@ -84,12 +106,35 @@ class ElectiveGroupsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $parentOptions['Global'] = 'Global';
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
+            //Course filters - { Must be active, Must be Elective enabled }
+            $filter = [
+                'isactive' => 'Active',
+                'elective_enabled' => 'Allowed',
+            ];
+
+            //Fetching list of courses using defined filters
+            if($listCourses = Courses::getSpecificCourses($filter))
+                $parentOptions['Course'] = 'Course';
+            else
+                $listCourses = ['No options available'];
+
+            //parentOptions are being populated as per the availability of items i.e. Courses / Batches
+            //Fetching list of batches using defined parent filters
+            if($listBatches = Batches::getSpecificBatches([], $filter))
+                $parentOptions['Batch'] = 'Batch';
+            else
+                $listBatches = ['No options available'];
+
             return $this->render('update', [
                 'model' => $model,
+                'parentOptions' => $parentOptions,
+                'listCourses' => $listCourses,
+                'listBatches' => $listBatches,
             ]);
         }
     }

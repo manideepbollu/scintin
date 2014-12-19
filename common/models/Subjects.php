@@ -67,7 +67,7 @@ class Subjects extends \yii\db\ActiveRecord
             'subject_name' => 'Subject Name',
             'subject_code' => 'Subject Code',
             'subject_type' => 'Subject Type',
-            'iselective' => 'Elective',
+            'iselective' => 'Subject Group',
             'elective_group' => 'Elective Group',
             'parent_type' => 'Parent Type',
             'course_id' => 'Course ID',
@@ -83,6 +83,42 @@ class Subjects extends \yii\db\ActiveRecord
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
         ];
+    }
+
+    /**
+     * @return array
+     * - Subject type options
+     */
+    public function getSubjectTypes()
+    {
+        return ['Theory' => 'Theory', 'Practicals' => 'Practicals'];
+    }
+
+    /**
+     * @return array
+     * - Subject group options
+     */
+    public function getSubjectGroups()
+    {
+        return ['Mandatory' => 'Mandatory', 'Elective' => 'Elective'];
+    }
+
+    /**
+     * @return array
+     * - Subject status options
+     */
+    public function getSubjectStatus()
+    {
+        return ['Active' => 'Active', 'Inactive' => 'Inactive'];
+    }
+
+    /**
+     * @return array
+     * - Exam options
+     */
+    public function getExamOptions()
+    {
+        return ['Yes' => 'Yes', 'No' => 'No'];
     }
 
     /**

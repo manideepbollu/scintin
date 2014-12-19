@@ -7,12 +7,13 @@ use yii\helpers\Html;
 /* @var $model common\models\Batches */
 
 $this->title = 'Create Batches';
+$this->params['breadcrumbs'][] = ['label' => 'Courses + Batches', 'url' => ['courses/overview']];
 $this->params['breadcrumbs'][] = ['label' => 'Batches', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <section class="panel">
     <header class="panel-heading">
-        <h1 class="no-m"><?= Html::encode($this->title) ?></h1>
+        <h2 class="no-m"><?= Html::encode($this->title) ?></h2>
     </header>
 
     <div class="panel-body">

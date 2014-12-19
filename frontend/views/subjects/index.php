@@ -8,6 +8,7 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Subjects';
+$this->params['breadcrumbs'][] = ['label' => 'Courses + Batches', 'url' => ['courses/overview']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <!-- New version -->
@@ -20,35 +21,37 @@ $this->params['breadcrumbs'][] = $this->title;
         <p>
             <?= Html::a('Create a Subject', ['create'], ['class' => 'btn btn-success']) ?>
         </p>
-        <?= GridView::widget([
-            'dataProvider' => $dataProvider,
-            'columns' => [
-                [
-                    'class' => 'yii\grid\SerialColumn',
-                    'header' => 'S.No'
+        <div class="table-responsive">
+            <?= GridView::widget([
+                'dataProvider' => $dataProvider,
+                'columns' => [
+                    [
+                        'class' => 'yii\grid\SerialColumn',
+                        'header' => 'S.No'
 
+                    ],
+                    'subject_name',
+                    'subject_code',
+                    'subject_type',
+                    'iselective',
+                    // 'elective_group',
+                    'parent_type',
+                    'course_id',
+                    'batch_id',
+                    'weekly_classes_max',
+                    'language',
+                    // 'credit_hours',
+                    // 'dependant_on',
+                    'isactive',
+                    'noexam',
+                    // 'created_at',
+                    // 'created_by',
+                    // 'updated_at',
+                    // 'updated_by',
+
+                    ['class' => 'yii\grid\ActionColumn'],
                 ],
-                'subject_name',
-                'subject_code',
-                'subject_type',
-                'iselective',
-                // 'elective_group',
-                // 'parent_type',
-                // 'course_id',
-                // 'batch_id',
-                // 'weekly_classes_max',
-                // 'language',
-                // 'credit_hours',
-                // 'dependant_on',
-                // 'isactive',
-                // 'noexam',
-                // 'created_at',
-                // 'created_by',
-                // 'updated_at',
-                // 'updated_by',
-
-                ['class' => 'yii\grid\ActionColumn'],
-            ],
-        ]); ?>
+            ]); ?>
+        </div>
     </div>
 </section>

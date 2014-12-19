@@ -7,6 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model common\models\Batches */
 
 $this->title = $model->batch_name;
+$this->params['breadcrumbs'][] = ['label' => 'Courses + Batches', 'url' => ['courses/overview']];
 $this->params['breadcrumbs'][] = ['label' => 'Batches', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

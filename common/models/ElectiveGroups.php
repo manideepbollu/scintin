@@ -51,6 +51,30 @@ class ElectiveGroups extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    public function beforeSave($insert)
+    {
+        $return = parent::beforeSave($insert);
+
+        switch($this->parent_type)
+        {
+            case 'Global':
+                $this->course_id = null;
+                $this->batch_id = null;
+                break;
+            case 'Course':
+                $this->batch_id = null;
+                break;
+            case 'Batch':
+                $this->course_id = null;
+                break;
+        }
+
+        return $return;
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function attributeLabels()
     {
         return [
@@ -112,7 +136,9 @@ class ElectiveGroups extends \yii\db\ActiveRecord
     /**
      * @return array - returns active elective groups available in the table
      */
-    public static function getActiveElectiveGroups(){
+    public static function getActiveElectiveGroups()
+    {
+        $electiveGroups = null;
         $multiArray = ElectiveGroups::find()
             ->asArray()
             ->select(['id','group_name'])

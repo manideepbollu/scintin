@@ -9,6 +9,7 @@ use yii\bootstrap\ActiveForm;
 
 /* Date Picker asset has been added to support Date picking feature */
 $this->registerAssetBundle('app\assets\DatePickerAsset');
+$this->registerAssetBundle('app\assets\FormMaskAsset');
 ?>
 
     <!-- Form -->
@@ -22,9 +23,9 @@ $this->registerAssetBundle('app\assets\DatePickerAsset');
         ],
     ]); ?>
 
-    <?= $form->field($model, 'batch_name')->textInput(['maxlength' => 255]) ?>
-
     <?= $form->field($model, 'course_id')->dropDownList($courseList) ?>
+
+    <?= $form->field($model, 'batch_name')->textInput(['maxlength' => 255]) ?>
 
     <?= $form->field($model, 'head_teacher')->textInput() ?>
 
