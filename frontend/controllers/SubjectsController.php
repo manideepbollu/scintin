@@ -2,6 +2,8 @@
 
 namespace frontend\controllers;
 
+use common\models\Batches;
+use common\models\Courses;
 use common\models\ElectiveGroups;
 use Yii;
 use common\models\Subjects;
@@ -66,12 +68,30 @@ class SubjectsController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            if(!($activeElectiveGroups = ElectiveGroups::getActiveElectiveGroups()))
-                $activeElectiveGroups = ['Not available' => 'No options available'];
+            //Course filters - { Must be active }
+            $filter = [
+                'isactive' => 'Active'
+            ];
 
+            if(!($activeElectiveGroups = ElectiveGroups::getSpecificElectiveGroups($filter)))
+                $activeElectiveGroups = [];
+            if(!( $activeCourses = Courses::getSpecificCourses($filter)))
+                $activeCourses = [];
+            if(!( $activeBatches = Batches::getSpecificBatches([],$filter)))
+                $activeBatches = [];
+
+            $activeSubjects = Subjects::getSpecificSubjects($filter);
+
+            if(!$parentOptions=Subjects::getParentTypes()) {
+                Yii::$app->session->setFlash('danger', 'There must be atleast one <b>active course</b> registered in the database before creating a Subject');
+                return Yii::$app->response->redirect(['courses/overview']);
+            }
             return $this->render('create', [
                 'model' => $model,
-                'activeElectiveGroups' => $activeElectiveGroups
+                'activeElectiveGroups' => $activeElectiveGroups,
+                'activeCourses' => $activeCourses,
+                'activeBatches' => $activeBatches,
+                'activeSubjects' => $activeSubjects,
             ]);
         }
     }
@@ -89,12 +109,25 @@ class SubjectsController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            if(!($activeElectiveGroups = ElectiveGroups::getActiveElectiveGroups()))
+
+            $filter = [
+                'isactive' => 'Active'
+            ];
+            if(!($activeElectiveGroups = ElectiveGroups::getSpecificElectiveGroups()))
                 $activeElectiveGroups = ['Not available' => 'No options available'];
+            if(!( $activeCourses = Courses::getSpecificCourses($filter)))
+                $activeCourses = ['Not available' => 'No options available'];
+            if(!( $activeBatches = Batches::getSpecificBatches([],$filter)))
+                $activeBatches = ['Not available' => 'No options available'];
+            if(!( $activeSubjects = Subjects::getSpecificSubjects($filter)))
+                $activeSubjects = ['Not available' => 'No options available'];
 
             return $this->render('update', [
                 'model' => $model,
-                'activeElectiveGroups' => $activeElectiveGroups
+                'activeElectiveGroups' => $activeElectiveGroups,
+                'activeCourses' => $activeCourses,
+                'activeBatches' => $activeBatches,
+                'activeSubjects' => $activeSubjects,
             ]);
         }
     }

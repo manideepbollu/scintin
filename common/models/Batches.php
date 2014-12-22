@@ -100,6 +100,7 @@ class Batches extends \yii\db\ActiveRecord
         $multiArray =  Batches::find()
             ->asArray()
             ->select(['id', 'batch_name', 'start_date', 'end_date'])
+            ->where($filter)
             ->all();
 
         foreach($multiArray as $singleArray)

@@ -4,7 +4,6 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 $this->registerJs('
-
     function hideElectives(){
         if($("#subjects-iselective").val() == "Elective"){
             if($("#subjects-elective_group").val() == "Not available"){
@@ -20,10 +19,30 @@ $this->registerJs('
         }
     }
 
+    function hideCourseBatch(){
+            if($("#subjects-parent_type").val() == "Course"){
+                $(".field-subjects-course_id").slideDown();
+                $(".field-subjects-batch_id").slideUp();
+            }
+            else if($("#subjects-parent_type").val() == "Batch"){
+                $(".field-subjects-batch_id").slideDown();
+                $(".field-subjects-course_id").slideUp();
+            }
+            else{
+                $(".field-subjects-course_id").slideUp();
+                $(".field-subjects-batch_id").slideUp();
+            }
+        }
+
+    hideCourseBatch();
     hideElectives();
 
     $("#subjects-iselective").change(function(){
         hideElectives();
+    });
+
+    $("#subjects-parent_type").change(function(){
+        hideCourseBatch();
     });
 ');
 
@@ -52,11 +71,11 @@ $this->registerJs('
 
     <?= $form->field($model, 'elective_group')->dropDownList($activeElectiveGroups) ?>
 
-    <?= $form->field($model, 'parent_type')->textInput(['maxlength' => 255]) ?>
+    <?= $form->field($model, 'parent_type')->dropDownList($model->parentTypes) ?>
 
-    <?= $form->field($model, 'course_id')->textInput() ?>
+    <?= $form->field($model, 'course_id')->dropDownList($activeCourses) ?>
 
-    <?= $form->field($model, 'batch_id')->textInput() ?>
+    <?= $form->field($model, 'batch_id')->dropDownList($activeBatches) ?>
 
     <?= $form->field($model, 'weekly_classes_max')->textInput() ?>
 
@@ -64,7 +83,9 @@ $this->registerJs('
 
     <?= $form->field($model, 'credit_hours')->textInput() ?>
 
-    <?= $form->field($model, 'dependant_on')->textInput() ?>
+    <?= $form->field($model, 'dependant_on')->dropDownList($activeSubjects,[
+        'prompt' => '--- None ---'
+    ]) ?>
 
     <?= $form->field($model, 'isactive')->dropDownList($model->subjectStatus) ?>
 

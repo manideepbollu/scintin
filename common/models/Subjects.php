@@ -86,6 +86,32 @@ class Subjects extends \yii\db\ActiveRecord
     }
 
     /**
+     * @inheritdoc
+     */
+    public function beforeSave($insert)
+    {
+        $return = parent::beforeSave($insert);
+
+        switch($this->parent_type)
+        {
+            case 'Course':
+                $this->batch_id = null;
+                break;
+            case 'Batch':
+                $this->course_id = null;
+                break;
+        }
+
+        if($this->iselective === 'Mandatory')
+            $this->elective_group = null;
+
+        if($this->dependant_on === 'No options available')
+            $this->dependant_on = null;
+
+        return $return;
+    }
+
+    /**
      * @return array
      * - Subject type options
      */
@@ -175,5 +201,48 @@ class Subjects extends \yii\db\ActiveRecord
     public function getUpdatedBy()
     {
         return $this->hasOne(User::className(), ['id' => 'updated_by']);
+    }
+    /**
+     * @return gives the list of parent types (hard coded values) if they are active
+     */
+    public static function getParentTypes()
+    {
+        $filter = [
+            'isactive' => 'Active'
+        ];
+
+        $parentOptions=[];
+
+        if(Courses::getSpecificCourses($filter))
+            $parentOptions['Course'] = 'Course';
+
+        if(Batches::getSpecificBatches([],$filter))
+            $parentOptions['Batch'] = 'Batch';
+
+        return $parentOptions;
+    }
+
+    /**
+     * @return array
+     * - Returns an array of subjects in [id => subject_name] pair.
+     * Results can be filtered by passing params in Array format.
+     * @param array $filter
+     * - This can be an array of columns with their desired values
+     * to filter while fetching the table for data
+     */
+    public static function getSpecificSubjects($filter = [])
+    {
+        $subjects = null;
+
+        $multiArray =  Subjects::find()
+            ->asArray()
+            ->select(['id','subject_name'])
+            ->where($filter)
+            ->all();
+
+        foreach($multiArray as $singleArray)
+            $subjects[$singleArray['id']] = $singleArray['subject_name'];
+
+        return $subjects;
     }
 }

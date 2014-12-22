@@ -134,17 +134,20 @@ class ElectiveGroups extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return array - returns active elective groups available in the table
+     * @return array
+     * - Returns an array of ElectiveGroups in [id => group_name] pair.
+     * Results can be filtered by passing params in Array format.
+     * @param array $filter
+     * - This can be an array of columns with their desired values
+     * to filter while fetching the table for data
      */
-    public static function getActiveElectiveGroups()
+    public static function getSpecificElectiveGroups($filter = [])
     {
         $electiveGroups = null;
         $multiArray = ElectiveGroups::find()
             ->asArray()
             ->select(['id','group_name'])
-            ->where([
-                'isactive' => 'Active'
-            ])
+            ->where($filter)
             ->all();
 
         foreach($multiArray as $singleArray){

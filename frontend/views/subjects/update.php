@@ -21,6 +21,9 @@ $this->params['breadcrumbs'][] = 'Update';
         <?= $this->render('_form', [
             'model' => $model,
             'activeElectiveGroups' => $activeElectiveGroups,
+            'activeCourses' => $activeCourses,
+            'activeBatches' => $activeBatches,
+            'activeSubjects' => $activeSubjects,
         ]) ?>
 
     </div>

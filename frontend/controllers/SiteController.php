@@ -236,6 +236,10 @@ class SiteController extends Controller
         }
 
         $rule = new AuthorRule();
+        if($rbac->getRule('isAuthor'))
+            $rbac->update('isAuthor', $rule);
+        else
+            $rbac->add($rule);
         $rbac->update('isAuthor', $rule);
         $updateOwnBatch->ruleName = $rule->name;
         $rbac->update('updateOwnBatch', $updateOwnBatch);
