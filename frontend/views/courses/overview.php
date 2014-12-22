@@ -58,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
         </div>
-        <!-- Bollu -> Begin Animated counters -->
+        <!-- Bollu -> End Animated counters -->
 
         <!-- Bollu -> Begin Courses, Batches and Subject tab switcher -->
         <div class="box-tab">

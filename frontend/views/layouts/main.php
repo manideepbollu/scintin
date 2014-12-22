@@ -233,8 +233,8 @@ CoreAsset::register($this);
         </a>
         <ul class="sub-menu">
             <li>
-                <a href="#">
-                    <span>Admit a Student</span>
+                <a href="<?= Yii::$app->urlManager->createUrl('usermanagement') ?>">
+                    <span>Overview</span>
                 </a>
             </li>
         </ul>
