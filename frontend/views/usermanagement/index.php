@@ -1,430 +1,116 @@
 <?php
 
-$this->registerAssetBundle('app\assets\UserManagementAsset');
+//AssetBundle specific to FlatIcons is loaded
+$this->registerAssetBundle('app\assets\FlatIconsAsset');
 
-$this->title = 'Role Management';
-$this->params['breadcrumbs'][] = $this->title;
+//AssetBundle specific to User Charts & Charts Plugin is loaded
+$this->registerAssetBundle('app\assets\UserChartsAsset');
+
+//AssetBundle specific to CountTo Plugin is loaded
+$this->registerAssetBundle('app\assets\CountToAsset');
+
+//In page JS loaded for CountTo Application i.e.
+//counters featuring in this page run on this
+$this->registerJs('jQuery(function ($) {
+        // start all the timers
+        $(".timer").each(count);
+
+        function count(options) {
+            var $this = $(this);
+            options = $.extend({}, options || {}, $this.data("countToOptions") || {});
+            $this.countTo(options);
+        }
+    });');
 ?>
 
-<!-- -->
-<div class="row">
-<div class="col-lg-12">
-<section class="panel no-b">
-<div class="panel-heading no-b">
-    <h5>Basic <b>Table</b></h5>
-</div>
 
-<div class="panel-body" style="overflow: hidden">
-<form>
-<div class="table-responsive">
-<table class="table no-m">
-<thead>
-<tr>
-    <th>Entity
-    </td>
-    <th class="text-center">Create
-    </td>
-    <th class="text-center">View
-    </td>
-    <th class="text-center">View Own
-    </td>
-    <th class="text-center">Update
-    </td>
-    <th class="text-center">Update Own
-    </td>
-    <th class="text-center">Delete
-    </td>
-    <th class="text-center">Delete Own
-    </td>
-</tr>
-</thead>
-<tbody>
-<!-- Academics begins -->
-<!-- Academics main parent -->
-<tr id="academics" data-fill="js-determined">
-    <td>
-        <a class="treehead mr5 fa fa-caret-right" href="javascript:;"></a>
-        <label class="control-label">Academics</label>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-create">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-view">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-view-own">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-update">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-update-own">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-delete">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-delete-own">
-        </div>
-    </td>
-</tr>
-<!-- |- Academics children -->
-<tr class="academics-child" id="courses-overview" data-fill="js-determined" hidden="hidden">
-    <td>
-        <span class="mr20"></span>
-        <a class="treehead mr5 fa fa-caret-right" href="javascript:;"></a>
-        <label class="control-label">Courses Overview</label>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-create">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-view">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-view-own">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-update">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-update-own">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-delete">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-delete-own">
-        </div>
-    </td>
-</tr>
-<!-- |- |- Courses children -->
-<tr class="academics-child courses-overview-child" hidden="hidden">
-    <td>
-        <span class="mr25 ml25"></span>
-        <label class="control-label">Courses</label>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-create" checked>
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-view">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-view-own">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-update">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-update-own">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-delete">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-delete-own">
-        </div>
-    </td>
-</tr>
-<tr class="academics-child courses-overview-child" hidden="hidden">
-    <td>
-        <span class="mr25 ml25"></span>
-        <label class="control-label">Batches</label>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-create" checked>
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-view">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-view-own">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-update">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-update-own">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-delete">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-delete-own">
-        </div>
-    </td>
-</tr>
-<tr class="academics-child courses-overview-child" hidden="hidden">
-    <td>
-        <span class="mr25 ml25"></span>
-        <label class="control-label">Subjects</label>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-create" checked>
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-view">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-view-own">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-update" checked>
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-update-own">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-delete">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-delete-own">
-        </div>
-    </td>
-</tr>
-<tr class="academics-child courses-overview-child" hidden="hidden">
-    <td>
-        <span class="mr25 ml25"></span>
-        <label class="control-label">Elective groups</label>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-create" checked>
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-view">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-view-own">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-update">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-update-own">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-delete">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-delete-own">
-        </div>
-    </td>
-</tr>
-<!-- |- |- End of Courses children -->
-<tr class="academics-child" id="attendance" hidden="hidden">
-    <td>
-        <span class="mr20"></span>
-        <label class="control-label">Attendance</label>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-create" checked>
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-view">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-view-own">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-update">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-update-own">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-delete">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-delete-own">
-        </div>
-    </td>
-</tr>
-<!-- Academics begins -->
-<!-- Transport begins -->
-<!-- Transport main Parent -->
-<tr id="transport" data-fill="js-determined">
-    <td>
-        <a class="treehead mr5 fa fa-caret-right" href="javascript:;"></a>
-        <label class="control-label">Transport</label>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-create">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-view">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-view-own">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-update">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-update-own">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-delete">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-delete-own">
-        </div>
-    </td>
-</tr>
-<!-- |- Transport children -->
-<tr class="transport-child" hidden="hidden">
-    <td>
-        <span class="mr20"></span>
-        <label class="control-label">Vehicles</label>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-create">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-view">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-view-own">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-update">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-update-own">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-delete">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-delete-own">
-        </div>
-    </td>
-</tr>
-<!-- End of Transport children -->
-<!-- Transport ends -->
-</tbody>
-</table>
+<div class="panel-heading">
+    <h2 class="no-m">User Management <b>Overview</b></h2>
 </div>
-</form>
+<div class="row">
+    <div class="col-sm-3 col-xs-6 text-center icon-box mb25 mt25">
+        <a href="javascript:;" class="big-icon-links">
+            <i class="flaticon-add99 flx4"></i>
+            <div>Add User</div>
+        </a>
+    </div>
+    <div class="col-sm-3 col-xs-6 text-center icon-box mb25 mt25">
+        <a href="<?= Yii::$app->urlManager->createUrl('user/index') ?>" class="big-icon-links">
+            <i class="flaticon-multiple25 flx4"></i>
+            <div>Manage Users</div>
+        </a>
+    </div>
+    <div class="col-sm-3 col-xs-6 text-center icon-box mb25 mt25">
+        <a href="javascript:;" class="big-icon-links">
+            <i class="flaticon-unlocked46 flx4"></i>
+            <div>Create Role</div>
+        </a>
+    </div>
+    <div class="col-sm-3 col-xs-6 text-center icon-box mb25 mt25">
+        <a href="javascript:;" class="big-icon-links">
+            <i class="flaticon-folder240 flx4"></i>
+            <div>Manage Roles</div>
+        </a>
+    </div>
+    <div class="col-sm-3 col-xs-6 text-center icon-box mb25 mt25">
+        <a href="javascript:;" class="big-icon-links">
+            <i class="flaticon-students8 flx4"></i>
+            <div>Student Data</div>
+        </a>
+    </div>
+    <div class="col-sm-3 col-xs-6 text-center icon-box mb25 mt25">
+        <a href="javascript:;" class="big-icon-links">
+            <i class="flaticon-teacher38 flx4"></i>
+            <div>Employee Data</div>
+        </a>
+    </div>
+    <div class="col-sm-3 col-xs-6 text-center icon-box mb25 mt25">
+        <a href="javascript:;" class="big-icon-links">
+            <i class="flaticon-teacher10 flx4"></i>
+            <div>Parent Data</div>
+        </a>
+    </div>
 </div>
+<section class="panel">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <section class="panel">
+                    <h5>Enrollment Stats - <b>Segment Wise</b></h5>
+                    <div class="flot-pie chart"></div>
+                </section>
+            </div>
+            <div class="col-md-4 text-center">
+                <section class="panel">
+                    <h5>Scintin <b>Enrollment Status</b></h5>
+                    <div class="piechart mt25">
+                        <span class="total chart" data-percent="77">
+                        <span>
+                            <div class="percent"></div>
+                            <small>Signed up for Scintin</small>
+                        </span>
+                        </span>
+                    </div>
+                </section>
+            </div>
+            <div class="col-md-4">
+                    <div class="m15 pull-right">
+                        <span class="h2 count" data-from="0" data-to="680">0</span>
+                        <span class="h4">&nbsp;&nbsp;users enrolled on Scintin</span>
+                    </div>
+                    <div class="m15 pull-right">
+                        <span class="h2 count" data-from="0" data-to="927">0</span>
+                        <span class="h4">&nbsp;&nbsp;students admitted</span>
+                    </div>
+                    <div class="m15 pull-right">
+                        <span class="h2 count" data-from="0" data-to="68">0</span>
+                        <span class="h4">&nbsp;&nbsp;employees working</span>
+                    </div>
+                    <div class="m15 pull-right">
+                        <span class="h2 count" data-from="0" data-to="9">0</span>
+                        <span class="h4">&nbsp;&nbsp;active Roles defined</span>
+                    </div>
+            </div>
+        </div>
+    </div>
 </section>
-</div>
-</div>

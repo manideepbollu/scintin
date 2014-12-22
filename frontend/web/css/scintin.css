@@ -23,3 +23,7 @@ encountered in Yii and Sublime integration are recorded in scintin.css
 .sc-border-primary:focus{
     border-color: #1582dc;
 }
+
+.big-icon-links:hover{
+    color: #696969;
+}
