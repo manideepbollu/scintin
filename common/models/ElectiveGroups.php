@@ -135,6 +135,15 @@ class ElectiveGroups extends \yii\db\ActiveRecord
 
     /**
      * @return array
+     * - Elective group parent options
+     */
+    public function getParentOptions()
+    {
+        return ['Global' => 'Global', 'Course' => 'Course', 'Batch' => 'Batch'];
+    }
+
+    /**
+     * @return array
      * - Returns an array of ElectiveGroups in [id => group_name] pair.
      * Results can be filtered by passing params in Array format.
      * @param array $filter

@@ -24,15 +24,15 @@ $this->registerJs('
                 $(".field-subjects-course_id").slideDown();
                 $(".field-subjects-batch_id").slideUp();
             }
-            else if($("#subjects-parent_type").val() == "Batch"){
-                $(".field-subjects-batch_id").slideDown();
-                $(".field-subjects-course_id").slideUp();
+            else if($("#subjects-parent_type").val() == "Batch" && $("#subjects-batch_id").val() != "Not available"){
+                    $(".field-subjects-batch_id").slideDown();
+                    $(".field-subjects-course_id").slideUp();
             }
             else{
-                $(".field-subjects-course_id").slideUp();
-                $(".field-subjects-batch_id").slideUp();
+                alert("There are no active batches available in the database");
+                $("#subjects-parent_type").val("Course");
             }
-        }
+    }
 
     hideCourseBatch();
     hideElectives();
@@ -71,7 +71,7 @@ $this->registerJs('
 
     <?= $form->field($model, 'elective_group')->dropDownList($activeElectiveGroups) ?>
 
-    <?= $form->field($model, 'parent_type')->dropDownList($model->parentTypes) ?>
+    <?= $form->field($model, 'parent_type')->dropDownList($model->parentOptions) ?>
 
     <?= $form->field($model, 'course_id')->dropDownList($activeCourses) ?>
 
