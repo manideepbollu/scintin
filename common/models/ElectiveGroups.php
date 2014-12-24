@@ -26,7 +26,7 @@ use Yii;
  * @property User $updatedBy
  * @property Subjects[] $subjects
  */
-class ElectiveGroups extends \yii\db\ActiveRecord
+class ElectiveGroups extends GeneralRecord
 {
     /**
      * @inheritdoc

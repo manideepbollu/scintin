@@ -27,3 +27,19 @@ encountered in Yii and Sublime integration are recorded in scintin.css
 .big-icon-links:hover{
     color: #696969;
 }
+
+div.required label:after {
+    content: " *";
+}
+
+.b-radius5{
+    border-radius: 5px;
+}
+
+.view-table th{
+    width: 30%;
+}
+
+.datepicker{
+    min-width: 250px;
+}

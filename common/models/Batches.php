@@ -3,8 +3,6 @@
 namespace common\models;
 
 use Yii;
-Use yii\behaviors\TimestampBehavior;
-use yii\behaviors\BlameableBehavior;
 
 /**
  * This is the model class for table "batches".
@@ -25,7 +23,7 @@ use yii\behaviors\BlameableBehavior;
  * @property User $createdBy
  * @property User $updatedBy
  */
-class Batches extends \yii\db\ActiveRecord
+class Batches extends GeneralRecord
 {
 
     /**
@@ -46,20 +44,6 @@ class Batches extends \yii\db\ActiveRecord
             [['course_id', 'head_teacher', 'created_by', 'updated_by'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['batch_name', 'start_date', 'end_date'], 'string', 'max' => 255]
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'timestamp' => [
-                'class' => TimestampBehavior::className(),
-                'value' => function(){return date('d/m/Y H:i:s');}, /* Ex: 01/01/2015 22:10:05 */
-            ],
-            BlameableBehavior::className(),
         ];
     }
 

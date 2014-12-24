@@ -23,5 +23,6 @@ class FormMaskAsset extends AssetBundle
     ];
     public $depends = [
         'app\assets\CoreAsset',
+        'yii\widgets\ActiveFormAsset',
     ];
 }

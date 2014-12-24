@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use yii\base\ErrorException;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "students".
@@ -43,9 +45,19 @@ use Yii;
  * @property integer $created_by
  * @property string $updated_at
  * @property integer $updated_by
+ * @property integer $photo_file_size
+ * @property file $file
+ *
+ * @property User $updatedBy
+ * @property User $createdBy
  */
-class Students extends \yii\db\ActiveRecord
+class Students extends GeneralRecord
 {
+    /**
+     * @var UploadedFile file attribute
+     */
+    public $file;
+
     /**
      * @inheritdoc
      */
@@ -57,13 +69,38 @@ class Students extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    public function beforeSave($params)
+    {
+        $varl = false;
+        if ($this->file = UploadedFile::getInstance($this, 'file')){
+            if ($this->validate()) {
+                $this->photo_file_name = $this->file->name;
+                $this->photo_file_type = $this->file->type;
+                $this->photo_file_size = $this->file->size;
+                $this->photo_element_data = file_get_contents($this->file->tempName);
+            }
+            else{
+                Yii::$app->session->setFlash('danger', 'There was a <b>problem while uploading the photo</b>, please check the file and try again. (Please note: Uploading file should be less than 4MB in size');
+                return false;
+            }
+        }
+
+        return parent::beforeSave($params);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
-            [['student_category', 'nationality_id', 'country_id', 'created_by', 'updated_by'], 'integer'],
+            [['student_category', 'nationality_id', 'country_id', 'photo_file_size', 'created_by', 'updated_by'], 'integer'],
             [['photo_element_data', 'description'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
-            [['admission_id', 'roll_number', 'admission_date', 'first_name', 'middle_name', 'last_name', 'father_name', 'mother_name', 'date_of_birth', 'gender', 'marital_status', 'blood_group', 'birth_place', 'language', 'religion', 'address_line1', 'address_line2', 'city', 'state', 'phone1', 'phone2', 'email', 'issms_enabled', 'photo_file_name', 'photo_file_type', 'isactive'], 'string', 'max' => 255]
+            [['first_name', 'country_id'], 'required'],
+            [['file'], 'file', 'extensions' => 'jpg, png', 'mimeTypes' => 'image/jpeg, image/png', 'maxSize' => 4000000],
+            [['admission_id', 'roll_number', 'admission_date', 'first_name', 'middle_name', 'last_name', 'father_name', 'mother_name', 'date_of_birth', 'gender', 'marital_status', 'blood_group', 'birth_place', 'language', 'religion', 'address_line1', 'address_line2', 'city', 'state', 'phone1', 'phone2', 'email', 'issms_enabled', 'photo_file_name', 'photo_file_type', 'isactive'], 'string', 'max' => 255],
+
         ];
     }
 
@@ -103,12 +140,29 @@ class Students extends \yii\db\ActiveRecord
             'photo_file_name' => 'Photo File Name',
             'photo_file_type' => 'Photo File Type',
             'photo_element_data' => 'Photo Element Data',
+            'file' => 'Photo',
             'description' => 'Description',
             'isactive' => 'Status',
             'created_at' => 'Created At',
-            'created_by' => 'Created By',
+            'createdBy.username' => 'Created By',
             'updated_at' => 'Updated At',
-            'updated_by' => 'Updated By',
+            'updatedBy.username' => 'Updated By',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUpdatedBy()
+    {
+        return $this->hasOne(User::className(), ['id' => 'updated_by']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCreatedBy()
+    {
+        return $this->hasOne(User::className(), ['id' => 'created_by']);
     }
 }

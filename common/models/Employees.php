@@ -61,9 +61,16 @@ use Yii;
  * @property integer $created_by
  * @property string $updated_at
  * @property integer $updated_by
+ * @property integer $photo_file_size
+ * @property file $file
  */
-class Employees extends \yii\db\ActiveRecord
+class Employees extends GeneralRecord
 {
+    /**
+     * @var UploadedFile file attribute
+     */
+    public $file;
+
     /**
      * @inheritdoc
      */
@@ -78,9 +85,10 @@ class Employees extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['employee_category', 'employee_position_id', 'employee_department_id', 'reporting_manager_id', 'employee_grade_id', 'experience_years', 'experience_months', 'children_count', 'nationality_id', 'present_country_id', 'permanent_country_id', 'created_by', 'updated_by'], 'integer'],
+            [['employee_category', 'employee_position_id', 'employee_department_id', 'reporting_manager_id', 'employee_grade_id', 'experience_years', 'experience_months', 'children_count', 'nationality_id', 'present_country_id', 'permanent_country_id', 'photo_file_size', 'created_by', 'updated_by'], 'integer'],
             [['experience_details', 'photo_element_data', 'description'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
+            [['file'], 'file', 'extensions' => 'jpg, png', 'mimeTypes' => 'image/jpeg, image/png',],
             [['employee_id', 'joining_date', 'first_name', 'middle_name', 'last_name', 'job_title', 'qualification', 'father_name', 'mother_name', 'spouse_name', 'date_of_birth', 'gender', 'marital_status', 'blood_group', 'birth_place', 'language', 'religion', 'present_address_line1', 'present_address_line2', 'present_city', 'present_state', 'present_phone1', 'present_phone2', 'present_mobile', 'email', 'fax', 'permanent_address_line1', 'permanent_address_line2', 'permanent_city', 'permanent_state', 'permanent_phone1', 'permanent_phone2', 'photo_file_name', 'photo_file_type', 'isactive'], 'string', 'max' => 255]
         ];
     }
@@ -139,6 +147,7 @@ class Employees extends \yii\db\ActiveRecord
             'photo_file_name' => 'Photo File Name',
             'photo_file_type' => 'Photo File Type',
             'photo_element_data' => 'Photo Element Data',
+            'file' => 'Photo',
             'description' => 'Description',
             'isactive' => 'Isactive',
             'created_at' => 'Created At',

@@ -3,8 +3,6 @@
 namespace common\models;
 
 use Yii;
-use yii\behaviors\TimestampBehavior;
-use yii\behaviors\BlameableBehavior;
 
 /**
  * This is the model class for table "courses".
@@ -25,7 +23,7 @@ use yii\behaviors\BlameableBehavior;
  * @property User $updatedBy
  * @property User $createdBy
  */
-class Courses extends \yii\db\ActiveRecord
+class Courses extends GeneralRecord
 {
     /**
      * @inheritdoc
@@ -46,20 +44,6 @@ class Courses extends \yii\db\ActiveRecord
             [['created_by', 'updated_by'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['course_name', 'section_name', 'course_code', 'isactive', 'grading_system', 'elective_enabled'], 'string', 'max' => 255]
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'timestamp' => [
-                'class' => TimestampBehavior::className(),
-                'value' => function(){return date('d/m/Y H:i:s');}, /* Ex: 01/01/2015 22:10:05 */
-            ],
-            BlameableBehavior::className(),
         ];
     }
 

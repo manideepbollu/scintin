@@ -5,9 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Students */
 
-$this->title = 'Update Students: ' . ' ' . $model->id;
+$this->title = 'Update Students: ' . ' ' . $model->first_name;
+$this->params['breadcrumbs'][] = ['label' => 'User Management', 'url' => ['usermanagement/index']];
 $this->params['breadcrumbs'][] = ['label' => 'Students', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => $model->first_name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="students-update">
@@ -16,6 +17,7 @@ $this->params['breadcrumbs'][] = 'Update';
 
     <?= $this->render('_form', [
         'model' => $model,
+        'task' => 'modifications',
     ]) ?>
 
 </div>

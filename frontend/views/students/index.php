@@ -8,6 +8,7 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Student Data';
+$this->params['breadcrumbs'][] = ['label' => 'User Management', 'url' => ['usermanagement/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <!-- New version -->
