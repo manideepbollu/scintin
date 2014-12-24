@@ -131,6 +131,15 @@ class Subjects extends GeneralRecord
 
     /**
      * @return array
+     * - Subject parent options
+     */
+    public function getParentOptions()
+    {
+        return ['Course' => 'Course', 'Batch' => 'Batch'];
+    }
+
+    /**
+     * @return array
      * - Subject status options
      */
     public function getSubjectStatus()
@@ -201,25 +210,6 @@ class Subjects extends GeneralRecord
     public function getUpdatedBy()
     {
         return $this->hasOne(User::className(), ['id' => 'updated_by']);
-    }
-    /**
-     * @return gives the list of parent types (hard coded values) if they are active
-     */
-    public static function getParentTypes()
-    {
-        $filter = [
-            'isactive' => 'Active'
-        ];
-
-        $parentOptions=[];
-
-        if(Courses::getSpecificCourses($filter))
-            $parentOptions['Course'] = 'Course';
-
-        if(Batches::getSpecificBatches([],$filter))
-            $parentOptions['Batch'] = 'Batch';
-
-        return $parentOptions;
     }
 
     /**

@@ -123,10 +123,13 @@ class BatchesController extends Controller
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 $courseList = Courses::getSpecificCourses(['isactive' => 'Active']);
-                return $this->render('create', [
-                    'model' => $model,
-                    'courseList' => $courseList,
-                ]);
+                if($courseList !== null)
+                    return $this->render('update', [
+                        'model' => $model,
+                        'courseList' => $courseList,
+                    ]);
+                Yii::$app->session->setFlash('danger', 'There must be atleast one <b>active course</b> registered in the database before creating a batch');
+                return Yii::$app->response->redirect(['courses/overview']);
             }
         }else
         {

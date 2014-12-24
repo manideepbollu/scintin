@@ -79,18 +79,17 @@ class ElectiveGroupsController extends Controller
             if($listCourses = Courses::getSpecificCourses($filter))
                 $parentOptions['Course'] = 'Course';
             else
-                $listCourses = [];
+                $listCourses = ['Not available' => 'No options available'];
 
             //parentOptions are being populated as per the availability of items i.e. Courses / Batches
             //Fetching list of batches using defined parent filters
             if($listBatches = Batches::getSpecificBatches([], $filter))
                 $parentOptions['Batch'] = 'Batch';
             else
-                $listBatches = [];
+                $listBatches = ['Not available' => 'No options available'];
 
             return $this->render('create', [
                 'model' => $model,
-                'parentOptions' => $parentOptions,
                 'listCourses' => $listCourses,
                 'listBatches' => $listBatches,
             ]);
@@ -121,18 +120,17 @@ class ElectiveGroupsController extends Controller
             if($listCourses = Courses::getSpecificCourses($filter))
                 $parentOptions['Course'] = 'Course';
             else
-                $listCourses = ['No options available'];
+                $listCourses = ['Not available' => 'No options available'];
 
             //parentOptions are being populated as per the availability of items i.e. Courses / Batches
             //Fetching list of batches using defined parent filters
             if($listBatches = Batches::getSpecificBatches([], $filter))
                 $parentOptions['Batch'] = 'Batch';
             else
-                $listBatches = ['No options available'];
+                $listBatches = ['Not available' => 'No options available'];
 
             return $this->render('update', [
                 'model' => $model,
-                'parentOptions' => $parentOptions,
                 'listCourses' => $listCourses,
                 'listBatches' => $listBatches,
             ]);
