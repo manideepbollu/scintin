@@ -12,7 +12,7 @@ $(document).ready(function(){
             });
             $('#step' + obj).find('.form-group').each(function(){
                 if($(this).hasClass('required'))
-                    if($(this).find('input').val() == "")
+                    if($(this).find('input, select').val() == "")
                         flag++;
             });
             if(flag != 0){

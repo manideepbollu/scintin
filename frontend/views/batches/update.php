@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = 'Update';
     <div class="panel-body">
         <?= $this->render('_form', [
             'model' => $model,
-            'courseList' => 'courseList',
+            'courseList' => $courseList,
         ]) ?>
     </div>
 

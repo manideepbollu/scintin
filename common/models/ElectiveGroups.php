@@ -164,4 +164,17 @@ class ElectiveGroups extends GeneralRecord
         }
         return $electiveGroups;
     }
+
+    /**
+     * @return integer
+     * - Returns the number of records satisfy the given filter.
+     * @param array $filter
+     * - This can be an array of columns with their desired values
+     * to filter while fetching the table for data
+     */
+    public static function getSpecificCount($filter = [])
+    {
+        $electiveGroups = self::getSpecificElectiveGroups($filter);
+        return count($electiveGroups);
+    }
 }

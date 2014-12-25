@@ -2,6 +2,9 @@
 
 /* @var $this yii\web\View */
 
+//AssetBundle specific to FlatIcons is loaded
+$this->registerAssetBundle('app\assets\FlatIconsAsset');
+
 // Bollu - AssetBundle specific to CountTo Plugin is loaded
 $this->registerAssetBundle('app\assets\CountToAsset');
 
@@ -18,8 +21,6 @@ $this->registerJs('jQuery(function ($) {
         }
     });');
 
-$this->title = 'Courses + Batches';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <!-- New version -->
 <!-- Begin flash messages if any -->
@@ -31,14 +32,14 @@ $this->params['breadcrumbs'][] = $this->title;
 <!-- End flash messages -->
 
 <!-- Begin view content -->
-<h2 class="mb20">Courses + <b>Batches</b></h2>
+<h2 class="ml5 mt10 mb15">Courses + <b>Batches</b></h2>
 
 <div class="row">
     <div class="col-md-8">
         <!-- Bollu -> Begin Animated counters -->
         <div class="panel no-b rounded overflow-hidden">
             <div class="panel-body no-p bg-primary">
-                <div class="row text-center" style="padding: 40px 0;">
+                <div class="row text-center" style="padding: 20px 0;">
                     <div class="col-xs-6 col-sm-3">
                         <span class="h4 show count" data-from="0" data-to="<?= $counters['activeCourses']; ?>">0</span>
                         <small class="text-uppercase">Active courses</small>
@@ -61,29 +62,35 @@ $this->params['breadcrumbs'][] = $this->title;
         <!-- Bollu -> End Animated counters -->
 
         <!-- Bollu -> Begin Courses, Batches and Subject tab switcher -->
-        <div class="box-tab">
-            <ul class="nav nav-tabs">
-                <li class="active"><a href="#home1" data-toggle="tab">Courses</a>
-                </li>
-                <li><a href="#profile1" data-toggle="tab">Batches</a>
-                </li>
-                <li><a href="#settings1" data-toggle="tab">Subjects</a>
-                </li>
-            </ul>
-            <div class="tab-content text-center">
-                <div class="tab-pane fade active in" id="home1">
-                    <i class="fa fa-book fa-4x mt20"></i>
-                    <h3 class="mt10">Courses <b>Overview</b></h3>
-                </div>
-                <div class="tab-pane fade" id="profile1">
-                    <i class="fa fa-copy fa-4x mt20"></i>
-                    <h3 class="mt10">Batches <b>Overview</b></h3>
-                </div>
-                <div class="tab-pane fade" id="settings1">
-                    <i class="fa fa-file-text-o fa-4x mt20"></i>
-                    <h3 class="mt10">Subjects <b>Overview</b></h3>
-                </div>
-            </div>
+        <div class="col-sm-4 col-xs-6 text-center icon-box mb25 mt25">
+            <a href="<?= Yii::$app->urlManager->createUrl('courses/index') ?>" class="big-icon-links">
+                <i class="flaticon-archive18 flx4"></i>
+                <div>Courses</div>
+            </a>
+        </div>
+        <div class="col-sm-4 col-xs-6 text-center icon-box mb25 mt25">
+            <a href="<?= Yii::$app->urlManager->createUrl('batches/index') ?>" class="big-icon-links">
+                <i class="flaticon-clipboard27 flx4"></i>
+                <div>Batches</div>
+            </a>
+        </div>
+        <div class="col-sm-4 col-xs-6 text-center icon-box mb25 mt25">
+            <a href="<?= Yii::$app->urlManager->createUrl('subjects/index') ?>" class="big-icon-links">
+                <i class="flaticon-book131 flx4"></i>
+                <div>Subjects</div>
+            </a>
+        </div>
+        <div class="col-sm-4 col-xs-6 text-center icon-box mb25 mt25">
+            <a href="<?= Yii::$app->urlManager->createUrl('electivegroups/index') ?>" class="big-icon-links">
+                <i class="flaticon-clipboard74 flx4"></i>
+                <div>Elective Groups</div>
+            </a>
+        </div>
+        <div class="col-sm-4 col-xs-6 text-center icon-box mb25 mt25">
+            <a href="javascript:;" class="big-icon-links">
+                <i class="flaticon-profile3 flx4"></i>
+                <div>Batch Assignments</div>
+            </a>
         </div>
     </div>
     <!-- Bollu -> End Courses, Batches and Subject tab switcher -->
@@ -98,58 +105,21 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <!-- Bollu -> End local search -->
 
-        <!-- Bollu -> Begin Collapsible Recent activity and error tabs -->
-        <section class="panel bg-none">
-            <div class="panel-group" id="accordion">
-                <div class="panel">
-                    <div class="panel-heading">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                            <span class="badge bg-primary pull-right">5</span>
-                            Latest activity in <?= $this->title ?>
-                        </a>
-                    </div>
-                    <div id="collapseOne" class="panel-collapse collapse in">
-                        <div class="panel-body">
-                            Your eyes can deceive you. Don't trust them. I don't know what you're talking about. I am a member of the Imperial Senate on a diplomatic mission to Alderaan-- I care. So, what do you think of her, Han? Look, I can take you as far as Anchorhead. You can get a transport there to Mos Eisley or wherever you're going.
-                        </div>
-                    </div>
-                </div>
-                <div class="panel">
-                    <div class="panel-heading">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                            <span class="badge bg-red pull-right">2</span>
-                            Errors + Warnings
-                        </a>
-                    </div>
-                    <div id="collapseTwo" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <blockquote>
-                                <p>You don’t need to see his identification … These aren’t the droids you’re looking for … He can go about his business … Move along.</p>
-                                <small>Obi-Wan Kenobi, Jedi Knight</small>
-                            </blockquote>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel">
-                    <div class="panel-heading">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-                            Know more about this section
-                        </a>
-                    </div>
-                    <div id="collapseThree" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <ul class="pl20">
-                                <li>Courses, Batches and their appropriate subjects can be declared and maintained here</li>
-                                <li>Students can be added to their respective batches</li>
-                                <li>Batches can be assigned to their associated teachers</li>
-                                <li><b>Please note:</b> You may not able to see all the available options due to your restricted access. Please contact Admin if you feel like you are missing something</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+        <!-- Bollu -> Know more section begins -->
+        <section class="panel">
+            <div class="panel-heading">
+                Know more about this section
+            </div>
+            <div class="panel-body">
+                <ul class="pl20">
+                    <li>Courses, Batches and their appropriate subjects can be declared and maintained here</li>
+                    <li>Students can be added to their respective batches</li>
+                    <li>Batches can be assigned to their associated teachers</li>
+                    <li><b>Please note:</b> You may not able to see all the available options due to your restricted access. Please contact Admin if you feel like you are missing something</li>
+                </ul>
             </div>
         </section>
-        <!-- Bollu -> End Collapsible Recent activity and error tabs -->
+        <!-- Bollu -> Know more section ends -->
     </div>
 </div>
 <!-- End View content -->

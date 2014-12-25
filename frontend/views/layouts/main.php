@@ -36,7 +36,7 @@ CoreAsset::register($this);
         <a href="<?= Yii::getAlias('@web') ?>" class="navbar-brand">
             <img src="<?= Yii::getAlias('@web') ?>/img/logo.png" alt="">
                     <span class="heading-font">
-                        Sublime
+                        Scintin
                     </span>
         </a>
         <!-- /logo -->
@@ -244,12 +244,24 @@ CoreAsset::register($this);
 
 
 </ul>
-<p class="nav-title">LABELS</p>
+<p class="nav-title">QUICK LINKS</p>
 <ul class="nav">
     <li>
         <a href="javascript:;">
             <i class="ti-control-record text-success"></i>
-            <span>Sample</span>
+            <span>New Admission</span>
+        </a>
+    </li>
+    <li>
+        <a href="javascript:;">
+            <i class="ti-control-record text-success"></i>
+            <span>Manage Batches</span>
+        </a>
+    </li>
+    <li>
+        <a href="javascript:;">
+            <i class="ti-control-record text-success"></i>
+            <span>Manage Roles</span>
         </a>
     </li>
 </ul>

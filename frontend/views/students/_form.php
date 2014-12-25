@@ -1,6 +1,6 @@
 <?php
 
-use yii\widgets\ActiveForm;
+use yii\bootstrap\ActiveForm;
 
 
 /* Date Picker asset has been added to support Date picking feature */
@@ -87,9 +87,13 @@ $this->registerAssetBundle('app\assets\FormWizardAsset');
                 <div class="step-pane" id="step2">
                     <div class="row">
                         <div class="col-md-12">
-                            <?= $form->field($model, 'gender')->textInput(['maxlength' => 255]) ?>
+                            <?= $form->field($model, 'gender')->dropDownList($model->genderOptions,[
+                                'prompt' => 'Choose One',
+                            ]) ?>
 
-                            <?= $form->field($model, 'marital_status')->textInput(['maxlength' => 255]) ?>
+                            <?= $form->field($model, 'marital_status')->dropDownList($model->maritalOptions,[
+                                'prompt' => 'Choose One',
+                            ]) ?>
 
                             <?= $form->field($model, 'blood_group')->textInput(['maxlength' => 255]) ?>
 
@@ -129,7 +133,7 @@ $this->registerAssetBundle('app\assets\FormWizardAsset');
                         <div class="col-md-12">
                             <?= $form->field($model, 'file')->fileInput() ?>
 
-                            <?= $form->field($model, 'issms_enabled')->textInput(['maxlength' => 255]) ?>
+                            <?= $form->field($model, 'issms_enabled')->inline()->radioList(['Yes' => 'Yes', 'No' => 'No']) ?>
 
                             <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
                         </div>

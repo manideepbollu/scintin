@@ -19,7 +19,6 @@ $this->params['breadcrumbs'][] = 'Update';
 
         <?= $this->render('_form', [
             'model' => $model,
-            'parentOptions' => $parentOptions,
             'listCourses' => $listCourses,
             'listBatches' => $listBatches,
         ]) ?>

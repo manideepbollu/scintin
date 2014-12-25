@@ -22,11 +22,7 @@ $this->registerJs('jQuery(function ($) {
         }
     });');
 ?>
-
-
-<div class="panel-heading">
-    <h2 class="no-m">User Management <b>Overview</b></h2>
-</div>
+<h2 class="ml5 mt10 mb15">User Management <b>Overview</b></h2>
 <div class="row">
     <div class="col-sm-3 col-xs-6 text-center icon-box mb25 mt25">
         <a href="javascript:;" class="big-icon-links">

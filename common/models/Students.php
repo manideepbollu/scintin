@@ -46,7 +46,7 @@ use yii\web\UploadedFile;
  * @property string $updated_at
  * @property integer $updated_by
  * @property integer $photo_file_size
- * @property file $file
+ * @property resource $file
  *
  * @property User $updatedBy
  * @property User $createdBy
@@ -97,7 +97,7 @@ class Students extends GeneralRecord
             [['student_category', 'nationality_id', 'country_id', 'photo_file_size', 'created_by', 'updated_by'], 'integer'],
             [['photo_element_data', 'description'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
-            [['first_name', 'country_id'], 'required'],
+            [['admission_id', 'first_name', 'last_name', 'date_of_birth', 'student_category', 'nationality_id', 'address_line1', 'city', 'phone1', 'gender'], 'required'],
             [['file'], 'file', 'extensions' => 'jpg, png', 'mimeTypes' => 'image/jpeg, image/png', 'maxSize' => 4000000],
             [['admission_id', 'roll_number', 'admission_date', 'first_name', 'middle_name', 'last_name', 'father_name', 'mother_name', 'date_of_birth', 'gender', 'marital_status', 'blood_group', 'birth_place', 'language', 'religion', 'address_line1', 'address_line2', 'city', 'state', 'phone1', 'phone2', 'email', 'issms_enabled', 'photo_file_name', 'photo_file_type', 'isactive'], 'string', 'max' => 255],
 
@@ -120,7 +120,7 @@ class Students extends GeneralRecord
             'last_name' => 'Last Name',
             'father_name' => 'Father Name',
             'mother_name' => 'Mother Name',
-            'date_of_birth' => 'Date Of Birth',
+            'date_of_birth' => 'Date of Birth',
             'gender' => 'Gender',
             'marital_status' => 'Marital Status',
             'blood_group' => 'Blood Group',
@@ -148,6 +148,61 @@ class Students extends GeneralRecord
             'updated_at' => 'Updated At',
             'updatedBy.username' => 'Updated By',
         ];
+    }
+
+    /**
+     * @return array
+     * - Returns an array of students in [id => first_name + last_name] pair.
+     * Results can be filtered by passing params in Array format.
+     * @param array $filter
+     * - This can be an array of columns with their desired values
+     * to filter while fetching the table for data
+     */
+    public static function getSpecificStudents($filter = [])
+    {
+        $students = null;
+
+        $multiArray =  Students::find()
+            ->asArray()
+            ->select(['id', 'admission_id', 'first_name', 'last_name'])
+            ->where($filter)
+            ->all();
+
+        foreach($multiArray as $singleArray)
+            $students[$singleArray['id']] = $singleArray['admission_id'] .' '. $singleArray['first_name'] .' '. $singleArray['last_name'];
+
+        return $students;
+    }
+
+    /**
+     * @return integer
+     * - Returns the number of records satisfy the given filter.
+     * @param array $filter
+     * - This can be an array of columns with their desired values
+     * to filter while fetching the table for data
+     */
+    public static function getSpecificCount($filter = [])
+    {
+        $students = self::getSpecificStudents($filter);
+        return count($students);
+    }
+
+    /**
+     * @return array
+     * available gender types
+     */
+    public function getGenderOptions()
+    {
+        return ['Male' => 'Male', 'Female' => 'Female'];
+    }
+
+    /**
+     * @return array
+     * available marital options
+     */
+    public function getMaritalOptions()
+    {
+        return ['Single' => 'Single', 'Married' => 'Married'];
     }
 
     /**

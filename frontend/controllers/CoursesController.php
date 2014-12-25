@@ -3,6 +3,8 @@
 namespace frontend\controllers;
 
 use common\models\Batches;
+use common\models\Students;
+use common\models\Subjects;
 use Yii;
 use common\models\Courses;
 use common\models\CoursesSearch;
@@ -63,8 +65,8 @@ class CoursesController extends Controller
         $counters = [
             'activeCourses' => Courses::getSpecificCount(['isactive' => 'Active']),
             'activeBatches' => Batches::getSpecificCount(),
-            'subjects' => 109,
-            'activeStudents' => 927,
+            'subjects' => Subjects::getSpecificCount(['isactive' => 'Active']),
+            'activeStudents' => Students::getSpecificCount(),
         ];
 
         return $this->render('overview', [

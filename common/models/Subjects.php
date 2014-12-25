@@ -235,4 +235,17 @@ class Subjects extends GeneralRecord
 
         return $subjects;
     }
+
+    /**
+     * @return integer
+     * - Returns the number of records satisfy the given filter.
+     * @param array $filter
+     * - This can be an array of columns with their desired values
+     * to filter while fetching the table for data
+     */
+    public static function getSpecificCount($filter = [])
+    {
+        $subjects = self::getSpecificSubjects($filter);
+        return count($subjects);
+    }
 }

@@ -24,7 +24,8 @@ encountered in Yii and Sublime integration are recorded in scintin.css
     border-color: #1582dc;
 }
 
-.big-icon-links:hover{
+.big-icon-links:hover,
+.big-icon-links:focus{
     color: #696969;
 }
 
