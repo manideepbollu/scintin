@@ -4,32 +4,48 @@ namespace common\models;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
+use yii\behaviors\BlameableBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
 /**
- * User model
+* This is the model class for table "user".
  *
  * @property integer $id
- * @property string $username
- * @property string $password_hash
- * @property string $password_reset_token
- * @property string $email
- * @property string $auth_key
- * @property integer $role
- * @property integer $status
- * @property integer $created_at
- * @property integer $updated_at
- * @property string $password write-only password
- *
+* @property string $username
+* @property string $auth_key
+* @property string $password_hash
+* @property string $password_reset_token
+* @property string $email
+* @property integer $role
+* @property integer $status
+* @property string $created_at
+* @property string $updated_at
+* @property string $sid
+* @property string $user_type
+* @property string $work_email
+* @property string $photo_file_name
+* @property string $photo_file_type
+* @property integer $photo_file_size
+* @property string $photo_element_data
+* @property integer $created_by
+* @property integer $updated_by
+*
  * @property Batches[] $batches
- * @property Courses[] $courses
- */
+* @property Courses[] $courses
+* @property ElectiveGroups[] $electiveGroups
+* @property Subjects[] $subjects
+*/
 class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
     const ROLE_USER = 10;
+
+    /**
+     * @var UploadedFile file attribute
+     */
+    public $file;
 
     /**
      * @inheritdoc
@@ -45,8 +61,34 @@ class User extends ActiveRecord implements IdentityInterface
     public function behaviors()
     {
         return [
-            TimestampBehavior::className(),
+            'timestamp' => [
+                'class' => TimestampBehavior::className(),
+                'value' => function(){return date('d/m/Y H:i:s');}, /* Ex: 01/01/2015 22:10:05 */
+            ],
+            BlameableBehavior::className(),
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function beforeSave($params)
+    {
+        $varl = false;
+        if ($this->file = UploadedFile::getInstance($this, 'file')){
+            if ($this->validate()) {
+                $this->photo_file_name = $this->file->name;
+                $this->photo_file_type = $this->file->type;
+                $this->photo_file_size = $this->file->size;
+                $this->photo_element_data = file_get_contents($this->file->tempName);
+            }
+            else{
+                Yii::$app->session->setFlash('danger', 'There was a <b>problem while uploading the photo</b>, please check the file and try again. (Please note: Uploading file should be less than 4MB in size');
+                return false;
+            }
+        }
+
+        return parent::beforeSave($params);
     }
 
     /**
@@ -55,6 +97,11 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
+            [['username'], 'required'],
+            [['role', 'status', 'photo_file_size', 'created_by', 'updated_by'], 'integer'],
+            [['username', 'password_hash', 'password_reset_token', 'email', 'sid', 'user_type', 'work_email', 'photo_file_name', 'photo_file_type'], 'string', 'max' => 255],
+            [['auth_key'], 'string', 'max' => 32],
+
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
 
