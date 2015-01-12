@@ -30,7 +30,7 @@ $this->registerAssetBundle('app\assets\FormWizardAsset');
                     <span class="badge bg-info">3</span>Miscellaneous
                 </li>
             </ul>
-            <div class="actions btn-group">
+            <div class="btn-group sc-wizard-btns">
                 <button class="btn btn-default btn-sm btn-prev mr20">
                     <i class="fa fa-angle-left"></i>&nbsp; Go Back
                 </button>

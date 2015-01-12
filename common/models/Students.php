@@ -46,6 +46,7 @@ use yii\web\UploadedFile;
  * @property string $updated_at
  * @property integer $updated_by
  * @property integer $photo_file_size
+ * @property string $signup_request_token
  * @property resource $file
  *
  * @property User $updatedBy
@@ -100,7 +101,6 @@ class Students extends GeneralRecord
             [['admission_id', 'first_name', 'last_name', 'date_of_birth', 'student_category', 'nationality_id', 'address_line1', 'city', 'phone1', 'gender'], 'required'],
             [['file'], 'file', 'extensions' => 'jpg, png', 'mimeTypes' => 'image/jpeg, image/png', 'maxSize' => 4000000],
             [['admission_id', 'roll_number', 'admission_date', 'first_name', 'middle_name', 'last_name', 'father_name', 'mother_name', 'date_of_birth', 'gender', 'marital_status', 'blood_group', 'birth_place', 'language', 'religion', 'address_line1', 'address_line2', 'city', 'state', 'phone1', 'phone2', 'email', 'issms_enabled', 'photo_file_name', 'photo_file_type', 'isactive'], 'string', 'max' => 255],
-
         ];
     }
 
@@ -148,6 +148,36 @@ class Students extends GeneralRecord
             'updated_at' => 'Updated At',
             'updatedBy.username' => 'Updated By',
         ];
+    }
+
+    /**
+     * Finds user by signup request token
+     *
+     * @param string $token signup request token
+     * @return null|static
+     */
+    public static function findBySignupRequestToken($token)
+    {
+        return static::findOne([
+            'signup_request_token' => $token,
+            'isactive' => 'Active',
+        ]);
+    }
+
+    /**
+     * Generates new sign up request token
+     */
+    public function generateSignupRequestToken()
+    {
+        $this->signup_request_token = Yii::$app->security->generateRandomString() . '_' . time();
+    }
+
+    /**
+     * Removes signup request token
+     */
+    public function removeSignupRequestToken()
+    {
+        $this->signup_request_token = null;
     }
 
     /**

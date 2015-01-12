@@ -2,6 +2,7 @@
 namespace frontend\controllers;
 
 use common\rbac\AuthorRule;
+use frontend\models\SignupRequestForm;
 use Yii;
 use common\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
@@ -33,7 +34,7 @@ class SiteController extends Controller
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['signup','login', 'request-password-reset', 'reset-password'],
+                        'actions' => ['signup','login', 'request-password-reset', 'reset-password', 'signup-request'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
@@ -117,11 +118,37 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
-    public function actionSignup()
+
+    public function actionSignupRequest()
     {
         $this->layout = 'login';
 
-        $model = new SignupForm();
+        $model = new SignupRequestForm();
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($model->sendEmail()) {
+                Yii::$app->getSession()->setFlash('success', 'Check your email for further instructions.');
+                return $this->goHome();
+            } else {
+                Yii::$app->getSession()->setFlash('error', 'Sorry, we are unable to process your signup request.');
+            }
+        }
+
+        return $this->render('signupRequest', [
+            'model' => $model,
+        ]);
+
+    }
+
+    public function actionSignup($token, $type)
+    {
+        $this->layout = 'login';
+
+        try {
+            $model = new SignupForm($token, $type);
+        } catch (InvalidParamException $e) {
+            throw new BadRequestHttpException($e->getMessage());
+        }
+
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
                 if (Yii::$app->getUser()->login($user)) {
@@ -156,6 +183,7 @@ class SiteController extends Controller
 
     public function actionResetPassword($token)
     {
+        $this->layout = 'login';
         try {
             $model = new ResetPasswordForm($token);
         } catch (InvalidParamException $e) {
