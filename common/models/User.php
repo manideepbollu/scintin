@@ -1,35 +1,56 @@
 <?php
 namespace common\models;
 
+use frontend\models\SignupRequestForm;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
+use yii\behaviors\BlameableBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
+use yii\web\UploadedFile;
 
 /**
- * User model
+* This is the model class for table "user".
  *
  * @property integer $id
- * @property string $username
- * @property string $password_hash
- * @property string $password_reset_token
- * @property string $email
- * @property string $auth_key
- * @property integer $role
- * @property integer $status
- * @property integer $created_at
- * @property integer $updated_at
- * @property string $password write-only password
- *
+* @property string $username
+* @property string $auth_key
+* @property string $password_hash
+* @property string $password_reset_token
+* @property string $email
+* @property integer $role
+* @property integer $status
+* @property string $created_at
+* @property string $updated_at
+* @property string $sid
+* @property string $user_type
+* @property string $work_email
+* @property string $photo_file_name
+* @property string $photo_file_type
+* @property integer $photo_file_size
+* @property string $photo_element_data
+* @property integer $created_by
+* @property integer $updated_by
+*
  * @property Batches[] $batches
- * @property Courses[] $courses
- */
+* @property Courses[] $courses
+* @property ElectiveGroups[] $electiveGroups
+* @property Subjects[] $subjects
+*/
 class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
-    const ROLE_USER = 10;
+    const ROLE_ADMIN = 10;
+    const ROLE_EMPLOYEE = 20;
+    const ROLE_STUDENT = 30;
+    const ROLE_GUARDIAN = 40;
+
+    /**
+     * @var UploadedFile file attribute
+     */
+    public $file;
 
     /**
      * @inheritdoc
@@ -45,8 +66,33 @@ class User extends ActiveRecord implements IdentityInterface
     public function behaviors()
     {
         return [
-            TimestampBehavior::className(),
+            'timestamp' => [
+                'class' => TimestampBehavior::className(),
+                'value' => function(){return date('d/m/Y H:i:s');}, /* Ex: 01/01/2015 22:10:05 */
+            ],
+            BlameableBehavior::className(),
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function beforeSave($params)
+    {
+        if ($this->file = UploadedFile::getInstance($this, 'file')){
+            if ($this->validate()) {
+                $this->photo_file_name = $this->file->name;
+                $this->photo_file_type = $this->file->type;
+                $this->photo_file_size = $this->file->size;
+                $this->photo_element_data = file_get_contents($this->file->tempName);
+            }
+            else{
+                Yii::$app->session->setFlash('danger', 'There was a <b>problem while uploading the photo</b>, please check the file and try again. (Please note: Uploading file should be less than 4MB in size');
+                return false;
+            }
+        }
+
+        return parent::beforeSave($params);
     }
 
     /**
@@ -55,11 +101,26 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
+            [['username'], 'required'],
+            [['role', 'status', 'photo_file_size', 'created_by', 'updated_by'], 'integer'],
+            [['username', 'password_hash', 'password_reset_token', 'email', 'sid', 'user_type', 'work_email', 'photo_file_name', 'photo_file_type'], 'string', 'max' => 255],
+            [['auth_key'], 'string', 'max' => 32],
+
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
 
-            ['role', 'default', 'value' => self::ROLE_USER],
-            ['role', 'in', 'range' => [self::ROLE_USER]],
+            ['role', 'default', 'value' => self::ROLE_STUDENT],
+            ['role', 'in', 'range' => [self::ROLE_ADMIN, self::ROLE_EMPLOYEE, self::ROLE_STUDENT, self::ROLE_GUARDIAN]],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels(){
+        return [
+            'role' => 'Type',
+            'sid' => 'SID',
         ];
     }
 
@@ -171,6 +232,28 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * Validates and sets the user types
+     * @param string $userType
+     */
+    public function setUserType($userType)
+    {
+        switch ($userType){
+            case self::ROLE_ADMIN:
+                $this->role = self::ROLE_ADMIN;
+                break;
+            case SignupRequestForm::EMPLOYEE:
+                $this->role = self::ROLE_EMPLOYEE;
+                break;
+            case SignupRequestForm::STUDENT:
+                $this->role = self::ROLE_STUDENT;
+                break;
+            case SignupRequestForm::GUARDIAN:
+                $this->role = self::ROLE_GUARDIAN;
+                break;
+        }
+    }
+
+    /**
      * Generates "remember me" authentication key
      */
     public function generateAuthKey()
@@ -193,12 +276,6 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
-
-    /**
-     * @param integer $id - user ID
-     * @return string - username of the user
-     * Converts ID to username
-     */
 
     /**
      * Begin relation based methods
@@ -236,4 +313,5 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->hasMany(Subjects::className(), ['updated_by' => 'id']);
     }
+
 }

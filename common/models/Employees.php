@@ -62,6 +62,7 @@ use Yii;
  * @property string $updated_at
  * @property integer $updated_by
  * @property integer $photo_file_size
+ * @property string $signup_request_token
  * @property file $file
  */
 class Employees extends GeneralRecord
@@ -89,7 +90,7 @@ class Employees extends GeneralRecord
             [['experience_details', 'photo_element_data', 'description'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
             [['file'], 'file', 'extensions' => 'jpg, png', 'mimeTypes' => 'image/jpeg, image/png',],
-            [['employee_id', 'joining_date', 'first_name', 'middle_name', 'last_name', 'job_title', 'qualification', 'father_name', 'mother_name', 'spouse_name', 'date_of_birth', 'gender', 'marital_status', 'blood_group', 'birth_place', 'language', 'religion', 'present_address_line1', 'present_address_line2', 'present_city', 'present_state', 'present_phone1', 'present_phone2', 'present_mobile', 'email', 'fax', 'permanent_address_line1', 'permanent_address_line2', 'permanent_city', 'permanent_state', 'permanent_phone1', 'permanent_phone2', 'photo_file_name', 'photo_file_type', 'isactive'], 'string', 'max' => 255]
+            [['employee_id', 'joining_date', 'first_name', 'middle_name', 'last_name', 'job_title', 'qualification', 'father_name', 'mother_name', 'spouse_name', 'date_of_birth', 'gender', 'marital_status', 'blood_group', 'birth_place', 'language', 'religion', 'present_address_line1', 'present_address_line2', 'present_city', 'present_state', 'present_phone1', 'present_phone2', 'present_mobile', 'email', 'fax', 'permanent_address_line1', 'permanent_address_line2', 'permanent_city', 'permanent_state', 'permanent_phone1', 'permanent_phone2', 'photo_file_name', 'photo_file_type', 'isactive'], 'string', 'max' => 255],
         ];
     }
 
@@ -156,4 +157,72 @@ class Employees extends GeneralRecord
             'updated_by' => 'Updated By',
         ];
     }
+
+    /**
+     * Finds user by signup request token
+     *
+     * @param string $token signup request token
+     * @return static|null
+     */
+    public static function findBySignupRequestToken($token)
+    {
+        return static::findOne([
+            'signup_request_token' => $token,
+            'isactive' => 'Active',
+        ]);
+    }
+
+    /**
+     * Generates new sign up request token
+     */
+    public function generateSignupRequestToken()
+    {
+        $this->signup_request_token = Yii::$app->security->generateRandomString() . '_' . time();
+    }
+
+    /**
+     * Removes signup request token
+     */
+    public function removeSignupRequestToken()
+    {
+        $this->signup_request_token = null;
+    }
+
+    /**
+     * @return array
+     * - Returns an array of employees in [id => first_name + last_name] pair.
+     * Results can be filtered by passing params in Array format.
+     * @param array $filter
+     * - This can be an array of columns with their desired values
+     * to filter while fetching the table for data
+     */
+    public static function getSpecificEmployees($filter = [])
+    {
+        $employees = null;
+
+        $multiArray =  Employees::find()
+            ->asArray()
+            ->select(['id', 'employee_id', 'first_name', 'last_name'])
+            ->where($filter)
+            ->all();
+
+        foreach($multiArray as $singleArray)
+            $employees[$singleArray['id']] = $singleArray['employee_id'] .' '. $singleArray['first_name'] .' '. $singleArray['last_name'];
+
+        return $employees;
+    }
+
+    /**
+     * @return integer
+     * - Returns the number of records satisfy the given filter.
+     * @param array $filter
+     * - This can be an array of columns with their desired values
+     * to filter while fetching the table for data
+     */
+    public static function getSpecificCount($filter = [])
+    {
+        $employees = self::getSpecificEmployees($filter);
+        return count($employees);
+    }
+
 }
