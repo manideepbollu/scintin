@@ -49,7 +49,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     // 'updated_at',
                     // 'updated_by',
 
-                    ['class' => 'yii\grid\ActionColumn'],
+                    [
+                        'class' => 'yii\grid\ActionColumn',
+                        'contentOptions' => [
+                            'class' => 'text-center',
+                        ],
+                    ],
                 ],
             ]); ?>
         </div>
