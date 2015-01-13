@@ -61,14 +61,25 @@ class AuthItemController extends Controller
     public function actionCreate()
     {
         $model = new AuthItem();
+        $rbac = Yii::$app->authManager;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->name]);
-        } else {
+        if(Yii::$app->request->post())
+        {
+            $authItem = Yii::$app->request->post('AuthItem');
+            if(!($role = $rbac->getRole($authItem['name']))){
+                $role = $rbac->createRole($authItem['name']);
+                $rbac->add($role);
+                return $this->redirect(['view', 'id' => $authItem['name']]);
+            }else {
+                Yii::$app->session->setFlash('danger', 'A user role already exists with the same name.');
+                return $this->redirect(['index']);
+            }
+        }else {
             return $this->render('create', [
                 'model' => $model,
             ]);
         }
+
     }
 
     /**
@@ -98,7 +109,9 @@ class AuthItemController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $rbac = Yii::$app->authManager;
+        $role = $rbac->getRole($id);
+        $rbac->remove($role);
 
         return $this->redirect(['index']);
     }

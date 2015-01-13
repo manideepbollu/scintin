@@ -10,12 +10,16 @@ $this->title = 'Create Auth Item';
 $this->params['breadcrumbs'][] = ['label' => 'Auth Items', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="auth-item-create">
-
-    <h1><?= Html::encode($this->title) ?></h1>
+<section class="panel">
+    <header class="panel-heading">
+        <h2 class="no-m"><?= Html::encode($this->title) ?></h2>
+    </header>
+    <div class="panel-body">
 
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>
 
-</div>
+    </div>
+</section>
+
