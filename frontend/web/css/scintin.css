@@ -48,7 +48,7 @@ div.required label:after {
 .sc-wizard-btns{
     right: 0;
     float: right;
-    padding: 6px 15px;
+    padding: 5px 15px;
     vertical-align: middle;
     line-height: 37px;
     a {
