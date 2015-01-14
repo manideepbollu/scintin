@@ -124,7 +124,7 @@ class Batches extends GeneralRecord
      */
     public static function getSpecificCount($filter = [], $parentFilters = [])
     {
-        $batches = self::getSpecificBatches($filter = [], $parentFilters = []);
+        $batches = self::getSpecificBatches($filter, $parentFilters);
         return count($batches);
     }
 

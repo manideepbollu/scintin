@@ -11,6 +11,15 @@ $this->title = 'User Roles';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <!-- New version -->
+<!-- Begin flash messages if any -->
+<?php
+foreach (Yii::$app->session->getAllFlashes() as $key => $message) {
+    echo '<div class="alert alert-'. $key .'">' . $message . '</div>';
+}
+?>
+<!-- End flash messages -->
+
+<!-- Begin view content -->
 <section class="panel panel-default">
     <div class="panel-heading">
         <h1 class="no-m"><?= Html::encode($this->title) ?></h1>

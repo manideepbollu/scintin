@@ -64,7 +64,7 @@ class CoursesController extends Controller
     {
         $counters = [
             'activeCourses' => Courses::getSpecificCount(['isactive' => 'Active']),
-            'activeBatches' => Batches::getSpecificCount(),
+            'activeBatches' => Batches::getSpecificCount([], ['isactive' => 'Active']),
             'subjects' => Subjects::getSpecificCount(['isactive' => 'Active']),
             'activeStudents' => Students::getSpecificCount(),
         ];
