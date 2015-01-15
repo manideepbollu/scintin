@@ -118,4 +118,13 @@ class EmployeesController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    public function actionLoadImage($id)
+    {
+        $model = $this->findModel($id);
+
+        header("content-type: " + $model->photo_file_type);
+        echo $model->photo_element_data;
+
+    }
 }

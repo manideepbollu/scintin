@@ -63,6 +63,7 @@ use Yii;
  * @property integer $updated_by
  * @property integer $photo_file_size
  * @property file $file
+ * @property boolean $copyPresentAddress
  */
 class Employees extends GeneralRecord
 {
@@ -70,6 +71,12 @@ class Employees extends GeneralRecord
      * @var UploadedFile file attribute
      */
     public $file;
+
+    /**
+     * @var copy present
+     */
+
+    public $copyPresentAddress;
 
     /**
      * @inheritdoc
@@ -82,6 +89,29 @@ class Employees extends GeneralRecord
     /**
      * @inheritdoc
      */
+    public function beforeSave($params)
+    {
+        $varl = false;
+        if ($this->file = UploadedFile::getInstance($this, 'file')){
+            if ($this->validate()) {
+                $this->photo_file_name = $this->file->name;
+                $this->photo_file_type = $this->file->type;
+                $this->photo_file_size = $this->file->size;
+                $this->photo_element_data = file_get_contents($this->file->tempName);
+            }
+            else{
+                Yii::$app->session->setFlash('danger', 'There was a <b>problem while uploading the photo</b>, please check the file and try again. (Please note: Uploading file should be less than 4MB in size');
+                return false;
+            }
+        }
+
+        return parent::beforeSave($params);
+    }
+
+
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
@@ -89,7 +119,10 @@ class Employees extends GeneralRecord
             [['experience_details', 'photo_element_data', 'description'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
             [['file'], 'file', 'extensions' => 'jpg, png', 'mimeTypes' => 'image/jpeg, image/png',],
-            [['employee_id', 'joining_date', 'first_name', 'middle_name', 'last_name', 'job_title', 'qualification', 'father_name', 'mother_name', 'spouse_name', 'date_of_birth', 'gender', 'marital_status', 'blood_group', 'birth_place', 'language', 'religion', 'present_address_line1', 'present_address_line2', 'present_city', 'present_state', 'present_phone1', 'present_phone2', 'present_mobile', 'email', 'fax', 'permanent_address_line1', 'permanent_address_line2', 'permanent_city', 'permanent_state', 'permanent_phone1', 'permanent_phone2', 'photo_file_name', 'photo_file_type', 'isactive'], 'string', 'max' => 255]
+            [['employee_id', 'joining_date', 'first_name', 'middle_name', 'last_name', 'job_title', 'qualification', 'father_name', 'mother_name', 'spouse_name', 'date_of_birth', 'gender', 'marital_status', 'blood_group', 'birth_place', 'language', 'religion', 'present_address_line1', 'present_address_line2', 'present_city', 'present_state', 'present_phone1', 'present_phone2', 'present_mobile', 'email', 'fax', 'permanent_address_line1', 'permanent_address_line2', 'permanent_city', 'permanent_state', 'permanent_phone1', 'permanent_phone2', 'photo_file_name', 'photo_file_type', 'isactive'], 'string', 'max' => 255],
+            [['employee_id','first_name','last_name','job_title','employee_category','employee_position_id','employee_department_id','reporting_manager_id','employee_grade_id','joining_date','qualification','experience_years','experience_months','father_name','date_of_birth','gender','nationality_id','present_address_line1','present_city', 'present_state','present_country_id','present_phone1','email'],'required']
+
+
         ];
     }
 
@@ -137,6 +170,7 @@ class Employees extends GeneralRecord
             'present_mobile' => 'Present Mobile',
             'email' => 'Email',
             'fax' => 'Fax',
+            'copyPresentAddress' => 'Same as Present Address',
             'permanent_address_line1' => 'Permanent Address Line1',
             'permanent_address_line2' => 'Permanent Address Line2',
             'permanent_city' => 'Permanent City',
@@ -156,4 +190,78 @@ class Employees extends GeneralRecord
             'updated_by' => 'Updated By',
         ];
     }
+
+    /**
+     * @return array
+     * - Returns an array of employees in [id => first_name + last_name] pair.
+     * Results can be filtered by passing params in Array format.
+     * @param array $filter
+     * - This can be an array of columns with their desired values
+     * to filter while fetching the table for data
+     */
+    public static function getSpecificEmployees($filter = [])
+    {
+        $employees = null;
+
+        $multiArray =  Employees::find()
+            ->asArray()
+            ->select(['id', 'employee_id', 'first_name', 'last_name'])
+            ->where($filter)
+            ->all();
+
+        foreach($multiArray as $singleArray)
+            $employees[$singleArray['id']] = $singleArray['employee_id'] .' '. $singleArray['first_name'] .' '. $singleArray['last_name'];
+
+        return $employees;
+    }
+
+    /**
+     * @return integer
+     * - Returns the number of records satisfy the given filter.
+     * @param array $filter
+     * - This can be an array of columns with their desired values
+     * to filter while fetching the table for data
+     */
+    public static function getSpecificCount($filter = [])
+    {
+        $employees = self::getSpecificStudents($filter);
+        return count($employees);
+    }
+
+
+    /**
+     * @return array
+     * available gender types
+     */
+    public function getGenderOptions()
+    {
+        return ['Male' => 'Male', 'Female' => 'Female'];
+    }
+
+    /**
+     * @return array
+     * available marital options
+     */
+    public function getMaritalOptions()
+    {
+        return ['Single' => 'Single', 'Married' => 'Married'];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUpdatedBy()
+    {
+        return $this->hasOne(User::className(), ['id' => 'updated_by']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCreatedBy()
+    {
+        return $this->hasOne(User::className(), ['id' => 'created_by']);
+    }
 }
+
+
