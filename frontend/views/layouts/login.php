@@ -31,7 +31,15 @@ CoreAsset::register($this);
 
     <div class="cover"></div>
 
-    <div class="overlay bg-primary"></div>
+    <div class="overlay bg-primary">
+        <!-- Begin flash messages if any -->
+        <?php
+        foreach (Yii::$app->session->getAllFlashes() as $key => $message) {
+            echo '<div class="alert alert-'. $key .' text-center">' . $message . '</div>';
+        }
+        ?>
+        <!-- End flash messages -->
+    </div>
 
     <div class="center-wrapper">
         <div class="center-content">
@@ -40,7 +48,7 @@ CoreAsset::register($this);
                     <section class="panel bg-white no-b">
                         <ul class="switcher-dash-action">
                             <li class="<?= $this->params['login'] ?>"><a href="<?= Yii::$app->urlManager->createUrl('site/login') ?>" class="selected">Sign in</a></li>
-                            <li class="<?= $this->params['signup'] ?>"><a href="<?= Yii::$app->urlManager->createUrl('site/signup') ?>" class="">New account</a></li>
+                            <li class="<?= $this->params['signup'] ?>"><a href="<?= Yii::$app->urlManager->createUrl('site/signup-request') ?>" class="">New account</a></li>
                         </ul>
 
                         <!-- View content is being passed inside the below div -->

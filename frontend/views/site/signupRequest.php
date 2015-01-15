@@ -6,7 +6,7 @@ use yii\bootstrap\ActiveForm;
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model \frontend\models\SignupForm */
 
-$this->title = 'Signup';
+$this->title = 'Signup Request';
 /* @var $this->params['login', 'signup'] - Manually introduced variables to toggle "Active class" between
  * login and Signup pages at layout.*/
 $this->params = [
@@ -23,28 +23,20 @@ $this->params = [
     ],
 ]); ?>
 
-<?= $form->field($model, 'username', [
+<?= $form->field($model, 'userType', [
     'inputOptions' => [
-        'placeholder' => 'Choose a username',
+        'class' => 'form-control input-lg mb25 mb25-scintin',
+    ],
+])->dropDownList($model->userTypeOptions); ?>
+
+<?= $form->field($model, 'sid', [
+    'inputOptions' => [
+        'placeholder' => 'Please enter your SID (Admission ID / Employee ID)',
         'class' => 'form-control input-lg mb25 mb25-scintin',
     ],
 ]) ?>
 
-<?= $form->field($model, 'password', [
-    'inputOptions' => [
-        'placeholder' => 'Choose a Password',
-        'class' => 'form-control input-lg mb25 mb25-scintin',
-    ],
-])->passwordInput() ?>
-
-<?= $form->field($model, 'password_repeat', [
-    'inputOptions' => [
-        'placeholder' => 'Repeat your Password',
-        'class' => 'form-control input-lg mb25 mb25-scintin',
-    ],
-])->passwordInput() ?>
-
-<?= Html::submitButton('Login', [
+<?= Html::submitButton('Submit', [
     'class' => 'btn btn-primary btn-lg btn-block',
     'name' => 'login-button',
     'type' => 'submit',

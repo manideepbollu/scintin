@@ -62,6 +62,7 @@ use Yii;
  * @property string $updated_at
  * @property integer $updated_by
  * @property integer $photo_file_size
+ * @property string $signup_request_token
  * @property file $file
  * @property boolean $copyPresentAddress
  */
@@ -121,8 +122,6 @@ class Employees extends GeneralRecord
             [['file'], 'file', 'extensions' => 'jpg, png', 'mimeTypes' => 'image/jpeg, image/png',],
             [['employee_id', 'joining_date', 'first_name', 'middle_name', 'last_name', 'job_title', 'qualification', 'father_name', 'mother_name', 'spouse_name', 'date_of_birth', 'gender', 'marital_status', 'blood_group', 'birth_place', 'language', 'religion', 'present_address_line1', 'present_address_line2', 'present_city', 'present_state', 'present_phone1', 'present_phone2', 'present_mobile', 'email', 'fax', 'permanent_address_line1', 'permanent_address_line2', 'permanent_city', 'permanent_state', 'permanent_phone1', 'permanent_phone2', 'photo_file_name', 'photo_file_type', 'isactive'], 'string', 'max' => 255],
             [['employee_id','first_name','last_name','job_title','employee_category','employee_position_id','employee_department_id','reporting_manager_id','employee_grade_id','joining_date','qualification','experience_years','experience_months','father_name','date_of_birth','gender','nationality_id','present_address_line1','present_city', 'present_state','present_country_id','present_phone1','email'],'required']
-
-
         ];
     }
 
@@ -192,6 +191,39 @@ class Employees extends GeneralRecord
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Finds user by signup request token
+     *
+     * @param string $token signup request token
+     * @return static|null
+     */
+    public static function findBySignupRequestToken($token)
+    {
+        return static::findOne([
+            'signup_request_token' => $token,
+            'isactive' => 'Active',
+        ]);
+    }
+
+    /**
+     * Generates new sign up request token
+     */
+    public function generateSignupRequestToken()
+    {
+        $this->signup_request_token = Yii::$app->security->generateRandomString() . '_' . time();
+    }
+
+    /**
+     * Removes signup request token
+     */
+    public function removeSignupRequestToken()
+    {
+        $this->signup_request_token = null;
+    }
+
+    /**
+>>>>>>> 788e0342064bf5cfa637ba88c6aafea21910adf1
      * @return array
      * - Returns an array of employees in [id => first_name + last_name] pair.
      * Results can be filtered by passing params in Array format.

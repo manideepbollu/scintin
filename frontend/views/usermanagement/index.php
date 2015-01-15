@@ -43,7 +43,7 @@ $this->registerJs('jQuery(function ($) {
         </a>
     </div>
     <div class="col-sm-3 col-xs-6 text-center icon-box mb25 mt25">
-        <a href="javascript:;" class="big-icon-links">
+        <a href="<?= Yii::$app->urlManager->createUrl('auth-item/index') ?>" class="big-icon-links">
             <i class="flaticon-folder240 flx4"></i>
             <div>Manage Roles</div>
         </a>
