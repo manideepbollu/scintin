@@ -2,11 +2,12 @@
 
 use yii\helpers\Html;
 
+$this->registerAssetBundle('app\assets\UserManagementAsset');
 
 /* @var $this yii\web\View */
 /* @var $model common\models\AuthItem */
 
-$this->title = 'Create Auth Item';
+$this->title = 'Create New Role';
 $this->params['breadcrumbs'][] = ['label' => 'Auth Items', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -22,4 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     </div>
 </section>
+
+<?= $this->render('_permissiontable') ?>
+
 

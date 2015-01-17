@@ -1,19 +1,29 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: alwaysbollu
+ * Date: 14/01/15
+ * Time: 2:23 PM
+ */
+
+use yii\helpers\Html;
 
 $this->registerAssetBundle('app\assets\UserManagementAsset');
 
-$this->title = 'Role Management';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<!-- Begin - Role allocation table -->
+<!-- Begin - Permission allocation table -->
 <div class="row">
 <div class="col-lg-12">
 <section class="panel no-b">
 <div class="panel-heading no-b">
-    <h5>Basic <b>Table</b></h5>
+    <div class="col-md-4 pull-right">
+        <p>
+            <?= Html::a('+ Copy from an existing role', 'javascript:;', ['class' => 'btn btn-default pull-right']) ?>
+        </p>
+    </div>
+    <h4>Permission <b>Table</b></h4>
 </div>
-
 <div class="panel-body" style="overflow: hidden">
 <form>
 <div class="table-responsive">
@@ -291,135 +301,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </td>
 </tr>
 <!-- |- |- End of Courses children -->
-<tr class="academics-child" id="attendance" hidden="hidden">
-    <td>
-        <span class="mr20"></span>
-        <label class="control-label">Attendance</label>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-create" checked>
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-view">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-view-own">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-update">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-update-own">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-delete">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-delete-own">
-        </div>
-    </td>
-</tr>
-<!-- Academics begins -->
-<!-- Transport begins -->
-<!-- Transport main Parent -->
-<tr id="transport" data-fill="js-determined">
-    <td>
-        <a class="treehead mr5 fa fa-caret-right" href="javascript:;"></a>
-        <label class="control-label">Transport</label>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-create">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-view">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-view-own">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-update">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-update-own">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-delete">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-delete-own">
-        </div>
-    </td>
-</tr>
-<!-- |- Transport children -->
-<tr class="transport-child" hidden="hidden">
-    <td>
-        <span class="mr20"></span>
-        <label class="control-label">Vehicles</label>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-create">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-view">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-view-own">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-update">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-update-own">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-delete">
-        </div>
-    </td>
-    <td class="text-center">
-        <div class="icheck">
-            <input type="checkbox" class="checkbox-delete-own">
-        </div>
-    </td>
-</tr>
-<!-- End of Transport children -->
-<!-- Transport ends -->
+<!-- Academics ends -->
 </tbody>
 </table>
 </div>
@@ -428,4 +310,4 @@ $this->params['breadcrumbs'][] = $this->title;
 </section>
 </div>
 </div>
-<!-- Ends - Role allocation table -->
+<!-- Ends - Permission allocation table -->
