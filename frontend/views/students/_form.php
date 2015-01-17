@@ -27,7 +27,7 @@ $this->registerAssetBundle('app\assets\FormWizardAsset');
                     <span class="badge bg-info">3</span>Contact Details
                 </li>
                 <li data-target="#step4">
-                    <span class="badge bg-info">3</span>Miscellaneous
+                    <span class="badge bg-info">4</span>Miscellaneous
                 </li>
             </ul>
             <div class="btn-group sc-wizard-btns">
