@@ -29,6 +29,7 @@ $(document).ready(function(){
 
         if($(this).parent().hasClass('checked')){
             $(childClass).find(inputClassName).parent().addClass('checked');
+            $(childClass).find(inputClassName).prop('checked', true);
 
             var classes = $(this).parent().parent().parent().parent().attr('class').split(" ");
             var numberClasses = classes.length - 1;
@@ -43,14 +44,17 @@ $(document).ready(function(){
                 console.log(flag);
                 if(flag != 0)
                     $('#' + classes[numberClasses].replace('-child', '')).find(inputClassName).parent().addClass('indeterminate');
-                else
+                else{
                     $('#' + classes[numberClasses].replace('-child', '')).find(inputClassName).parent().removeClass('indeterminate').addClass('checked');
+                    $('#' + classes[numberClasses].replace('-child', '')).find(inputClassName).prop('checked', true);
+                }
 
                 numberClasses--;
             }
         }
         else {
             $(childClass).find(inputClassName).parent().removeClass('checked');
+            $(childClass).find(inputClassName).prop('checked', false);
 
             var classes = $(this).parent().parent().parent().parent().attr('class').split(" ");
             var numberClasses = classes.length - 1;
@@ -65,8 +69,10 @@ $(document).ready(function(){
                 console.log(flag);
                 if(flag != 0)
                     $('#' + classes[numberClasses].replace('-child', '')).find(inputClassName).parent().addClass('indeterminate');
-                else
+                else{
                     $('#' + classes[numberClasses].replace('-child', '')).find(inputClassName).parent().removeClass('indeterminate').removeClass('checked');
+                    $('#' + classes[numberClasses].replace('-child', '')).find(inputClassName).prop('checked', false);
+                }
 
                 numberClasses--;
             }

@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "employees".
@@ -182,7 +183,7 @@ class Employees extends GeneralRecord
             'photo_element_data' => 'Photo Element Data',
             'file' => 'Photo',
             'description' => 'Description',
-            'isactive' => 'Isactive',
+            'isactive' => 'Status',
             'created_at' => 'Created At',
             'created_by' => 'Created By',
             'updated_at' => 'Updated At',

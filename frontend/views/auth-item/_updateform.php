@@ -10,6 +10,8 @@ $this->registerAssetBundle('app\assets\UserManagementAsset');
 /* @var $form yii\widgets\ActiveForm */
 
 $permissionElements = ['create', 'view', 'view-own', 'update', 'update-own', 'delete', 'delete-own'];
+$rbac = Yii::$app->authManager;
+$role = $rbac->getRole($model->name);
 ?>
 
 <?php $form = ActiveForm::begin([
@@ -22,7 +24,10 @@ $permissionElements = ['create', 'view', 'view-own', 'update', 'update-own', 'de
     ],
 ]); ?>
 
-<?= $form->field($model, 'name')->textInput(['maxlength' => 64]) ?>
+<?= $form->field($model, 'name')->textInput([
+    'maxlength' => 64,
+    'disabled' => 'true',
+]) ?>
 
 <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
@@ -104,11 +109,19 @@ $permissionElements = ['create', 'view', 'view-own', 'update', 'update-own', 'de
     </td>
     <?php
     foreach($permissionElements as $permissionElement){
-        echo '<td class="text-center">
+        if($rbac->hasChild($role,$rbac->getPermission($permissionElement.'-course')))
+            echo '<td class="text-center">
+                <div class="icheck">
+                    <input type="checkbox" name="'. $permissionElement .'-course" class="checkbox-'. $permissionElement .'" checked>
+                </div>
+            </td>';
+        else
+            echo '<td class="text-center">
                 <div class="icheck">
                     <input type="checkbox" name="'. $permissionElement .'-course" class="checkbox-'. $permissionElement .'">
                 </div>
             </td>';
+
     }
     ?>
 </tr>

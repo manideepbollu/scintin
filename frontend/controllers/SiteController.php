@@ -305,4 +305,66 @@ class SiteController extends Controller
 
 
     }
+
+    /**
+     * Temporary Method to implement AdHoc RBAC
+     */
+    public function actionMiniRbac()
+    {
+        $rbac = Yii::$app->authManager;
+
+        if(!($createCourse = $rbac->getPermission('create-course')))
+        {
+            $createCourse = $rbac->createPermission('create-course');
+            $createCourse->description = 'Access to create courses';
+            $rbac->add($createCourse);
+        }
+
+        if(!($viewCourse = $rbac->getPermission('view-course')))
+        {
+            $viewCourse = $rbac->createPermission('view-course');
+            $viewCourse->description = 'Access to view courses';
+            $rbac->add($viewCourse);
+        }
+
+
+        if(!($viewOwnCourse = $rbac->getPermission('view-own-course')))
+        {
+            $viewOwnCourse = $rbac->createPermission('view-own-course');
+            $viewOwnCourse->description = 'Access to view own courses';
+            $rbac->add($viewOwnCourse);
+        }
+
+
+        if(!($updateCourse = $rbac->getPermission('update-course')))
+        {
+            $updateCourse = $rbac->createPermission('update-course');
+            $updateCourse->description = 'Access to update course';
+            $rbac->add($updateCourse);
+        }
+
+
+        if(!($updateOwnCourse = $rbac->getPermission('update-own-course')))
+        {
+            $updateOwnCourse = $rbac->createPermission('update-own-course');
+            $updateOwnCourse->description = 'Access to update own courses';
+            $rbac->add($updateOwnCourse);
+        }
+
+
+        if(!($deleteCourse = $rbac->getPermission('delete-course')))
+        {
+            $deleteCourse = $rbac->createPermission('delete-course');
+            $deleteCourse->description = 'Access to delete own courses';
+            $rbac->add($deleteCourse);
+        }
+
+
+        if(!($deleteOwnCourse = $rbac->getPermission('delete-own-course')))
+        {
+            $deleteOwnCourse = $rbac->createPermission('delete-own-course');
+            $deleteOwnCourse->description = 'Access to delete own courses';
+            $rbac->add($deleteOwnCourse);
+        }
+    }
 }

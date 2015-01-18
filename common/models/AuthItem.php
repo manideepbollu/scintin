@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "auth_item".
@@ -19,8 +20,9 @@ use Yii;
  * @property AuthRule $ruleName
  * @property AuthItemChild[] $authItemChildren
  */
-class AuthItem extends GeneralRecord
+class AuthItem extends ActiveRecord
 {
+
     /**
      * @inheritdoc
      */
@@ -81,4 +83,39 @@ class AuthItem extends GeneralRecord
     {
         return $this->hasMany(AuthItemChild::className(), ['child' => 'name']);
     }
+
+    /**
+     * Sets the appropriate permissions for a role as per the inputs during create / update role.
+     * @param array|mixed $postParams
+     * @return boolean
+     */
+    public function setRolePermissions($postParams)
+    {
+        if($postParams){
+            $totalPermissions = self::getAllPermissions();
+            $rbac = Yii::$app->authManager;
+
+            foreach($totalPermissions as $permission){
+                $localPermission = $rbac->getPermission($permission);
+                if(isset($postParams[$localPermission->name])){
+                    if(!$rbac->hasChild($this, $localPermission))
+                        $rbac->addChild($this, $localPermission);
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * @return array - Returns an array of permissions registered in the application
+     */
+    public static function getAllPermissions()
+    {
+        return AuthItem::find()
+            ->asArray()
+            ->select(['name'])
+            ->where(['type' => 2])
+            ->all();
+    }
+
 }

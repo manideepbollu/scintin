@@ -10,12 +10,15 @@ $this->params['breadcrumbs'][] = ['label' => 'Auth Items', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->name]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
-<div class="auth-item-update">
+<section class="panel">
+    <header class="panel-heading">
+        <h2 class="no-m"><?= Html::encode($this->title) ?></h2>
+    </header>
+    <div class="panel-body">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+        <?= $this->render('_updateform', [
+            'model' => $model,
+        ]) ?>
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
-
-</div>
+    </div>
+</section>

@@ -68,8 +68,16 @@ class AuthItemController extends Controller
             $authItem = Yii::$app->request->post('AuthItem');
             if(!($role = $rbac->getRole($authItem['name']))){
                 $role = $rbac->createRole($authItem['name']);
+                $role->description = $authItem['description'];
                 $rbac->add($role);
-                return $this->redirect(['view', 'id' => $authItem['name']]);
+                $authItemObject = AuthItem::findOne($role->name);
+                if($authItemObject->setRolePermissions(Yii::$app->request->post())){
+                    return $this->redirect(['view', 'id' => $authItem['name']]);
+                }else{
+                    $rbac->remove($role);
+                    Yii::$app->session->setFlash('danger', 'There seems to be a problem with Permission assignment. Please contact Scintin for more assistance.');
+                    return $this->redirect(['index']);
+                }
             }else {
                 Yii::$app->session->setFlash('danger', 'A user role already exists with the same name.');
                 return $this->redirect(['index']);
@@ -91,10 +99,27 @@ class AuthItemController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $rbac = Yii::$app->authManager;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->name]);
-        } else {
+        if(Yii::$app->request->post())
+        {
+            $authItem = Yii::$app->request->post('AuthItem');
+            if($role = $rbac->getRole($id)){
+                $role->description = $authItem['description'];
+                $rbac->update($id, $role);
+                $authItemObject = AuthItem::findOne($role->name);
+                if($authItemObject->setRolePermissions(Yii::$app->request->post())){
+                    return $this->redirect(['view', 'id' => $id]);
+                }else{
+                    $rbac->remove($role);
+                    Yii::$app->session->setFlash('danger', 'There seems to be a problem with Permission assignment. Please contact Scintin for more assistance.');
+                    return $this->redirect(['index']);
+                }
+            }else {
+                Yii::$app->session->setFlash('danger', 'Role seems to be invalid. Please check your Role Management or contact Scintin');
+                return $this->redirect(['index']);
+            }
+        }else {
             return $this->render('update', [
                 'model' => $model,
             ]);

@@ -24,6 +24,4 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 </section>
 
-<?= $this->render('_permissiontable') ?>
-
 

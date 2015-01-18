@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="panel-body">
 
-        <p><?= Html::a('Create Employees', ['create'], ['class' => 'btn btn-success']) ?></p>
+        <p><?= Html::a('Add an Employee', ['create'], ['class' => 'btn btn-success']) ?></p>
 
         <div class="table-responsive">
             <?= GridView::widget([
@@ -30,12 +30,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 'id',
                 'employee_id',
-                'joining_date',
-                'employee_category',
                 'first_name',
-                // 'middle_name',
-                // 'last_name',
+                'last_name',
+                'joining_date',
+                // 'employee_category',
                 'job_title',
+                // 'middle_name',
                 // 'employee_position_id',
                 // 'employee_department_id',
                 // 'reporting_manager_id',
@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 // 'mother_name',
                 // 'spouse_name',
                 // 'date_of_birth',
-                // 'gender',
+                'gender',
                 // 'marital_status',
                 // 'children_count',
                 // 'blood_group',
@@ -77,7 +77,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 // 'photo_file_type',
                 // 'photo_element_data',
                 // 'description:ntext',
-                // 'isactive',
+                'isactive',
                 // 'created_at',
                 // 'created_by',
                 // 'updated_at',
