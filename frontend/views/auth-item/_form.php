@@ -9,7 +9,6 @@ $this->registerAssetBundle('app\assets\UserManagementAsset');
 /* @var $model common\models\AuthItem */
 /* @var $form yii\widgets\ActiveForm */
 
-$permissionElements = ['create', 'view', 'view-own', 'update', 'update-own', 'delete', 'delete-own'];
 ?>
 
 <?php $form = ActiveForm::begin([
@@ -30,13 +29,8 @@ $permissionElements = ['create', 'view', 'view-own', 'update', 'update-own', 'de
 <div class="row">
 <div class="col-lg-12">
 <section class="panel no-b">
-<div class="panel-heading no-b">
-    <div class="col-md-4 pull-right">
-        <p>
-            <?= Html::a('+ Copy from an existing role', 'javascript:;', ['class' => 'btn btn-default pull-right']) ?>
-        </p>
-    </div>
-    <h4>Permission <b>Table</b></h4>
+<div class="panel-heading">
+    <h4 class="mb0">Permission <b>Assignment</b></h4>
 </div>
 <div class="panel-body" style="overflow: hidden">
 <div class="table-responsive">
@@ -70,7 +64,7 @@ $permissionElements = ['create', 'view', 'view-own', 'update', 'update-own', 'de
         <label class="control-label">Academics</label>
     </td>
     <?php
-    foreach($permissionElements as $permissionElement){
+    foreach($model->permissionElements as $permissionElement){
         echo '<td class="text-center">
                 <div class="icheck">
                     <input type="checkbox" class="checkbox-'. $permissionElement .'">
@@ -87,7 +81,7 @@ $permissionElements = ['create', 'view', 'view-own', 'update', 'update-own', 'de
         <label class="control-label">Courses Overview</label>
     </td>
     <?php
-    foreach($permissionElements as $permissionElement){
+    foreach($model->permissionElements as $permissionElement){
         echo '<td class="text-center">
                 <div class="icheck">
                     <input type="checkbox" class="checkbox-'. $permissionElement .'">
@@ -103,7 +97,7 @@ $permissionElements = ['create', 'view', 'view-own', 'update', 'update-own', 'de
         <label class="control-label">Courses</label>
     </td>
     <?php
-    foreach($permissionElements as $permissionElement){
+    foreach($model->permissionElements as $permissionElement){
         echo '<td class="text-center">
                 <div class="icheck">
                     <input type="checkbox" name="'. $permissionElement .'-course" class="checkbox-'. $permissionElement .'">
@@ -118,7 +112,7 @@ $permissionElements = ['create', 'view', 'view-own', 'update', 'update-own', 'de
         <label class="control-label">Batches</label>
     </td>
     <?php
-    foreach($permissionElements as $permissionElement){
+    foreach($model->permissionElements as $permissionElement){
         echo '<td class="text-center">
                 <div class="icheck">
                     <input type="checkbox" name="'. $permissionElement .'-batch" class="checkbox-'. $permissionElement .'">
@@ -133,7 +127,7 @@ $permissionElements = ['create', 'view', 'view-own', 'update', 'update-own', 'de
         <label class="control-label">Subjects</label>
     </td>
     <?php
-    foreach($permissionElements as $permissionElement){
+    foreach($model->permissionElements as $permissionElement){
         echo '<td class="text-center">
                 <div class="icheck">
                     <input type="checkbox" name="'. $permissionElement .'-subject" class="checkbox-'. $permissionElement .'">
@@ -148,7 +142,7 @@ $permissionElements = ['create', 'view', 'view-own', 'update', 'update-own', 'de
         <label class="control-label">Elective groups</label>
     </td>
     <?php
-    foreach($permissionElements as $permissionElement){
+    foreach($model->permissionElements as $permissionElement){
         echo '<td class="text-center">
                 <div class="icheck">
                     <input type="checkbox" name="'. $permissionElement .'-electivegroup" class="checkbox-'. $permissionElement .'">
@@ -169,13 +163,13 @@ $permissionElements = ['create', 'view', 'view-own', 'update', 'update-own', 'de
 <!-- Ends - Permission allocation table -->
 
 <div class="form-group">
-    <div class="col-md-2 control-label"></div>
-    <div class="col-md-8">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', [
-            'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary',
-            'type' => 'submit',
-        ]) ?>
-    </div>
+        <p>
+            <?= Html::submitButton('Create', [
+                'class' => 'btn btn-primary pull-right mr25 ml5',
+                'type' => 'submit',
+            ]) ?>
+            <?= Html::a('+ Copy from an existing role', 'javascript:;', ['class' => 'btn btn-default pull-right']) ?>
+        </p>
 </div>
 
 <?php ActiveForm::end(); ?>

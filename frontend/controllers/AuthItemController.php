@@ -71,6 +71,7 @@ class AuthItemController extends Controller
                 $role->description = $authItem['description'];
                 $rbac->add($role);
                 $authItemObject = AuthItem::findOne($role->name);
+                $authItemObject->timeAndBlame();
                 if($authItemObject->setRolePermissions(Yii::$app->request->post())){
                     return $this->redirect(['view', 'id' => $authItem['name']]);
                 }else{
@@ -108,10 +109,10 @@ class AuthItemController extends Controller
                 $role->description = $authItem['description'];
                 $rbac->update($id, $role);
                 $authItemObject = AuthItem::findOne($role->name);
+                $authItemObject->timeAndBlame("update");
                 if($authItemObject->setRolePermissions(Yii::$app->request->post())){
                     return $this->redirect(['view', 'id' => $id]);
                 }else{
-                    $rbac->remove($role);
                     Yii::$app->session->setFlash('danger', 'There seems to be a problem with Permission assignment. Please contact Scintin for more assistance.');
                     return $this->redirect(['index']);
                 }

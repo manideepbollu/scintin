@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="panel-body p25">
                 <div class="col-md-3">
                     <a href="javascript:;" class="show text-center">
-                        <img src="<?= Yii::$app->urlManager->createUrl(['students/load-image', 'id' => $model->id ]) ?>" class="avatar avatar-lg img-circle" alt="">
+                        <img src="<?= Yii::$app->urlManager->createUrl(['employees/load-image', 'id' => $model->id ]) ?>" class="avatar avatar-lg img-circle" alt="">
                     </a>
 
                     <div class="show mt15 text-center">
@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'class' => 'table col-md-6 view-table'
                         ],
                         'attributes' => [
-                            'id',
+                            // 'id',
                             'employee_id',
                             'joining_date',
                             'employee_category',
@@ -116,9 +116,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             'permanent_country_id',
                             'permanent_phone1',
                             'permanent_phone2',
-                            'photo_file_name',
-                            'photo_file_type',
-                            'photo_element_data',
                             'description:ntext',
                             'isactive',
                             'created_at',

@@ -13,15 +13,23 @@ use yii\db\ActiveRecord;
  * @property string $description
  * @property string $rule_name
  * @property string $data
- * @property integer $created_at
- * @property integer $updated_at
+ * @property string $created_at
+ * @property string $updated_at
+ * @property integer $created_by
+ * @property integer $updated_by
+ *
+ * @property array $permissionElements
  *
  * @property AuthAssignment[] $authAssignments
  * @property AuthRule $ruleName
  * @property AuthItemChild[] $authItemChildren
+ * @property User $updatedBy
+ * @property User $createdBy
  */
 class AuthItem extends ActiveRecord
 {
+
+    public $permissionElements = ['create', 'view', 'view-own', 'update', 'update-own', 'delete', 'delete-own'];
 
     /**
      * @inheritdoc
@@ -38,8 +46,8 @@ class AuthItem extends ActiveRecord
     {
         return [
             [['name', 'type'], 'required'],
-            [['type', 'created_at', 'updated_at'], 'integer'],
-            [['description', 'data'], 'string'],
+            [['type', 'created_by', 'updated_by'], 'integer'],
+            [['description', 'data', 'created_at', 'updated_at'], 'string'],
             [['name', 'rule_name'], 'string', 'max' => 64]
         ];
     }
@@ -59,6 +67,65 @@ class AuthItem extends ActiveRecord
             'updated_at' => 'Updated At',
         ];
     }
+
+    /**
+     * Sets the appropriate permissions for a role as per the inputs during create / update role.
+     * @param array|mixed $postParams
+     * @return boolean
+     */
+    public function setRolePermissions($postParams)
+    {
+        if($postParams){
+            $totalPermissions = self::getAllPermissions();
+            $rbac = Yii::$app->authManager;
+            $rbac->removeChildren($this);
+
+            foreach($totalPermissions as $permission){
+                $localPermission = $rbac->getPermission($permission);
+                if(isset($postParams[$localPermission->name])){
+                    if(!$rbac->hasChild($this, $localPermission))
+                        $rbac->addChild($this, $localPermission);
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * @return array - Returns an array of permissions registered in the application
+     */
+    public static function getAllPermissions()
+    {
+        return AuthItem::find()
+            ->asArray()
+            ->select(['name'])
+            ->where(['type' => 2])
+            ->all();
+    }
+
+    /**
+     * Applies timestamps and blamable data without the help of Yii Behaviors.
+     * @param string $action = create / update
+     * @return bool
+     */
+    public function timeAndBlame($action = "create")
+    {
+        $time = date('d/m/Y H:i:s'); /* Ex: 01/01/2015 22:10:05 */
+        $userID = Yii::$app->user->id;
+
+        if($action === "create"){
+            $this->created_at = $time;
+            $this->updated_at = $time;
+            $this->created_by = $userID;
+            $this->updated_by = $userID;
+            return $this->save();
+        }else{
+            $this->updated_at = $time;
+            $this->updated_by = $userID;
+            return $this->save();
+        }
+    }
+
 
     /**
      * @return \yii\db\ActiveQuery
@@ -85,37 +152,19 @@ class AuthItem extends ActiveRecord
     }
 
     /**
-     * Sets the appropriate permissions for a role as per the inputs during create / update role.
-     * @param array|mixed $postParams
-     * @return boolean
+     * @return \yii\db\ActiveQuery
      */
-    public function setRolePermissions($postParams)
+    public function getUpdatedBy()
     {
-        if($postParams){
-            $totalPermissions = self::getAllPermissions();
-            $rbac = Yii::$app->authManager;
-
-            foreach($totalPermissions as $permission){
-                $localPermission = $rbac->getPermission($permission);
-                if(isset($postParams[$localPermission->name])){
-                    if(!$rbac->hasChild($this, $localPermission))
-                        $rbac->addChild($this, $localPermission);
-                }
-            }
-        }
-        return true;
+        return $this->hasOne(User::className(), ['id' => 'updated_by']);
     }
 
     /**
-     * @return array - Returns an array of permissions registered in the application
+     * @return \yii\db\ActiveQuery
      */
-    public static function getAllPermissions()
+    public function getCreatedBy()
     {
-        return AuthItem::find()
-            ->asArray()
-            ->select(['name'])
-            ->where(['type' => 2])
-            ->all();
+        return $this->hasOne(User::className(), ['id' => 'created_by']);
     }
 
 }

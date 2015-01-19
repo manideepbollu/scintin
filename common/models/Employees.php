@@ -66,6 +66,9 @@ use yii\web\UploadedFile;
  * @property string $signup_request_token
  * @property file $file
  * @property boolean $copyPresentAddress
+ *
+ * @property User $updatedBy
+ * @property User $createdBy
  */
 class Employees extends GeneralRecord
 {

@@ -313,6 +313,8 @@ class SiteController extends Controller
     {
         $rbac = Yii::$app->authManager;
 
+
+        //Course Permissions
         if(!($createCourse = $rbac->getPermission('create-course')))
         {
             $createCourse = $rbac->createPermission('create-course');
@@ -327,7 +329,6 @@ class SiteController extends Controller
             $rbac->add($viewCourse);
         }
 
-
         if(!($viewOwnCourse = $rbac->getPermission('view-own-course')))
         {
             $viewOwnCourse = $rbac->createPermission('view-own-course');
@@ -335,14 +336,12 @@ class SiteController extends Controller
             $rbac->add($viewOwnCourse);
         }
 
-
         if(!($updateCourse = $rbac->getPermission('update-course')))
         {
             $updateCourse = $rbac->createPermission('update-course');
-            $updateCourse->description = 'Access to update course';
+            $updateCourse->description = 'Access to update courses';
             $rbac->add($updateCourse);
         }
-
 
         if(!($updateOwnCourse = $rbac->getPermission('update-own-course')))
         {
@@ -351,7 +350,6 @@ class SiteController extends Controller
             $rbac->add($updateOwnCourse);
         }
 
-
         if(!($deleteCourse = $rbac->getPermission('delete-course')))
         {
             $deleteCourse = $rbac->createPermission('delete-course');
@@ -359,12 +357,162 @@ class SiteController extends Controller
             $rbac->add($deleteCourse);
         }
 
-
         if(!($deleteOwnCourse = $rbac->getPermission('delete-own-course')))
         {
             $deleteOwnCourse = $rbac->createPermission('delete-own-course');
             $deleteOwnCourse->description = 'Access to delete own courses';
             $rbac->add($deleteOwnCourse);
+        }
+
+
+        //Batch Permissions
+        if(!($createBatch = $rbac->getPermission('create-batch')))
+        {
+            $createBatch = $rbac->createPermission('create-batch');
+            $createBatch->description = 'Access to create batches';
+            $rbac->add($createBatch);
+        }
+
+        if(!($viewBatch = $rbac->getPermission('view-batch')))
+        {
+            $viewBatch = $rbac->createPermission('view-batch');
+            $viewBatch->description = 'Access to view batches';
+            $rbac->add($viewBatch);
+        }
+
+        if(!($viewOwnBatch = $rbac->getPermission('view-own-batch')))
+        {
+            $viewOwnBatch = $rbac->createPermission('view-own-batch');
+            $viewOwnBatch->description = 'Access to view own batches';
+            $rbac->add($viewOwnBatch);
+        }
+
+        if(!($updateBatch = $rbac->getPermission('update-batch')))
+        {
+            $updateBatch = $rbac->createPermission('update-batch');
+            $updateBatch->description = 'Access to update batches';
+            $rbac->add($updateBatch);
+        }
+
+        if(!($updateOwnBatch = $rbac->getPermission('update-own-batch')))
+        {
+            $updateOwnBatch = $rbac->createPermission('update-own-batch');
+            $updateOwnBatch->description = 'Access to update own batches';
+            $rbac->add($updateOwnBatch);
+        }
+
+        if(!($deleteBatch = $rbac->getPermission('delete-batch')))
+        {
+            $deleteBatch = $rbac->createPermission('delete-batch');
+            $deleteBatch->description = 'Access to delete own batches';
+            $rbac->add($deleteBatch);
+        }
+
+        if(!($deleteOwnBatch = $rbac->getPermission('delete-own-batch')))
+        {
+            $deleteOwnBatch = $rbac->createPermission('delete-own-batch');
+            $deleteOwnBatch->description = 'Access to delete own batches';
+            $rbac->add($deleteOwnBatch);
+        }
+
+        //Subject Permissions
+        if(!($createSubject = $rbac->getPermission('create-subject')))
+        {
+            $createSubject = $rbac->createPermission('create-subject');
+            $createSubject->description = 'Access to create subjects';
+            $rbac->add($createSubject);
+        }
+
+        if(!($viewSubject = $rbac->getPermission('view-subject')))
+        {
+            $viewSubject = $rbac->createPermission('view-subject');
+            $viewSubject->description = 'Access to view subjects';
+            $rbac->add($viewSubject);
+        }
+
+        if(!($viewOwnSubject = $rbac->getPermission('view-own-subject')))
+        {
+            $viewOwnSubject = $rbac->createPermission('view-own-subject');
+            $viewOwnSubject->description = 'Access to view own subjects';
+            $rbac->add($viewOwnSubject);
+        }
+
+        if(!($updateSubject = $rbac->getPermission('update-subject')))
+        {
+            $updateSubject = $rbac->createPermission('update-subject');
+            $updateSubject->description = 'Access to update subjects';
+            $rbac->add($updateSubject);
+        }
+
+        if(!($updateOwnSubject = $rbac->getPermission('update-own-subject')))
+        {
+            $updateOwnSubject = $rbac->createPermission('update-own-subject');
+            $updateOwnSubject->description = 'Access to update own subjects';
+            $rbac->add($updateOwnSubject);
+        }
+
+        if(!($deleteSubject = $rbac->getPermission('delete-subject')))
+        {
+            $deleteSubject = $rbac->createPermission('delete-subject');
+            $deleteSubject->description = 'Access to delete own subjects';
+            $rbac->add($deleteSubject);
+        }
+
+        if(!($deleteOwnSubject = $rbac->getPermission('delete-own-subject')))
+        {
+            $deleteOwnSubject = $rbac->createPermission('delete-own-subject');
+            $deleteOwnSubject->description = 'Access to delete own subjects';
+            $rbac->add($deleteOwnSubject);
+        }
+
+        //Electivegroup Permissions
+        if(!($createElectivegroup = $rbac->getPermission('create-electivegroup')))
+        {
+            $createElectivegroup = $rbac->createPermission('create-electivegroup');
+            $createElectivegroup->description = 'Access to create electivegroups';
+            $rbac->add($createElectivegroup);
+        }
+
+        if(!($viewElectivegroup = $rbac->getPermission('view-electivegroup')))
+        {
+            $viewElectivegroup = $rbac->createPermission('view-electivegroup');
+            $viewElectivegroup->description = 'Access to view electivegroups';
+            $rbac->add($viewElectivegroup);
+        }
+
+        if(!($viewOwnElectivegroup = $rbac->getPermission('view-own-electivegroup')))
+        {
+            $viewOwnElectivegroup = $rbac->createPermission('view-own-electivegroup');
+            $viewOwnElectivegroup->description = 'Access to view own electivegroups';
+            $rbac->add($viewOwnElectivegroup);
+        }
+
+        if(!($updateElectivegroup = $rbac->getPermission('update-electivegroup')))
+        {
+            $updateElectivegroup = $rbac->createPermission('update-electivegroup');
+            $updateElectivegroup->description = 'Access to update electivegroups';
+            $rbac->add($updateElectivegroup);
+        }
+
+        if(!($updateOwnElectivegroup = $rbac->getPermission('update-own-electivegroup')))
+        {
+            $updateOwnElectivegroup = $rbac->createPermission('update-own-electivegroup');
+            $updateOwnElectivegroup->description = 'Access to update own electivegroups';
+            $rbac->add($updateOwnElectivegroup);
+        }
+
+        if(!($deleteElectivegroup = $rbac->getPermission('delete-electivegroup')))
+        {
+            $deleteElectivegroup = $rbac->createPermission('delete-electivegroup');
+            $deleteElectivegroup->description = 'Access to delete own electivegroups';
+            $rbac->add($deleteElectivegroup);
+        }
+
+        if(!($deleteOwnElectivegroup = $rbac->getPermission('delete-own-electivegroup')))
+        {
+            $deleteOwnElectivegroup = $rbac->createPermission('delete-own-electivegroup');
+            $deleteOwnElectivegroup->description = 'Access to delete own electivegroups';
+            $rbac->add($deleteOwnElectivegroup);
         }
     }
 }
