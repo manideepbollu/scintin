@@ -29,10 +29,10 @@ use Yii;
  *
  * @property Batches $batch
  * @property Courses $course
- * @property User $createdBy
  * @property Subjects $dependantOn
  * @property Subjects[] $subjects
  * @property ElectiveGroups $electiveGroup
+ * @property User $createdBy
  * @property User $updatedBy
  */
 class Subjects extends GeneralRecord

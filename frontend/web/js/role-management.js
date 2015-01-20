@@ -111,5 +111,11 @@ $(document).ready(function(){
         });
     }
 
+    //Copy permissions from an existing role
+    $('#copy-button').click(function(){
+        sessionStorage.setItem('role', 'Admin');
+        $('#permission-table').load('../views/auth-item/_permissiontable.php');
+    })
+
 
 });

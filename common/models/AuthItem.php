@@ -104,6 +104,25 @@ class AuthItem extends ActiveRecord
     }
 
     /**
+     * @return array - Returns an array of roles registered in the application
+     */
+    public static function getAllRoles()
+    {
+        $roles = null;
+
+        $multiArray =  AuthItem::find()
+            ->asArray()
+            ->select(['name'])
+            ->where(['type' => 1])
+            ->all();
+
+        foreach($multiArray as $singleArray)
+            $roles[$singleArray['name']] = $singleArray['name'];
+
+        return $roles;
+    }
+
+    /**
      * Applies timestamps and blamable data without the help of Yii Behaviors.
      * @param string $action = create / update
      * @return bool

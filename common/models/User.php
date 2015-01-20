@@ -24,7 +24,7 @@ use yii\web\UploadedFile;
 * @property string $created_at
 * @property string $updated_at
 * @property string $sid
-* @property string $user_type
+* @property string $user_role
 * @property string $work_email
 * @property string $photo_file_name
 * @property string $photo_file_type
@@ -37,8 +37,10 @@ use yii\web\UploadedFile;
 * @property Courses[] $courses
 * @property ElectiveGroups[] $electiveGroups
 * @property Subjects[] $subjects
+* @property User $createdBy
+* @property User $updatedBy
 */
-class User extends ActiveRecord implements IdentityInterface
+class User extends GeneralRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
@@ -58,20 +60,6 @@ class User extends ActiveRecord implements IdentityInterface
     public static function tableName()
     {
         return '{{%user}}';
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'timestamp' => [
-                'class' => TimestampBehavior::className(),
-                'value' => function(){return date('d/m/Y H:i:s');}, /* Ex: 01/01/2015 22:10:05 */
-            ],
-            BlameableBehavior::className(),
-        ];
     }
 
     /**
@@ -103,7 +91,7 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             [['username'], 'required'],
             [['role', 'status', 'photo_file_size', 'created_by', 'updated_by'], 'integer'],
-            [['username', 'password_hash', 'password_reset_token', 'email', 'sid', 'user_type', 'work_email', 'photo_file_name', 'photo_file_type'], 'string', 'max' => 255],
+            [['username', 'password_hash', 'password_reset_token', 'email', 'sid', 'user_role', 'work_email', 'photo_file_name', 'photo_file_type'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
 
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
@@ -278,6 +266,34 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * Assign a specific role to a user
+     */
+    public function assignUserRole($role_name = null)
+    {
+        $rbac = Yii::$app->authManager;
+        if($role_name){
+            if($role = $rbac->getRole($role_name)){
+
+                $currentRoles = $rbac->getAssignments($this->id);
+                foreach($currentRoles as $currentRole){
+                    $roleObject = $rbac->getRole($currentRole->roleName);
+                    $rbac->revoke($roleObject, $this->id);
+                }
+
+                return $rbac->assign($role, $this->id);
+
+            }else{
+                Yii::$app->session->setFlash('danger', 'There was a problem with role allocation. Please verify your role management or contact Scintin for more assistance.');
+                return $this->redirect(['index']);
+            }
+        }else{
+            Yii::$app->session->setFlash('danger', 'There was a problem with role allocation. Please verify your role management or contact Scintin for more assistance.');
+            return $this->redirect(['index']);
+        }
+
+    }
+
+    /**
      * Begin relation based methods
      */
 
@@ -312,6 +328,22 @@ class User extends ActiveRecord implements IdentityInterface
     public function getSubjects()
     {
         return $this->hasMany(Subjects::className(), ['updated_by' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCreatedBy()
+    {
+        return $this->hasOne(self::className(), ['id' => 'created_by']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUpdatedBy()
+    {
+        return $this->hasOne(self::className(), ['id' => 'updated_by']);
     }
 
 }

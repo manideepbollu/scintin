@@ -81,7 +81,8 @@ class UserController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $userDetails = Yii::$app->request->post('User');
+        if ($model->load(Yii::$app->request->post()) && $model->assignUserRole($userDetails['user_role']) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
