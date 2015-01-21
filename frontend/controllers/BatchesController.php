@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\SubjectsSearch;
 use Yii;
 use common\models\Batches;
 use common\models\BatchesSearch;
@@ -23,17 +24,17 @@ class BatchesController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create', 'delete'],
+                'only' => ['index', 'create'],
                 'rules' => [
                     [
                         'allow' => true,
                         'actions' => ['create'],
-                        'roles' => ['createBatch'],
+                        'roles' => ['create-batch'],
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['delete'],
-                        'roles' => ['deleteBatch'],
+                        'actions' => ['index'],
+                        'roles' => ['view-batch'],
                     ],
                 ],
             ],
@@ -71,9 +72,21 @@ class BatchesController extends Controller
     {
         $model = $this->findModel($id);
 
-        if(Yii::$app->user->can('viewBatch', ['batch' => $model])) {
+        if(Yii::$app->user->can('view-batch', ['model' => $model])) {
+
+            $searchModel = new SubjectsSearch();
+            $dataProvider = $searchModel->searchWithOrFilter([
+                'SubjectsSearch' => [
+                    'isactive' => 'Active',
+                    'course_id' => $model->course_id,
+                    'batch_id' => $id,
+                ]
+            ]);
+
             return $this->render('view', [
                 'model' => $model,
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
             ]);
         }
         else
@@ -85,15 +98,18 @@ class BatchesController extends Controller
     /**
      * Creates a new Batches model.
      * If creation is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id - Takes the course id and presents a pre-filled create form
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($id = null)
     {
         $model = new Batches();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
+            if($id)
+                $model->course_id = $id;
             $courseList = Courses::getSpecificCourses(['isactive' => 'Active']);
             //Checks if there are any active courses available before creating a batch
             if($courseList !== null)
@@ -117,7 +133,7 @@ class BatchesController extends Controller
     {
         $model = $this->findModel($id);
 
-        if(Yii::$app->user->can('updateBatch', ['batch' => $model]))
+        if(Yii::$app->user->can('update-batch', ['model' => $model]))
         {
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -142,12 +158,17 @@ class BatchesController extends Controller
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
+     * @throws ForbiddenHttpException
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        $model = $this->findModel($id);
+        if(Yii::$app->user->can('delete-batch', ['model' => $model])) {
+            $model->delete();
+            return $this->redirect(['index']);
+        }else {
+            throw new ForbiddenHttpException('You are not authorized to perform this action.');
+        }
     }
 
     /**

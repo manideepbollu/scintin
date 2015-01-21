@@ -2,6 +2,9 @@
 
 /* @var $this yii\web\View */
 
+$rbac = Yii::$app->authManager;
+$webUser = Yii::$app->user;
+
 //AssetBundle specific to FlatIcons is loaded
 $this->registerAssetBundle('app\assets\FlatIconsAsset');
 
@@ -62,36 +65,50 @@ $this->registerJs('jQuery(function ($) {
         <!-- Bollu -> End Animated counters -->
 
         <!-- Bollu -> Begin Courses, Batches and Subject tab switcher -->
+        <?php if($rbac->checkAccess($webUser->id, 'view-course')){ ?>
         <div class="col-sm-4 col-xs-6 text-center icon-box mb25 mt25">
             <a href="<?= Yii::$app->urlManager->createUrl('courses/index') ?>" class="big-icon-links">
                 <i class="flaticon-archive18 flx4"></i>
                 <div>Courses</div>
             </a>
         </div>
+        <?php } ?>
+
+        <?php if($rbac->checkAccess($webUser->id, 'view-batch')){ ?>
         <div class="col-sm-4 col-xs-6 text-center icon-box mb25 mt25">
             <a href="<?= Yii::$app->urlManager->createUrl('batches/index') ?>" class="big-icon-links">
                 <i class="flaticon-clipboard27 flx4"></i>
                 <div>Batches</div>
             </a>
         </div>
+        <?php } ?>
+
+        <?php if($rbac->checkAccess($webUser->id, 'view-subject')){ ?>
         <div class="col-sm-4 col-xs-6 text-center icon-box mb25 mt25">
             <a href="<?= Yii::$app->urlManager->createUrl('subjects/index') ?>" class="big-icon-links">
                 <i class="flaticon-book131 flx4"></i>
                 <div>Subjects</div>
             </a>
         </div>
+        <?php } ?>
+
+        <?php if($rbac->checkAccess($webUser->id, 'view-electivegroup')){ ?>
         <div class="col-sm-4 col-xs-6 text-center icon-box mb25 mt25">
             <a href="<?= Yii::$app->urlManager->createUrl('electivegroups/index') ?>" class="big-icon-links">
                 <i class="flaticon-clipboard74 flx4"></i>
                 <div>Elective Groups</div>
             </a>
         </div>
+        <?php } ?>
+
+        <?php if($rbac->checkAccess($webUser->id, 'update-batch')){ ?>
         <div class="col-sm-4 col-xs-6 text-center icon-box mb25 mt25">
             <a href="javascript:;" class="big-icon-links">
                 <i class="flaticon-profile3 flx4"></i>
                 <div>Batch Assignments</div>
             </a>
         </div>
+        <?php } ?>
     </div>
     <!-- Bollu -> End Courses, Batches and Subject tab switcher -->
 

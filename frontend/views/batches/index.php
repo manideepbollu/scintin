@@ -7,6 +7,9 @@ use yii\grid\GridView;
 /* @var $searchModel common\models\BatchesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
+//restricting controls as per user role
+$webUser = Yii::$app->user;
+
 $this->title = 'Batches';
 $this->params['breadcrumbs'][] = ['label' => 'Courses + Batches', 'url' => ['courses/overview']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -19,7 +22,10 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="panel-body">
         <p>
-            <?= Html::a('Create a Batch', ['create'], ['class' => 'btn btn-success']) ?>
+            <?php
+            if($webUser->can('create-batch'))
+                echo Html::a('Create Batch', ['create'], ['class' => 'btn btn-success'])
+            ?>
         </p>
         <div class="table-responsive">
             <?= GridView::widget([

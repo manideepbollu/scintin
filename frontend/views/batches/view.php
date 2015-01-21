@@ -2,9 +2,13 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Batches */
+
+//restricting controls as per user role
+$webUser = Yii::$app->user;
 
 $this->title = $model->batch_name;
 $this->params['breadcrumbs'][] = ['label' => 'Courses + Batches', 'url' => ['courses/overview']];
@@ -14,18 +18,23 @@ $this->params['breadcrumbs'][] = $this->title;
 <section class="panel panel-default">
     <div class="panel-heading">
         <h1 class="no-m"><?= Html::encode($this->title) ?></h1>
-        <?php //echo $this->render('_search', ['model' => $searchModel]); ?>
     </div>
     <div class="panel-body">
         <p>
-            <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-            <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-                'class' => 'btn btn-danger',
-                'data' => [
-                    'confirm' => 'Are you sure you want to delete this item?',
-                    'method' => 'post',
-                ],
-            ]) ?>
+            <?php
+            if($webUser->can('update-batch', ['model' => $model]))
+                echo Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary'])
+            ?>
+            <?php
+            if($webUser->can('delete-batch', ['model' => $model]))
+                echo Html::a('Delete', ['delete', 'id' => $model->id], [
+                    'class' => 'btn btn-danger',
+                    'data' => [
+                        'confirm' => 'Are you sure you want to delete this item?',
+                        'method' => 'post',
+                    ],
+                ])
+            ?>
         </p>
 
         <?= DetailView::widget([
@@ -43,5 +52,48 @@ $this->params['breadcrumbs'][] = $this->title;
                 'updatedBy.username',
             ],
         ]) ?>
+    </div>
+
+    <div class="panel-heading">
+        <h4 class="no-m"><strong>Subjects</strong> under this Batch</h4>
+    </div>
+    <div class="panel-body">
+        <div class="table-responsive">
+            <?= GridView::widget([
+                'dataProvider' => $dataProvider,
+                'columns' => [
+                    [
+                        'class' => 'yii\grid\SerialColumn',
+                        'header' => 'S.No'
+
+                    ],
+                    'subject_name',
+                    'subject_code',
+                    'subject_type',
+                    'iselective',
+                    // 'elective_group',
+                    'parent_type',
+                    // 'course_id',
+                    // 'batch_id',
+                    // 'weekly_classes_max',
+                    // 'language',
+                    // 'credit_hours',
+                    // 'dependant_on',
+                    'noexam',
+                    // 'created_at',
+                    // 'created_by',
+                    // 'updated_at',
+                    // 'updated_by',
+
+                    [
+                        'class' => 'yii\grid\ActionColumn',
+                        'controller' => 'subjects',
+                        'contentOptions' => [
+                            'class' => 'text-center',
+                        ],
+                    ],
+                ],
+            ]); ?>
+        </div>
     </div>
 </section>

@@ -39,7 +39,7 @@ $this->registerJs('jQuery(function ($) {
     <div class="col-sm-3 col-xs-6 text-center icon-box mb25 mt25">
         <a href="javascript:;" class="big-icon-links">
             <i class="flaticon-unlocked46 flx4"></i>
-            <div>Create Role</div>
+            <div>Role Assignment</div>
         </a>
     </div>
     <div class="col-sm-3 col-xs-6 text-center icon-box mb25 mt25">
@@ -66,6 +66,36 @@ $this->registerJs('jQuery(function ($) {
             <div>Parent Data</div>
         </a>
     </div>
+
+    <!-- Sample Data -->
+    <div class="col-sm-3 col-xs-6 text-center icon-box mb25 mt25">
+        <a href="javascript:;" class="big-icon-links">
+            <i class="flaticon-bus28 flx4"></i>
+            <div>Add User</div>
+        </a>
+    </div>
+    <!--
+    <div class="col-sm-3 col-xs-6 text-center icon-box mb25 mt25">
+        <a href="javascript:;" class="big-icon-links">
+            <i class="flaticon-pointer16 flx4"></i>
+            <div>Add User</div>
+        </a>
+    </div>
+    <div class="col-sm-3 col-xs-6 text-center icon-box mb25 mt25">
+        <a href="javascript:;" class="big-icon-links">
+            <i class="flaticon-route flx4"></i>
+            <div>Add User</div>
+        </a>
+    </div>
+    <div class="col-sm-3 col-xs-6 text-center icon-box mb25 mt25">
+        <a href="javascript:;" class="big-icon-links">
+            <i class="flaticon-web29 flx4"></i>
+            <div>Add User</div>
+        </a>
+    </div>-->
+
+    <!-- Sample Data ends -->
+
 </div>
 <section class="panel">
     <div class="panel-body">
@@ -80,7 +110,7 @@ $this->registerJs('jQuery(function ($) {
                 <section class="panel">
                     <h5>Scintin <b>Enrollment Status</b></h5>
                     <div class="piechart mt25">
-                        <span class="total chart" data-percent="77">
+                        <span class="total chart" data-percent="<?= $enrollmentRatio ?>">
                         <span>
                             <div class="percent"></div>
                             <small>Signed up for Scintin</small>
@@ -91,19 +121,19 @@ $this->registerJs('jQuery(function ($) {
             </div>
             <div class="col-md-4">
                     <div class="m15 pull-right">
-                        <span class="h2 count" data-from="0" data-to="680">0</span>
+                        <span class="h2 count" data-from="0" data-to="<?= $userCount ?>">0</span>
                         <span class="h4">&nbsp;&nbsp;users enrolled on Scintin</span>
                     </div>
                     <div class="m15 pull-right">
-                        <span class="h2 count" data-from="0" data-to="927">0</span>
+                        <span class="h2 count" data-from="0" data-to="<?= $studentCount ?>">0</span>
                         <span class="h4">&nbsp;&nbsp;students admitted</span>
                     </div>
                     <div class="m15 pull-right">
-                        <span class="h2 count" data-from="0" data-to="68">0</span>
+                        <span class="h2 count" data-from="0" data-to="<?= $employeeCount ?>">0</span>
                         <span class="h4">&nbsp;&nbsp;employees working</span>
                     </div>
                     <div class="m15 pull-right">
-                        <span class="h2 count" data-from="0" data-to="9">0</span>
+                        <span class="h2 count" data-from="0" data-to="<?= $roleCount ?>">0</span>
                         <span class="h4">&nbsp;&nbsp;active Roles defined</span>
                     </div>
             </div>

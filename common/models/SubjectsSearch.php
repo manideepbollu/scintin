@@ -76,4 +76,49 @@ class SubjectsSearch extends Subjects
 
         return $dataProvider;
     }
+
+    /**
+     * Creates data provider instance with search query applied
+     *
+     * @param array $params
+     *
+     * @return ActiveDataProvider
+     */
+    public function searchWithOrFilter($params)
+    {
+        $query = Subjects::find();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        if (!($this->load($params) && $this->validate())) {
+            return $dataProvider;
+        }
+
+        $query->orFilterWhere(['like', 'subject_name', $this->subject_name])
+            ->orFilterWhere(['like', 'subject_code', $this->subject_code])
+            ->orFilterWhere(['like', 'subject_type', $this->subject_type])
+            ->orFilterWhere(['like', 'course_id', $this->course_id])
+            ->orFilterWhere(['like', 'batch_id', $this->batch_id])
+            ->orFilterWhere(['like', 'iselective', $this->iselective])
+            ->orFilterWhere(['like', 'parent_type', $this->parent_type])
+            ->orFilterWhere(['like', 'noexam', $this->noexam]);
+
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'elective_group' => $this->elective_group,
+            'weekly_classes_max' => $this->weekly_classes_max,
+            'language' => $this->language,
+            'credit_hours' => $this->credit_hours,
+            'dependant_on' => $this->dependant_on,
+            'isactive' => $this->isactive,
+            'created_at' => $this->created_at,
+            'created_by' => $this->created_by,
+            'updated_at' => $this->updated_at,
+            'updated_by' => $this->updated_by,
+        ]);
+
+        return $dataProvider;
+    }
 }

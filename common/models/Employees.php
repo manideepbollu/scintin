@@ -227,7 +227,6 @@ class Employees extends GeneralRecord
     }
 
     /**
->>>>>>> 788e0342064bf5cfa637ba88c6aafea21910adf1
      * @return array
      * - Returns an array of employees in [id => first_name + last_name] pair.
      * Results can be filtered by passing params in Array format.
@@ -260,7 +259,7 @@ class Employees extends GeneralRecord
      */
     public static function getSpecificCount($filter = [])
     {
-        $employees = self::getSpecificStudents($filter);
+        $employees = self::getSpecificEmployees($filter);
         return count($employees);
     }
 

@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Batches;
+use common\models\BatchesSearch;
 use common\models\Students;
 use common\models\Subjects;
 use Yii;
@@ -12,6 +13,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\ForbiddenHttpException;
 
 /**
  * CoursesController implements the CRUD actions for Courses model.
@@ -25,10 +27,17 @@ class CoursesController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
+                'only' => ['index', 'create'],
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['@'],
+                        'actions' => ['create'],
+                        'roles' => ['create-course'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['index'],
+                        'roles' => ['view-course'],
                     ],
                 ],
             ],
@@ -78,12 +87,31 @@ class CoursesController extends Controller
      * Displays a single Courses model.
      * @param integer $id
      * @return mixed
+     * @throws ForbiddenHttpException
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        $model = $this->findModel($id);
+
+        if(Yii::$app->user->can('view-course', ['model' => $model])) {
+
+            $searchModel = new BatchesSearch();
+            $dataProvider = $searchModel->search([
+                'BatchesSearch' => [
+                    'course_id' => $id,
+                ],
+            ]);
+
+            return $this->render('view', [
+                'model' => $model,
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
+        else
+        {
+            throw new ForbiddenHttpException('You are not authorized to perform this action.');
+        }
     }
 
     /**
@@ -109,17 +137,24 @@ class CoursesController extends Controller
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
+     * @throws ForbiddenHttpException
      */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        if(Yii::$app->user->can('update-course', ['model' => $model]))
+        {
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
+        }else
+        {
+            throw new ForbiddenHttpException('You are not authorized to perform this action.');
         }
     }
 
@@ -128,12 +163,17 @@ class CoursesController extends Controller
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
+     * @throws ForbiddenHttpException
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        $model = $this->findModel($id);
+        if(Yii::$app->user->can('delete-course', ['model' => $model])) {
+            $model->delete();
+            return $this->redirect(['index']);
+        }else {
+            throw new ForbiddenHttpException('You are not authorized to perform this action.');
+        }
     }
 
     /**

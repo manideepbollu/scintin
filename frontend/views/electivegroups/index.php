@@ -7,6 +7,9 @@ use yii\grid\GridView;
 /* @var $searchModel common\models\ElectiveGroupsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
+//restricting controls as per user role
+$webUser = Yii::$app->user;
+
 $this->title = 'Elective Groups';
 $this->params['breadcrumbs'][] = ['label' => 'Courses + Batches', 'url' => ['courses/overview']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -19,7 +22,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
     <div class="panel-body">
         <p>
-            <?= Html::a('Create Elective Groups', ['create'], ['class' => 'btn btn-success']) ?>
+            <?php
+            if($webUser->can('create-electivegroup'))
+                echo Html::a('Create Elective Group', ['create'], ['class' => 'btn btn-success'])
+            ?>
         </p>
 
         <div class="table-responsive">

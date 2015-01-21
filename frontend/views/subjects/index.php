@@ -7,6 +7,9 @@ use yii\grid\GridView;
 /* @var $searchModel common\models\SubjectsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
+//restricting controls as per user role
+$webUser = Yii::$app->user;
+
 $this->title = 'Subjects';
 $this->params['breadcrumbs'][] = ['label' => 'Courses + Batches', 'url' => ['courses/overview']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -19,7 +22,10 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="panel-body">
         <p>
-            <?= Html::a('Create a Subject', ['create'], ['class' => 'btn btn-success']) ?>
+            <?php
+            if($webUser->can('create-subject'))
+                echo Html::a('Create Subject', ['create'], ['class' => 'btn btn-success'])
+            ?>
         </p>
         <div class="table-responsive">
             <?= GridView::widget([

@@ -294,6 +294,43 @@ class User extends GeneralRecord implements IdentityInterface
     }
 
     /**
+     * @return array
+     * - Returns an array of users in [id => username] pair.
+     * Results can be filtered by passing params in Array format.
+     * @param array $filter
+     * - This can be an array of columns with their desired values
+     * to filter while fetching the table for data
+     */
+    public static function getSpecificUsers($filter = [])
+    {
+        $users = null;
+
+        $multiArray =  self::find()
+            ->asArray()
+            ->select(['id', 'username'])
+            ->where($filter)
+            ->all();
+
+        foreach($multiArray as $singleArray)
+            $users[$singleArray['id']] = $singleArray['username'];
+
+        return $users;
+    }
+
+    /**
+     * @return integer
+     * - Returns the number of records satisfy the given filter.
+     * @param array $filter
+     * - This can be an array of columns with their desired values
+     * to filter while fetching the table for data
+     */
+    public static function getSpecificCount($filter = [])
+    {
+        $users = self::getSpecificUsers($filter);
+        return count($users);
+    }
+
+    /**
      * Begin relation based methods
      */
 

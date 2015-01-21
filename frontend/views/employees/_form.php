@@ -52,7 +52,7 @@ $this->registerJs('jQuery(function ($){
                     <span class="badge bg-info">4</span>Miscellaneous
                 </li>
             </ul>
-            <div class="actions btn-group">
+            <div class="btn-group sc-wizard-btns">
                 <button class="btn btn-default btn-sm btn-prev mr20">
                     <i class="fa fa-angle-left"></i>&nbsp; Go Back
                 </button>
@@ -96,13 +96,13 @@ $this->registerJs('jQuery(function ($){
 
                             <?= $form->field($model, 'employee_grade_id')->textInput() ?>
 
+                            <?= $form->field($model, 'qualification')->textInput() ?>
+
                             <?= $form->field($model, 'joining_date',  [
                                 'inputOptions' => [
                                     'class' => 'form-control datepicker',
                                 ],
-                            ])->textInput(['maxlength' => 255]) ?>
-
-                            <?= $form->field($model, 'qualification')->textInput(['maxlength' => 255]) ?>
+                            ])->textInput() ?>
 
                             <?= $form->field($model, 'experience_years')->textInput() ?>
 
@@ -174,7 +174,7 @@ $this->registerJs('jQuery(function ($){
 
                             <?= $form->field($model, 'fax')->textInput(['maxlength' => 255]) ?>
 
-                            <?= $form->field($model, 'copyPresentAddress')->checkbox() ?>
+                            <div class="col-md-12 no-p"><?= $form->field($model, 'copyPresentAddress')->checkbox() ?></div>
 
                             <?= $form->field($model, 'permanent_address_line1')->textInput(['maxlength' => 255]) ?>
 

@@ -8,9 +8,11 @@ use common\models\ElectiveGroups;
 use Yii;
 use common\models\Subjects;
 use common\models\SubjectsSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\ForbiddenHttpException;
 
 /**
  * SubjectsController implements the CRUD actions for Subjects model.
@@ -20,6 +22,22 @@ class SubjectsController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index', 'create'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['create'],
+                        'roles' => ['create-subject'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['index'],
+                        'roles' => ['view-subject'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -48,12 +66,21 @@ class SubjectsController extends Controller
      * Displays a single Subjects model.
      * @param integer $id
      * @return mixed
+     * @throws ForbiddenHttpException
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        $model = $this->findModel($id);
+
+        if(Yii::$app->user->can('view-subject', ['model' => $model])) {
+            return $this->render('view', [
+                'model' => $model,
+            ]);
+        }
+        else
+        {
+            throw new ForbiddenHttpException('You are not authorized to perform this action.');
+        }
     }
 
     /**
@@ -102,44 +129,51 @@ class SubjectsController extends Controller
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
+     * @throws ForbiddenHttpException
      */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            //filters - { Must be active }
-            $filter = [
-                'isactive' => 'Active'
-            ];
+        if(Yii::$app->user->can('update-subject', ['model' => $model]))
+        {
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                //filters - { Must be active }
+                $filter = [
+                    'isactive' => 'Active'
+                ];
 
-            if(!($activeElectiveGroups = ElectiveGroups::getSpecificElectiveGroups($filter)))
-                $activeElectiveGroups = ['Not available' => 'No options available'];
-            if(!($activeCourses = Courses::getSpecificCourses($filter)))
-                $activeCourses = ['Not available' => 'No options available'];
-            else
-                $parentOptions['Course'] = 'Course';
-            if(!($activeBatches = Batches::getSpecificBatches([],$filter)))
-                $activeBatches = ['Not available' => 'No options available'];
-            else
-                $parentOptions['Batch'] = 'Batch';
-            if(!($activeSubjects = Subjects::getSpecificSubjects($filter)))
-                $activeSubjects = [];
-            if(!isset($parentOptions)) {
-                Yii::$app->session->setFlash('danger', 'There must be atleast one <b>active course</b> registered in the database before creating a Subject');
-                return Yii::$app->response->redirect(['courses/overview']);
+                if(!($activeElectiveGroups = ElectiveGroups::getSpecificElectiveGroups($filter)))
+                    $activeElectiveGroups = ['Not available' => 'No options available'];
+                if(!($activeCourses = Courses::getSpecificCourses($filter)))
+                    $activeCourses = ['Not available' => 'No options available'];
+                else
+                    $parentOptions['Course'] = 'Course';
+                if(!($activeBatches = Batches::getSpecificBatches([],$filter)))
+                    $activeBatches = ['Not available' => 'No options available'];
+                else
+                    $parentOptions['Batch'] = 'Batch';
+                if(!($activeSubjects = Subjects::getSpecificSubjects($filter)))
+                    $activeSubjects = [];
+                if(!isset($parentOptions)) {
+                    Yii::$app->session->setFlash('danger', 'There must be atleast one <b>active course</b> registered in the database before creating a Subject');
+                    return Yii::$app->response->redirect(['courses/overview']);
+                }
+                else
+                    return $this->render('update', [
+                        'model' => $model,
+                        'activeElectiveGroups' => $activeElectiveGroups,
+                        'parentOptions' => $parentOptions,
+                        'activeCourses' => $activeCourses,
+                        'activeBatches' => $activeBatches,
+                        'activeSubjects' => $activeSubjects,
+                    ]);
             }
-            else
-                return $this->render('update', [
-                    'model' => $model,
-                    'activeElectiveGroups' => $activeElectiveGroups,
-                    'parentOptions' => $parentOptions,
-                    'activeCourses' => $activeCourses,
-                    'activeBatches' => $activeBatches,
-                    'activeSubjects' => $activeSubjects,
-                ]);
+        }else
+        {
+            throw new ForbiddenHttpException('You are not authorized to perform this action.');
         }
     }
 
@@ -148,12 +182,17 @@ class SubjectsController extends Controller
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
+     * @throws ForbiddenHttpException
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        $model = $this->findModel($id);
+        if(Yii::$app->user->can('delete-subject', ['model' => $model])) {
+            $model->delete();
+            return $this->redirect(['index']);
+        }else {
+            throw new ForbiddenHttpException('You are not authorized to perform this action.');
+        }
     }
 
     /**
