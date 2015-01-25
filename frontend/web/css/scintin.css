@@ -51,9 +51,28 @@ div.required label:after {
     padding: 5px 15px;
     vertical-align: middle;
     line-height: 37px;
-    a {
-        margin-right: 8px;
-        font-size: 12px;
-        line-height: 45px;
-    }
 }
+
+#map{
+    height: 100%;
+    position: absolute;
+    z-index: 0;
+    overflow: visible;
+}
+
+#maps-breadcrumbs{
+    margin: 15px;
+    position: absolute;
+    z-index: 2;
+}
+
+#maps-wrapper{
+}
+
+#transport-icon-wrapper{
+    position: relative;
+    z-index: 1;
+    background-color: rgba(255,255,255,0.8); /* Set the opacity for a slightly transparent Google Form */
+}
+
+

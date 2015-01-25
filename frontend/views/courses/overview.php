@@ -112,7 +112,7 @@ $this->registerJs('jQuery(function ($) {
     </div>
     <!-- Bollu -> End Courses, Batches and Subject tab switcher -->
 
-    <div class="col-md-4">
+    <div class="col-md-4 col-xs-12">
         <!-- Bollu -> Begin local search -->
         <div class="input-group mb15">
             <input type="text" class="form-control sc-border-primary" placeholder="Search within this section">

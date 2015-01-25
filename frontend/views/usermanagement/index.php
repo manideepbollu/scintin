@@ -67,35 +67,6 @@ $this->registerJs('jQuery(function ($) {
         </a>
     </div>
 
-    <!-- Sample Data -->
-    <div class="col-sm-3 col-xs-6 text-center icon-box mb25 mt25">
-        <a href="javascript:;" class="big-icon-links">
-            <i class="flaticon-bus28 flx4"></i>
-            <div>Add User</div>
-        </a>
-    </div>
-    <!--
-    <div class="col-sm-3 col-xs-6 text-center icon-box mb25 mt25">
-        <a href="javascript:;" class="big-icon-links">
-            <i class="flaticon-pointer16 flx4"></i>
-            <div>Add User</div>
-        </a>
-    </div>
-    <div class="col-sm-3 col-xs-6 text-center icon-box mb25 mt25">
-        <a href="javascript:;" class="big-icon-links">
-            <i class="flaticon-route flx4"></i>
-            <div>Add User</div>
-        </a>
-    </div>
-    <div class="col-sm-3 col-xs-6 text-center icon-box mb25 mt25">
-        <a href="javascript:;" class="big-icon-links">
-            <i class="flaticon-web29 flx4"></i>
-            <div>Add User</div>
-        </a>
-    </div>-->
-
-    <!-- Sample Data ends -->
-
 </div>
 <section class="panel">
     <div class="panel-body">
