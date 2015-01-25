@@ -34,7 +34,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'class' => 'yii\grid\SerialColumn',
                         'header' => 'S.No'
-
                     ],
                     'subject_name',
                     'subject_code',

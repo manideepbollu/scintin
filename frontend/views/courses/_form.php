@@ -45,16 +45,3 @@ use yii\bootstrap\ActiveForm;
 
     <?php ActiveForm::end(); ?>
     <!-- /form -->
-
-
- <!-- $form->field($model, 'isactive')->checkbox([
-    'template' => '<label class="col-sm-2 control-label">Status</label>
-                            <div class="col-sm-10">
-                                <div class="checkbox">
-                                    <label>
-                                        {input}Active
-                                    </label>
-                                </div>
-                                {error}
-                            </div>',
-]) --> <!-- Above live should be included in <\?= ?\> to get our desired checkbox -->

@@ -10,22 +10,22 @@
 }
 [class^="flaticon-"]:before, [class*=" flaticon-"]:before,
 [class^="flaticon-"]:after, [class*=" flaticon-"]:after {
-    font-family: Flaticon;
-    font-size: inherit;
-    font-style: normal;
+	font-family: Flaticon;
+        font-size: inherit;
+font-style: normal;
 }.flaticon-add99:before {
      content: "\e000";
  }
-.flaticon-archive18:before {
+.flaticon-adding:before {
     content: "\e001";
 }
-.flaticon-book131:before {
+.flaticon-archive18:before {
     content: "\e002";
 }
-.flaticon-bus28:before {
+.flaticon-book131:before {
     content: "\e003";
 }
-.flaticon-car186:before {
+.flaticon-bus28:before {
     content: "\e004";
 }
 .flaticon-clipboard27:before {
@@ -34,44 +34,50 @@
 .flaticon-clipboard74:before {
     content: "\e006";
 }
-.flaticon-file98:before {
+.flaticon-folder240:before {
     content: "\e007";
 }
-.flaticon-folder240:before {
+.flaticon-glasses9:before {
     content: "\e008";
 }
-.flaticon-idcard:before {
+.flaticon-gross2:before {
     content: "\e009";
 }
 .flaticon-multiple25:before {
     content: "\e00a";
 }
-.flaticon-pilot:before {
+.flaticon-pointer16:before {
     content: "\e00b";
 }
-.flaticon-pointer16:before {
+.flaticon-profile3:before {
     content: "\e00c";
 }
-.flaticon-profile3:before {
+.flaticon-round56:before {
     content: "\e00d";
 }
-.flaticon-route:before {
+.flaticon-rounded54:before {
     content: "\e00e";
 }
-.flaticon-students8:before {
+.flaticon-rounded62:before {
     content: "\e00f";
 }
-.flaticon-teacher10:before {
+.flaticon-route:before {
     content: "\e010";
 }
-.flaticon-teacher38:before {
+.flaticon-students8:before {
     content: "\e011";
 }
-.flaticon-two197:before {
+.flaticon-teacher10:before {
     content: "\e012";
 }
-.flaticon-unlocked46:before {
+.flaticon-teacher38:before {
     content: "\e013";
+}
+.flaticon-web29:before {
+    content: "\e014";
+}
+.flaticon-unlocked46:before {
+    content: "\e014";
 }
 
 /*Self made things*/

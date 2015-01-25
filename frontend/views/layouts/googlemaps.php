@@ -2,11 +2,14 @@
 use yii\helpers\Html;
 use yii\widgets\Breadcrumbs;
 use app\assets\CoreAsset;
+use app\assets\GoogleMapsAsset;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
 
 CoreAsset::register($this);
+GoogleMapsAsset::register($this);
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -271,19 +274,21 @@ CoreAsset::register($this);
 
 <!-- main content -->
 <section class="main-content">
-
     <!-- content wrapper -->
     <div class="content-wrap">
-
         <!-- inner content wrapper - View content i.e. $content is being passed here -->
-        <div class="wrapper">
-
+        <div id="maps-breadcrumbs">
             <?= Breadcrumbs::widget([
+                'options' => [
+                    'class' => 'breadcrumb no-m',
+                ],
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
             ]) ?>
-            <?= $content ?>
-
         </div>
+        <div class="wrapper" id="maps-wrapper">
+            <?= $content ?>
+        </div>
+        <div id="map"></div>
         <!-- /inner content wrapper -->
 
     </div>
