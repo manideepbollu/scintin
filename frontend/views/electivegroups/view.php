@@ -49,9 +49,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'min_subjects',
                 'isactive',
                 'created_at',
-                'created_by',
+                'createdBy.username',
                 'updated_at',
-                'updated_by',
+                'updatedBy.username',
             ],
         ]) ?>
     </div>

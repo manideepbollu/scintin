@@ -41,6 +41,7 @@ use yii\web\UploadedFile;
  * @property string $photo_file_type
  * @property resource $photo_element_data
  * @property integer $photo_file_size
+ * @property string $imgpath
  *
  * @property Countries $residenceCountry
  * @property Students $childAdmission
@@ -54,6 +55,11 @@ class Guardians extends GeneralRecord
      * @var UploadedFile file attribute
      */
     public $file;
+
+    /**
+     * @var default image for users
+     */
+    public $imgPath;
 
     /**
      * @inheritdoc

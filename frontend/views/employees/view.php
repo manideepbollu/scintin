@@ -17,8 +17,14 @@ $this->params['breadcrumbs'][] = $this->title;
         <section class="panel no-b">
             <div class="panel-body p25">
                 <div class="col-md-3">
+                    <?php if($model->photo_file_name) {
+                        $model->imgPath = Yii::$app->urlManager->createUrl(['employees/load-image', 'id' => $model->id]);
+                    }
+                    else
+                        $model->imgPath = Yii::$app->urlManager->baseUrl.'/img/default_'.$model->gender.'.jpg';
+                    ?>
                     <a href="javascript:;" class="show text-center">
-                        <img src="<?= Yii::$app->urlManager->createUrl(['employees/load-image', 'id' => $model->id ]) ?>" class="avatar avatar-lg img-circle" alt="">
+                        <img src="<?= $model->imgPath  ?>" class="avatar avatar-lg img-circle" alt="">
                     </a>
 
                     <div class="show mt15 text-center">
@@ -119,9 +125,9 @@ $this->params['breadcrumbs'][] = $this->title;
                             'description:ntext',
                             'isactive',
                             'created_at',
-                            'created_by',
+                            'createdBy.username',
                             'updated_at',
-                            'updated_by',
+                            'updatedBy.username',
                         ],
                     ]) ?>
                 </div>

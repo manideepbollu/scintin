@@ -90,6 +90,8 @@ class ElectiveGroups extends GeneralRecord
             'created_by' => 'Created By',
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
+            'createdBy.username' => 'Created By',
+            'updatedBy.username' => 'Updated By'
         ];
     }
 

@@ -48,6 +48,7 @@ use yii\web\UploadedFile;
  * @property integer $photo_file_size
  * @property string $signup_request_token
  * @property resource $file
+ * @property string $imgpath
  *
  * @property User $updatedBy
  * @property User $createdBy
@@ -58,6 +59,11 @@ class Students extends GeneralRecord
      * @var UploadedFile file attribute
      */
     public $file;
+
+    /**
+     * @var default image for users
+     */
+    public $imgPath;
 
     /**
      * @inheritdoc
