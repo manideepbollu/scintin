@@ -96,7 +96,6 @@ class Employees extends GeneralRecord
      */
     public function beforeSave($params)
     {
-        $varl = false;
         if ($this->file = UploadedFile::getInstance($this, 'file')){
             if ($this->validate()) {
                 $this->photo_file_name = $this->file->name;
@@ -123,7 +122,7 @@ class Employees extends GeneralRecord
             [['employee_category', 'employee_position_id', 'employee_department_id', 'reporting_manager_id', 'employee_grade_id', 'experience_years', 'experience_months', 'children_count', 'nationality_id', 'present_country_id', 'permanent_country_id', 'photo_file_size', 'created_by', 'updated_by'], 'integer'],
             [['experience_details', 'photo_element_data', 'description'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
-            [['file'], 'file', 'extensions' => 'jpg, png', 'mimeTypes' => 'image/jpeg, image/png',],
+            [['file'], 'file', 'extensions' => 'jpg, png', 'mimeTypes' => 'image/jpeg, image/png',  'maxSize' => 4000000],
             [['employee_id', 'joining_date', 'first_name', 'middle_name', 'last_name', 'job_title', 'qualification', 'father_name', 'mother_name', 'spouse_name', 'date_of_birth', 'gender', 'marital_status', 'blood_group', 'birth_place', 'language', 'religion', 'present_address_line1', 'present_address_line2', 'present_city', 'present_state', 'present_phone1', 'present_phone2', 'present_mobile', 'email', 'fax', 'permanent_address_line1', 'permanent_address_line2', 'permanent_city', 'permanent_state', 'permanent_phone1', 'permanent_phone2', 'photo_file_name', 'photo_file_type', 'isactive'], 'string', 'max' => 255],
             [['employee_id','first_name','last_name','job_title','employee_category','employee_position_id','employee_department_id','reporting_manager_id','employee_grade_id','joining_date','qualification','experience_years','experience_months','father_name','date_of_birth','gender','nationality_id','present_address_line1','present_city', 'present_state','present_country_id','present_phone1','email'],'required']
         ];

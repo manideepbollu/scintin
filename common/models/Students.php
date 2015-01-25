@@ -72,7 +72,6 @@ class Students extends GeneralRecord
      */
     public function beforeSave($params)
     {
-        $varl = false;
         if ($this->file = UploadedFile::getInstance($this, 'file')){
             if ($this->validate()) {
                 $this->photo_file_name = $this->file->name;

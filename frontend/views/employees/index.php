@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="panel-body">
 
-        <p><?= Html::a('Add an Employee', ['create'], ['class' => 'btn btn-success']) ?></p>
+        <p><?= Html::a('Add Employee', ['create'], ['class' => 'btn btn-success']) ?></p>
 
         <div class="table-responsive">
             <?= GridView::widget([
