@@ -32,6 +32,7 @@ class BusstopsController extends Controller
      */
     public function actionIndex()
     {
+        $this->layout = 'googlemaps';
         $searchModel = new BusstopsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 

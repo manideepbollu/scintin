@@ -72,4 +72,26 @@ div.required label:after {
     background-color: rgba(255,255,255,0.8); /* Set the opacity for a slightly transparent Google Form */
 }
 
+#transport-index-wrapper{
+    position: relative;
+    z-index: 1;
+    background-color: rgba(255,255,255,0.9); /* Set the opacity for a slightly transparent Google Form */
+}
+
+.stop-window-content{
+    line-height:1.35;
+    overflow:hidden;
+    white-space:nowrap;
+}
+
+.sc-list{
+    padding-top: 10px;
+    border-top: 1px #ddd solid;
+    margin: 5px 0 0;
+    overflow: hidden;
+}
+
+.grey-hover:hover{
+    background-color: #ddd;
+}
 

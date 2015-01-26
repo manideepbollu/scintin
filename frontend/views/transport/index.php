@@ -1,8 +1,15 @@
 <?php
 
+use yii\helpers\Html;
+
 //AssetBundle specific to FlatIcons is loaded
 $this->registerAssetBundle('app\assets\FlatIconsAsset');
 $this->registerJsFile(Yii::$app->urlManager->baseUrl.'/js/gmaps-overview.js', ['depends' => 'app\assets\googleMapsAsset']);
+$this->registerJs("
+    var jsonDataUrl = '".Yii::$app->urlManager->createUrl('busstops/json-data')."';
+    var schoolIcon = '".Yii::$app->urlManager->baseUrl."/img/university.png';
+    var subscribeButton = '".Html::a('Subscribe', 'javascript:;', ['class' => 'btn btn-primary'])."'
+    ", \yii\web\View::POS_HEAD, 'declare Javascript Variables');
 
 ?>
     <div class="row" id="transport-icon-wrapper">

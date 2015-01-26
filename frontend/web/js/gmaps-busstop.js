@@ -4,9 +4,6 @@ var map;
 //school Marker is here
 var schoolMarker;
 
-//create the infowindow for general use
-var infoWindow = new google.maps.InfoWindow();
-
 //Temporary Variables
 var dps = [13.117346, 77.641570];
 var stoneHill = [13.170170, 77.595624];
@@ -37,6 +34,9 @@ var geoCoder = new google.maps.Geocoder();
 
 //Ajax Request to BusStop Controller
 var request;
+
+//InfoWindow to show bus stop information
+var stopWindow = new google.maps.InfoWindow();
 
 google.maps.event.addDomListener(window, "load", initialize);
 
@@ -70,7 +70,7 @@ function initialize() {
     schoolMarker = new google.maps.Marker({
         position: schoolLocation,
         draggable: false,
-        icon: "img/university.png",
+        icon: schoolIcon,
         animation: google.maps.Animation.DROP,
         map: map
     });
@@ -81,8 +81,8 @@ function initialize() {
 
     //Show the infowindow when someone clicks on the school marker
     google.maps.event.addListener(schoolMarker, 'click', function() {
-        infoWindow.setContent("School <b>Base Location</b>");
-        infoWindow.open(map,schoolMarker);
+        stopWindow.setContent("School <b>Base Location</b>");
+        stopWindow.open(map,schoolMarker);
     });
 
     //Drops the red marker (New Bus stop) for the first time on click
@@ -151,7 +151,7 @@ function populateMap(){
 
     // Fire off the request to busstops/json-data [Controller/Action]
     request = $.ajax({
-        url: "index.php?r=busstops/json-data",
+        url: jsonDataUrl,
         type: "get",
         data: typeof stopId != 'undefined' ? "id="+stopId : "",
         dataType: "json",
@@ -178,6 +178,15 @@ function populateMap(){
                 animation: google.maps.Animation.DROP,
                 title: data.stop_name,
             });
+
+            //Add a listener using a closure to compose the marker specific data
+            google.maps.event.addListener(oldMarker, 'click', (function(oldMarker, data) {
+                return function() {
+                    var content = '<div class="stop-window-content"><b>'+data.stop_name+'</b><br><small>'+data.lat_coords+', '+data.lon_coords+'</small><p>'+data.notes+'</p></div>';
+                    stopWindow.setContent(content);
+                    stopWindow.open(map, oldMarker);
+                }
+            })(oldMarker, data));
         }
     });
 
