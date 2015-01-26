@@ -288,7 +288,9 @@ GoogleMapsAsset::register($this);
         <div class="wrapper" id="maps-wrapper">
             <?= $content ?>
         </div>
+        <!-- Map div -->
         <div id="map"></div>
+        <!-- /Map div -->
         <!-- /inner content wrapper -->
 
     </div>

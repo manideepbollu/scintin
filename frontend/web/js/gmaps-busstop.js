@@ -12,10 +12,14 @@ var dps = [13.117346, 77.641570];
 var stoneHill = [13.170170, 77.595624];
 var cgi = [12.948347, 77.689351];
 
+//JSON data from the Bus Stop DB table
+var jsonData;
+
 //create Bus Stop Marker
 var createBusStop = new google.maps.Marker({
     draggable: true,
     animation: google.maps.Animation.DROP,
+    //icon: 'https://chart.googleapis.com/chart?chst=d_map_pin_icon&chld=glyphish_redo|0000FF',
 });
 
 //School Location
@@ -31,13 +35,14 @@ var stopLng = document.getElementById("busstops-lon_coords");
 //Geocode variable
 var geoCoder = new google.maps.Geocoder();
 
+//Ajax Request to BusStop Controller
+var request;
+
 google.maps.event.addDomListener(window, "load", initialize);
 
 
-
-
-
-//Functions here
+//Helper functions are declared here
+//Initialize the map for the very first time
 function initialize() {
 
     //Define the map styling with the map properties here
@@ -95,7 +100,10 @@ function initialize() {
         reverseGeoCode();
     });
 
+    //Place a marker based on the Auto-completed input
     google.maps.event.addListener(autoComplete, 'place_changed', onPlaceChanged);
+
+    populateMap();
 
 }
 
@@ -136,4 +144,49 @@ function updateCoords(){
 
 function updateDistance(){
     document.getElementById("busstops-distance").value = (google.maps.geometry.spherical.computeDistanceBetween(createBusStop.getPosition(), schoolLocation)/1000).toFixed(2);
+}
+
+//Populating map with the available Json Data
+function populateMap(){
+
+    // Fire off the request to busstops/json-data [Controller/Action]
+    request = $.ajax({
+        url: "index.php?r=busstops/json-data",
+        type: "get",
+        data: typeof stopId != 'undefined' ? "id="+stopId : "",
+        dataType: "json",
+    });
+
+    // Callback handler that will be called on success
+    request.done(function (response, textStatus, jqXHR){
+        // Log a message to the console
+        jsonData = response;
+        for (var i = 0; i < jsonData.length; i++) {
+            var data = jsonData[i],
+                latLng = new google.maps.LatLng(data.lat_coords, data.lon_coords);
+
+            // Placing a marker on the map as per Json Data
+            var oldMarker = new google.maps.Marker({
+                position: latLng,
+                draggable: false,
+                map: map,
+                icon: {
+                    path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+                    strokeColor: "green",
+                    scale: 5,
+                },
+                animation: google.maps.Animation.DROP,
+                title: data.stop_name,
+            });
+        }
+    });
+
+    // Callback handler that will be called on failure
+    request.fail(function (jqXHR, textStatus, errorThrown){
+        // Log the error to the console
+        console.error(
+            "The following error occurred: "+
+            textStatus, errorThrown
+        );
+    });
 }

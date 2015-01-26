@@ -13,6 +13,7 @@ use yii\web\UploadedFile;
  * @property string $last_name
  * @property string $relation
  * @property string $date_of_birth
+ * @property string $gender
  * @property string $occupation
  * @property integer $income
  * @property string $education
@@ -26,11 +27,11 @@ use yii\web\UploadedFile;
  * @property string $office_city
  * @property string $office_state
  * @property integer $office_country_id
- * @property string $Residence_address_line1
- * @property string $Residence_address_line2
- * @property string $Residence_city
- * @property string $Residence_state
- * @property integer $Residence_country_id
+ * @property string $residence_address_line1
+ * @property string $residence_address_line2
+ * @property string $residence_city
+ * @property string $residence_state
+ * @property integer $residence_country_id
  * @property string $description
  * @property string $isactive
  * @property string $created_at
@@ -93,13 +94,13 @@ class Guardians extends GeneralRecord
     public function rules()
     {
         return [
-            [['child_admission_id', 'income', 'office_country_id', 'Residence_country_id', 'created_by', 'updated_by', 'photo_file_size'], 'integer'],
-            [['description', 'photo_element_data'], 'string'],
+            [['child_admission_id', 'income', 'office_country_id', 'residence_country_id', 'created_by', 'updated_by', 'photo_file_size'], 'integer'],
+            [['description', 'photo_element_data', 'gender'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
             [['email'],'email'],
             [['file'], 'file', 'extensions' => 'jpg, png', 'mimeTypes' => 'image/jpeg, image/png',  'maxSize' => 4000000],
-            [['first_name', 'last_name', 'relation', 'date_of_birth', 'occupation', 'education', 'email', 'office_phone', 'residence_phone', 'mobile_phone', 'fax', 'office_address_line1', 'office_address_line2', 'office_city', 'office_state', 'Residence_address_line1', 'Residence_address_line2', 'Residence_city', 'Residence_state', 'photo_file_name', 'photo_file_type', 'isactive'], 'string', 'max' => 255],
-            [['child_admission_id','first_name', 'relation', 'Residence_address_line1', 'Residence_city', 'Residence_state', 'Residence_country_id', 'mobile_phone' ], 'required']
+            [['first_name', 'last_name', 'relation', 'date_of_birth', 'occupation', 'education', 'email', 'office_phone', 'residence_phone', 'mobile_phone', 'fax', 'office_address_line1', 'office_address_line2', 'office_city', 'office_state', 'residence_address_line1', 'residence_address_line2', 'residence_city', 'residence_state', 'photo_file_name', 'photo_file_type', 'isactive'], 'string', 'max' => 255],
+            [['child_admission_id','first_name', 'relation', 'residence_address_line1', 'residence_city', 'residence_state', 'mobile_phone', 'gender' ], 'required']
         ];
     }
 
@@ -212,6 +213,14 @@ class Guardians extends GeneralRecord
         $this->signup_request_token = null;
     }
 
+    /**
+     * @return array
+     * available gender types
+     */
+    public function getGenderOptions()
+    {
+        return ['Male' => 'Male', 'Female' => 'Female'];
+    }
 
     /**
      * @return \yii\db\ActiveQuery

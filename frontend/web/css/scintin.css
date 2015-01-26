@@ -66,9 +66,6 @@ div.required label:after {
     z-index: 2;
 }
 
-#maps-wrapper{
-}
-
 #transport-icon-wrapper{
     position: relative;
     z-index: 1;

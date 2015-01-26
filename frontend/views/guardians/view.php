@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         $model->imgPath = Yii::$app->urlManager->createUrl(['guardians/load-image', 'id' => $model->id]);
                     }
                     else
-                        $model->imgPath = Yii::$app->urlManager->baseUrl.'/img/faceless.jpg';
+                        $model->imgPath = Yii::$app->urlManager->baseUrl.'/img/default_'.$model->gender.'.jpg';
                     ?>
                     <a href="javascript:;" class="show text-center">
                         <img src="<?= $model->imgPath  ?>" class="avatar avatar-lg img-circle" alt="">
@@ -95,11 +95,11 @@ $this->params['breadcrumbs'][] = $this->title;
                             'office_city',
                             'office_state',
                             'office_country_id',
-                            'Residence_address_line1',
-                            'Residence_address_line2',
-                            'Residence_city',
-                            'Residence_state',
-                            'Residence_country_id',
+                            'residence_address_line1',
+                            'residence_address_line2',
+                            'residence_city',
+                            'residence_state',
+                            'residence_country_id',
                             'description:ntext',
                             'isactive',
                             'created_at',

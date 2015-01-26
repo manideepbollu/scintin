@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 $this->registerJsFile(Yii::$app->urlManager->baseUrl.'/js/gmaps-busstop.js', ['depends' => 'app\assets\googleMapsAsset']);
+if($model->id)
+    $this->registerJs("var stopId = $model->id", \yii\web\View::POS_HEAD, 'declare Javascript Variables');
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Busstops */

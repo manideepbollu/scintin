@@ -63,6 +63,8 @@ $this->registerAssetBundle('app\assets\FormWizardAsset');
                             ],
                         ])->textInput() ?>
 
+                        <?= $form->field($model, 'gender')->dropDownList($model->genderOptions); ?>
+
                         <?= $form->field($model, 'relation')->textInput(['maxlength' => 255]) ?>
 
                         <?= $form->field($model, 'occupation')->textInput(['maxlength' => 255]) ?>
@@ -79,15 +81,15 @@ $this->registerAssetBundle('app\assets\FormWizardAsset');
                 <div class="row">
                     <div class="col-md-12">
 
-                        <?= $form->field($model, 'Residence_address_line1')->textInput(['maxlength' => 255]) ?>
+                        <?= $form->field($model, 'residence_address_line1')->textInput(['maxlength' => 255]) ?>
 
-                        <?= $form->field($model, 'Residence_address_line2')->textInput(['maxlength' => 255]) ?>
+                        <?= $form->field($model, 'residence_address_line2')->textInput(['maxlength' => 255]) ?>
 
-                        <?= $form->field($model, 'Residence_city')->textInput(['maxlength' => 255]) ?>
+                        <?= $form->field($model, 'residence_city')->textInput(['maxlength' => 255]) ?>
 
-                        <?= $form->field($model, 'Residence_state')->textInput(['maxlength' => 255]) ?>
+                        <?= $form->field($model, 'residence_state')->textInput(['maxlength' => 255]) ?>
 
-                        <?= $form->field($model, 'Residence_country_id')->textInput() ?>
+                        <?= $form->field($model, 'residence_country_id')->textInput() ?>
 
                         <?= $form->field($model, 'residence_phone')->textInput(['maxlength' => 255]) ?>
 
