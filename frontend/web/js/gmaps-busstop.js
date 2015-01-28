@@ -1,3 +1,6 @@
+/**
+ * Created by manideep.bollu on 1/28/2015.
+ */
 //Map variable is here
 var map;
 

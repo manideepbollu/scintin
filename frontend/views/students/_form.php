@@ -1,12 +1,15 @@
 <?php
 
 use yii\bootstrap\ActiveForm;
+use yii\helpers\Html;
 
 
 /* Date Picker asset has been added to support Date picking feature */
 $this->registerAssetBundle('app\assets\DatePickerAsset');
 /* Form Wizard asset has been added to support Form Wizard feature */
 $this->registerAssetBundle('app\assets\FormWizardAsset');
+/* JCrop asset has been added to support Image cropping feature */
+$this->registerAssetBundle('app\assets\JcropAsset');
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Students */
@@ -131,14 +134,25 @@ $this->registerAssetBundle('app\assets\FormWizardAsset');
                 <div class="step-pane" id="step4">
                     <div class="row">
                         <div class="col-md-12">
-                            <?= $form->field($model, 'file')->fileInput() ?>
+
+                            <?= $form->field($model, 'file')->fileInput(['onchange' => 'displayUrlImage(this)']) ?>
 
                             <?= $form->field($model, 'issms_enabled')->inline()->radioList(['Yes' => 'Yes', 'No' => 'No']) ?>
 
+                            <img src="#" id="jcrop-preview" alt="preview">
+
                             <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+
+
+
+                            <?= Html::hiddenInput('Students[jcropX1]', '', ['id' => 'jcrop-x1']); ?>
+                            <?= Html::hiddenInput('Students[jcropY1]', '', ['id' => 'jcrop-y1']); ?>
+                            <?= Html::hiddenInput('Students[jcropW]', '', ['id' => 'jcrop-w']); ?>
+                            <?= Html::hiddenInput('Students[jcropH]', '', ['id' => 'jcrop-h']); ?>
                         </div>
                     </div>
                 </div>
+
             <?php ActiveForm::end(); ?>
         </div>
     </div>

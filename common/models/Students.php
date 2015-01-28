@@ -49,6 +49,10 @@ use yii\web\UploadedFile;
  * @property string $signup_request_token
  * @property resource $file
  * @property string $imgpath
+ * @property number $jcropX1
+ * @property number $jcropY1
+ * @property number $jcropW
+ * @property number $jcropH
  *
  * @property User $updatedBy
  * @property User $createdBy
@@ -59,6 +63,14 @@ class Students extends GeneralRecord
      * @var UploadedFile file attribute
      */
     public $file;
+
+    /**
+     * @vars photo crop parameters
+     */
+    public $jcropX1;
+    public $jcropY1;
+    public $jcropW;
+    public $jcropH;
 
     /**
      * @var default image for users
@@ -83,7 +95,9 @@ class Students extends GeneralRecord
                 $this->photo_file_name = $this->file->name;
                 $this->photo_file_type = $this->file->type;
                 $this->photo_file_size = $this->file->size;
-                $this->photo_element_data = file_get_contents($this->file->tempName);
+                $source = $this->file->tempName;
+                $this->implementJcrop($source, $this->file->type);
+                $this->photo_element_data = file_get_contents($source);
             }
             else{
                 Yii::$app->session->setFlash('danger', 'There was a <b>problem while uploading the photo</b>, please check the file and try again. (Please note: Uploading file should be less than 4MB in size');
@@ -103,6 +117,7 @@ class Students extends GeneralRecord
             [['student_category', 'nationality_id', 'country_id', 'photo_file_size', 'created_by', 'updated_by'], 'integer'],
             [['photo_element_data', 'description'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
+            [['jcropX1', 'jcropY1', 'jcropW', 'jcropH'], 'number'],
             [['admission_id', 'first_name', 'last_name', 'date_of_birth', 'student_category', 'nationality_id', 'address_line1', 'city', 'phone1', 'gender'], 'required'],
             [['file'], 'file', 'extensions' => 'jpg, png', 'mimeTypes' => 'image/jpeg, image/png', 'maxSize' => 4000000],
             [['admission_id', 'roll_number', 'admission_date', 'first_name', 'middle_name', 'last_name', 'father_name', 'mother_name', 'date_of_birth', 'gender', 'marital_status', 'blood_group', 'birth_place', 'language', 'religion', 'address_line1', 'address_line2', 'city', 'state', 'phone1', 'phone2', 'email', 'issms_enabled', 'photo_file_name', 'photo_file_type', 'isactive'], 'string', 'max' => 255],
@@ -238,6 +253,30 @@ class Students extends GeneralRecord
     public function getMaritalOptions()
     {
         return ['Single' => 'Single', 'Married' => 'Married'];
+    }
+
+    /**
+     * Jcrop server side implementation. Crops the uploaded image as per Jcrop inputs
+     */
+    public function implementJcrop($src, $contentType)
+    {
+        $targetWidth = $targetHeight = 250;
+        $jpegQuality = 90;
+
+        if($contentType === 'image/jpeg')
+            $image = imagecreatefromjpeg($src);
+        elseif($contentType === 'image/png')
+            $image = imagecreatefrompng($src);
+
+        $distribution = imagecreatetruecolor($targetWidth, $targetHeight);
+
+        imagecopyresampled($distribution,$image,0,0, $this->jcropX1, $this->jcropY1,
+            $targetHeight,$targetHeight, $this->jcropW, $this->jcropH);
+
+        if($contentType === 'image/jpeg')
+            imagejpeg($distribution, $src, $jpegQuality);
+        elseif($contentType === 'image/png')
+            imagepng($distribution, $src);
     }
 
     /**
