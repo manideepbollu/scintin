@@ -42,7 +42,7 @@ class Busstops extends \yii\db\ActiveRecord
     {
         return [
             [['created_by', 'updated_by'], 'integer'],
-            [['distance'], 'double'],
+            [['distance'], 'number'],
             [['notes'], 'string'],
             [['stop_name', 'lat_coords', 'lon_coords', 'isactive', 'created_at', 'updated_at'], 'string', 'max' => 255],
             [['stop_name', 'lat_coords', 'lon_coords', 'distance', 'isactive'], 'required'],
@@ -67,6 +67,15 @@ class Busstops extends \yii\db\ActiveRecord
             'updated_at' => 'Updated At',
             'updatedBy.username' => 'Updated By',
         ];
+    }
+
+    /**
+     * @return array
+     * - status options
+     */
+    public function getStatusOptions()
+    {
+        return ['Active' => 'Active', 'Inactive' => 'Inactive'];
     }
 
     /**

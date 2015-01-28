@@ -1,4 +1,11 @@
+//Google Map object delared globally
 var overviewMap;
+
+//InfoWindow to show bus stop information
+var stopWindow = new google.maps.InfoWindow();
+
+//Bus stop markers
+var oldMarker = [];
 
 function initialize() {
 
@@ -13,7 +20,17 @@ function initialize() {
     var mapOverviewProp = {
         center: latlng,
         zoom: 14,
-        disableDefaultUI: true,
+        panControl: true,
+        panControlOptions: {
+            position:google.maps.ControlPosition.LEFT_BOTTOM,
+        },
+        zoomControl: true,
+        zoomControlOptions: {
+            style:google.maps.ZoomControlStyle.SMALL,
+            position:google.maps.ControlPosition.LEFT_BOTTOM,
+        },
+        streetViewControl: false,
+        mapTypeControl: false,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
@@ -24,21 +41,17 @@ function initialize() {
     var marker = new google.maps.Marker({
         position: latlng,
         draggable: false,
-        icon: "img/university.png",
+        icon: schoolIcon,
         animation: google.maps.Animation.DROP,
     });
 
     //Show the marker on the map
     marker.setMap(overviewMap);
 
-    //create the infowindow for school marker
-    var infowindow = new google.maps.InfoWindow({
-        content:"School <b>Base Location</b>",
-    });
-
     //Show the infowindow when someone clicks on the school marker
     google.maps.event.addListener(marker, 'click', function() {
-        infowindow.open(overviewMap,marker);
+        stopWindow.setContent("School <b>Base Location</b>");
+        stopWindow.open(overviewMap,marker);
     });
 
     //Populating the map with Bus stop information
@@ -52,7 +65,7 @@ function populateMap(){
 
     // Fire off the request to busstops/json-data [Controller/Action]
     request = $.ajax({
-        url: "index.php?r=busstops/json-data",
+        url: jsonDataUrl,
         type: "get",
         dataType: "json",
     });
@@ -66,7 +79,7 @@ function populateMap(){
                 latLng = new google.maps.LatLng(data.lat_coords, data.lon_coords);
 
             // Placing a marker on the map as per Json Data
-            var oldMarker = new google.maps.Marker({
+            oldMarker[data.id] = new google.maps.Marker({
                 position: latLng,
                 draggable: false,
                 map: overviewMap,
@@ -78,6 +91,17 @@ function populateMap(){
                 animation: google.maps.Animation.DROP,
                 title: data.stop_name,
             });
+
+            var tempMarker = oldMarker[data.id];
+
+            //Add a listener using a closure to compose the marker specific data
+            google.maps.event.addListener(oldMarker[data.id], 'click', (function(tempMarker, data) {
+                return function() {
+                    var content = '<div class="stop-window-content"><b>'+data.stop_name+'</b><br><small>'+data.lat_coords+', '+data.lon_coords+'</small><p>'+data.notes+'</p>'+subscribeButton+'</div>';
+                    stopWindow.setContent(content);
+                    stopWindow.open(overviewMap, tempMarker);
+                }
+            })(tempMarker, data));
         }
     });
 
@@ -90,4 +114,11 @@ function populateMap(){
         );
     });
 
+}
+
+function onClickBusStop(stop_id, lat, lng){
+    var location = new google.maps.LatLng(lat, lng);
+    overviewMap.panTo(location);
+    oldMarker[stop_id].setAnimation(google.maps.Animation.BOUNCE);
+    setTimeout(function(){ oldMarker[stop_id].setAnimation(null); }, 1500);
 }

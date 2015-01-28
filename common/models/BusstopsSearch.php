@@ -18,7 +18,8 @@ class BusstopsSearch extends Busstops
     public function rules()
     {
         return [
-            [['id', 'distance', 'created_by', 'updated_by'], 'integer'],
+            [['id', 'created_by', 'updated_by'], 'integer'],
+            [['distance'], 'number'],
             [['stop_name', 'lat_coords', 'lon_coords', 'notes', 'isactive', 'created_at', 'updated_at'], 'safe'],
         ];
     }
@@ -41,7 +42,7 @@ class BusstopsSearch extends Busstops
      */
     public function search($params)
     {
-        $query = Busstops::find();
+        $query = Busstops::find()->orderBy('stop_name');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

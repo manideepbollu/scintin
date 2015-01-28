@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\BusstopsSearch */
@@ -11,35 +11,21 @@ use yii\widgets\ActiveForm;
 <div class="busstops-search">
 
     <?php $form = ActiveForm::begin([
+        'fieldConfig' => [
+            'template' => '{input}',
+        ],
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
-
-    <?= $form->field($model, 'stop_name') ?>
-
-    <?= $form->field($model, 'lat_coords') ?>
-
-    <?= $form->field($model, 'lon_coords') ?>
-
-    <?= $form->field($model, 'distance') ?>
-
-    <?php // echo $form->field($model, 'notes') ?>
-
-    <?php // echo $form->field($model, 'isactive') ?>
-
-    <?php // echo $form->field($model, 'created_at') ?>
-
-    <?php // echo $form->field($model, 'created_by') ?>
-
-    <?php // echo $form->field($model, 'updated_at') ?>
-
-    <?php // echo $form->field($model, 'updated_by') ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+    <div class="input-group mb15">
+    <?= $form->field($model, 'stop_name')->textInput([
+        'class' => 'form-control',
+        'placeholder' => 'Search for specific Bus Stops',
+    ]) ?>
+        <span class="input-group-btn">
+                <?= Html::submitButton('<i class="fa fa-search"></i>', ['class' => 'btn btn-default bordered grey-hover']) ?>
+            </span>
     </div>
 
     <?php ActiveForm::end(); ?>

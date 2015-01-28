@@ -4,8 +4,12 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 $this->registerJsFile(Yii::$app->urlManager->baseUrl.'/js/gmaps-busstop.js', ['depends' => 'app\assets\googleMapsAsset']);
-if($model->id)
-    $this->registerJs("var stopId = $model->id", \yii\web\View::POS_HEAD, 'declare Javascript Variables');
+$this->registerJs("
+    var jsonDataUrl = '".Yii::$app->urlManager->createUrl('busstops/json-data')."';
+    var schoolIcon = '".Yii::$app->urlManager->baseUrl."/img/university.png';
+    ", \yii\web\View::POS_HEAD, 'declare Javascript Variables');
+if(!$model->isNewRecord)
+    $this->registerJs("var stopId = $model->id", \yii\web\View::POS_HEAD, 'declare stopId Variable');
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Busstops */
@@ -27,7 +31,7 @@ if($model->id)
 
     <?= $form->field($model, 'notes')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'isactive')->textInput(['maxlength' => 255]) ?>
+    <?= $form->field($model, 'isactive')->dropDownList($model->statusOptions); ?>
 
 <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
