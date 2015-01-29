@@ -16,7 +16,7 @@ $this->registerJs("
         <div class="col-lg-12 text-center">
             <h4 class="mt10 mb0">Transport <b>Overview</b></h4>
             <div class="col-lg-2 col-md-3 col-xs-6 text-center icon-box mb25 mt25">
-                <a href="javascript:;" class="big-icon-links">
+                <a href="<?= Yii::$app->urlManager->createUrl('routes/index') ?>" class="big-icon-links">
                     <i class="flaticon-pointer16 flx3   "></i>
                     <div>Route Data</div>
                 </a>
