@@ -13,6 +13,8 @@ class m150129_161306_add_PK_to_routestops extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
+	$this->dropTable('routestops');
+
         $this->createTable('routestops', [
 
             'id' => Schema::TYPE_PK,
