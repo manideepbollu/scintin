@@ -26,13 +26,14 @@ if(!$model->isNewRecord)
 
     <?= $form->field($model, 'destination_id')->dropDownList(\common\models\Busstops::getSpecificBusstops(['isactive' => 'Active']), [
         'data-placeholder' => 'Your Favorite Football Team',
-    'class' => 'chosen chosen-field-width',
+        'id' => 'destination-select',
+        'class' => 'chosen chosen-field-width',
     ]) ?>
 
     <?= $form->field($model, 'stops')->listBox(\common\models\Busstops::getSpecificBusstops(['isactive' => 'Active']), [
-    'class' => 'chosen chosen-field-width',
-    'id' => 'stops-multiselect',
-    'multiple' => 'multiple',
+        'class' => 'chosen chosen-field-width',
+        'id' => 'stops-multiselect',
+        'multiple' => 'multiple',
     ]); ?>
 
     <?= $form->field($model, 'notes')->textarea(['rows' => 6]) ?>

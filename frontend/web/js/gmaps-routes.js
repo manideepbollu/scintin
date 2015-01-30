@@ -10,6 +10,13 @@ var oldMarker = [];
 //Bus Stop Way Points to calculate complex route
 var wayPoints = [];
 
+//Destination for the current route
+var routeDestination = new google.maps.Marker({
+    draggable: true,
+    animation: google.maps.Animation.DROP,
+    //icon: 'https://chart.googleapis.com/chart?chst=d_map_pin_icon&chld=glyphish_redo|0000FF',
+});
+
 //Route path
 var directionsDisplay = new google.maps.DirectionsRenderer();
 
@@ -59,6 +66,9 @@ function initialize() {
         stopWindow.setContent("School <b>Base Location</b>");
         stopWindow.open(overviewMap,marker);
     });
+
+    //Initialize the route on update
+    pinDestination($('#destination-select').val());
 }
 
 google.maps.event.addDomListener(window, "load", initialize);
@@ -114,6 +124,7 @@ function pinMap(pinId){
             "The following error occurred: "+
             textStatus, errorThrown
         );
+        return null;
     });
 
 }
@@ -146,7 +157,7 @@ function renderDirections(){
     directionsDisplay.setOptions(rendererOptions);
 
     var org = new google.maps.LatLng ( 12.948347, 77.689351);
-    var dest = new google.maps.LatLng ( 12.94859, 77.70820600000002);
+    var dest = routeDestination.getPosition();
 
     var request = {
         origin: org,
@@ -189,4 +200,47 @@ function functiontofindIndexByKeyValue(arraytosearch, keytosearchfor, valuetosea
             return i;
     }
     return null;
+}
+
+//
+function pinDestination(pinId){
+    // Fire off the request to busstops/json-data [Controller/Action]
+    request = $.ajax({
+        url: jsonDataUrl,
+        type: "get",
+        data: {'id': pinId},
+        dataType: "json"
+    });
+
+    // Callback handler that will be called on success
+    request.done(function (response, textStatus, jqXHR){
+        // Log a message to the console
+        latLng = new google.maps.LatLng(response.lat_coords, response.lon_coords);
+
+        // Placing a marker on the map as per Json Data
+        routeDestination.setPosition(latLng);
+        routeDestination.setMap(overviewMap);
+
+        //Add a listener using a closure to compose the marker specific data
+        google.maps.event.addListener(routeDestination, 'click', (function(routeDestination, response) {
+            return function() {
+                var content = '<div class="stop-window-content"><b>'+response.stop_name+'</b><br><small>'+response.lat_coords+', '+response.lon_coords+'</small><p>'+response.notes+'</p></div>';
+                stopWindow.setContent(content);
+                stopWindow.open(overviewMap, routeDestination);
+            }
+        })(routeDestination, response));
+
+        renderDirections();
+    });
+
+    // Callback handler that will be called on failure
+    request.fail(function (jqXHR, textStatus, errorThrown){
+        // Log the error to the console
+        console.error(
+            "The following error occurred: "+
+            textStatus, errorThrown
+        );
+        return null;
+    });
+
 }
