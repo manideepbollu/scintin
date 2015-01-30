@@ -95,3 +95,7 @@ div.required label:after {
     background-color: #ddd;
 }
 
+.chosen-field-width{
+    width: 100%;
+}
+

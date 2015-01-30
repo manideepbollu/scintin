@@ -71,6 +71,7 @@ class RoutesController extends Controller
      */
     public function actionCreate()
     {
+        $this->layout = 'googlemaps';
         $model = new Routes();
         $i = 0;
 
@@ -128,6 +129,7 @@ class RoutesController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
+        Routestops::deleteAll(['route_id' => $model->id]);
 
         return $this->redirect(['index']);
     }

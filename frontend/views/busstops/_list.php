@@ -12,7 +12,7 @@ use yii\helpers\HtmlPurifier;
 <div class="sc-list">
     <?php $split = explode(',', $model->stop_name, 2); ?>
     <b><?= Html::a($split[0], "javascript:onClickBusStop($model->id, $model->lat_coords, $model->lon_coords)") ?></b><br>
-    <?= Html::encode($split[1]) ?><br>
+    <?php if(isset($split[1])) echo Html::encode($split[1]).'<br>'; ?>
     <?= 'Distance From School: <b>'.HtmlPurifier::process($model->distance).' kms</b>' ?>
     <p class="mt10 pull-right">
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn bordered grey-hover']) ?>

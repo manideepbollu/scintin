@@ -19,8 +19,10 @@ class RoutesFormAsset extends AssetBundle
     public $baseUrl = '@web';
     public $js = [
         'plugins/chosen/chosen.jquery.min.js',
+        'js/chosen-trigger.js',
     ];
     public $depends = [
+        'app\assets\GoogleMapsAsset',
         'app\assets\CoreAsset',
         'yii\widgets\ActiveFormAsset',
     ];

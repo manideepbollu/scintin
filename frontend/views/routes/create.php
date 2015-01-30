@@ -10,7 +10,8 @@ $this->title = 'Create Routes';
 $this->params['breadcrumbs'][] = ['label' => 'Routes', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<section class="panel">
+<div class="col-lg-5 col-sm-6 col-xs-12 pull-right pr0">
+<section class="panel" id="transport-icon-wrapper">
     <header class="panel-heading">
         <h2 class="no-m"><?= Html::encode($this->title) ?></h2>
     </header>
@@ -21,3 +22,4 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
     </div>
 </section>
+</div>

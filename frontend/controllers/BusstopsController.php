@@ -122,6 +122,21 @@ class BusstopsController extends Controller
     }
 
     /**
+     * Returns the available Bus stops data in JSON format for Javascript to process
+     * @param integer $id
+     * @return array Bus Stop data
+     */
+    public function actionPointJsonData($id)
+    {
+        $busStop = Busstops::find()
+            ->asArray()
+            ->select(['id', 'stop_name', 'lat_coords', 'lon_coords', 'notes'])
+            ->where(['id' => $id])
+            ->one();
+        return \yii\helpers\Json::encode($busStop);
+    }
+
+    /**
      * Finds the Busstops model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
