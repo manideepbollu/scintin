@@ -21,6 +21,7 @@ class FormWizardAsset extends AssetBundle
     public $js = [
         'plugins/fuelux/wizard.js',
         'js/form-wizard.js',
+        'js/employees-module.js'
     ];
     public $depends = [
         'app\assets\CoreAsset',
