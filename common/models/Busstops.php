@@ -79,6 +79,42 @@ class Busstops extends \yii\db\ActiveRecord
     }
 
     /**
+     * @return array
+     * - Returns an array of bus stops in [id => stop_name + distance] pair.
+     * Results can be filtered by passing params in Array format.
+     * @param array $filter
+     * - This can be an array of columns with their desired values
+     * to filter while fetching the table for data
+     */
+    public static function getSpecificBusstops($filter = [])
+    {
+        $stops = null;
+
+        $multiArray =  Busstops::find()
+            ->asArray()
+            ->select(['id', 'stop_name', 'distance'])
+            ->where($filter)
+            ->all();
+
+        foreach($multiArray as $singleArray)
+            $stops[$singleArray['id']] = $singleArray['stop_name'] .' ('. $singleArray['distance'].'kms)';
+        return $stops;
+    }
+
+    /**
+     * @return integer
+     * - Returns the number of records satisfy the given filter.
+     * @param array $filter
+     * - This can be an array of columns with their desired values
+     * to filter while fetching the table for data
+     */
+    public static function getSpecificCount($filter = [])
+    {
+        $stops = self::getSpecificBusstops($filter);
+        return count($stops);
+    }
+
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getCreatedBy()

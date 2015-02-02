@@ -72,12 +72,6 @@ div.required label:after {
     background-color: rgba(255,255,255,0.8); /* Set the opacity for a slightly transparent Google Form */
 }
 
-
-.jcrop-holder {
-            margin-top: 50px;
-            margin-left: 10px;
-}
-
 #transport-index-wrapper{
     position: relative;
     z-index: 1;
@@ -99,5 +93,9 @@ div.required label:after {
 
 .grey-hover:hover{
     background-color: #ddd;
+}
+
+.chosen-field-width{
+    width: 100%;
 }
 

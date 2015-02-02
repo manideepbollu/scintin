@@ -2,17 +2,20 @@
 
 namespace frontend\controllers;
 
-use Yii;
 use common\models\Busstops;
-use common\models\BusstopsSearch;
+use common\models\Routestops;
+use Yii;
+use common\models\Routes;
+use common\models\RoutesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\data\ActiveDataProvider;
 
 /**
- * BusstopsController implements the CRUD actions for Busstops model.
+ * RoutesController implements the CRUD actions for Routes model.
  */
-class BusstopsController extends Controller
+class RoutesController extends Controller
 {
     public function behaviors()
     {
@@ -27,13 +30,12 @@ class BusstopsController extends Controller
     }
 
     /**
-     * Lists all Busstops models.
+     * Lists all Routes models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $this->layout = 'googlemaps';
-        $searchModel = new BusstopsSearch();
+        $searchModel = new RoutesSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -43,28 +45,44 @@ class BusstopsController extends Controller
     }
 
     /**
-     * Displays a single Busstops model.
+     * Displays a single Routes model.
      * @param integer $id
      * @return mixed
      */
     public function actionView($id)
     {
+        $query = Routestops::find()
+            ->where(['route_id' => $id]);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
-     * Creates a new Busstops model.
+     * Creates a new Routes model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
         $this->layout = 'googlemaps';
-        $model = new Busstops();
+        $model = new Routes();
+        $i = 0;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            while($i < count($model->stops)){
+                $stopsModel = new Routestops();
+                $stopsModel->route_id = $model->id;
+                $stopsModel->stop_id = $model->stops[$i];
+                $stopsModel->save();
+                $i++;
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -74,19 +92,28 @@ class BusstopsController extends Controller
     }
 
     /**
-     * Updates an existing Busstops model.
+     * Updates an existing Routes model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
      */
     public function actionUpdate($id)
     {
-        $this->layout = 'googlemaps';
         $model = $this->findModel($id);
+        $i = 0;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Routestops::deleteAll(['route_id' => $model->id]);
+            while($i < count($model->stops)){
+                $stopsModel = new Routestops();
+                $stopsModel->route_id = $model->id;
+                $stopsModel->stop_id = $model->stops[$i];
+                $stopsModel->save();
+                $i++;
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
+            $model->stops = Routestops::getSpecificRoutestops(['route_id' => $model->id]);
             return $this->render('update', [
                 'model' => $model,
             ]);
@@ -94,7 +121,7 @@ class BusstopsController extends Controller
     }
 
     /**
-     * Deletes an existing Busstops model.
+     * Deletes an existing Routes model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -102,54 +129,24 @@ class BusstopsController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
+        Routestops::deleteAll(['route_id' => $model->id]);
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Returns the available Bus stops data in JSON format for Javascript to process
-     * @param integer $id
-     * @return array Bus Stop data
-     */
-    public function actionJsonData($id = null)
-    {
-        $busStops = Busstops::find()
-                        ->asArray()
-                        ->select(['id', 'stop_name', 'lat_coords', 'lon_coords', 'notes'])
-                        ->where($id != null ? "id != $id" : "" )
-                        ->all();
-        return \yii\helpers\Json::encode($busStops);
-    }
-
-    /**
-     * Returns the available Bus stops data in JSON format for Javascript to process
-     * @param integer $id
-     * @return array Bus Stop data
-     */
-    public function actionPointJsonData($id)
-    {
-        $busStop = Busstops::find()
-            ->asArray()
-            ->select(['id', 'stop_name', 'lat_coords', 'lon_coords', 'notes'])
-            ->where(['id' => $id])
-            ->one();
-        return \yii\helpers\Json::encode($busStop);
-    }
-
-    /**
-     * Finds the Busstops model based on its primary key value.
+     * Finds the Routes model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Busstops the loaded model
+     * @return Routes the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Busstops::findOne($id)) !== null) {
+        if (($model = Routes::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-
 }
