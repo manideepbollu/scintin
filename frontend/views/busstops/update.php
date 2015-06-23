@@ -5,10 +5,12 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Busstops */
 
-$this->title = 'Update Busstops: ' . ' ' . $model->id;
+$split = explode(',', $model->stop_name, 2);
+
+$this->title = 'Update: ' . ' ' . $split[0];
+$this->params['breadcrumbs'][] = ['label' => 'Transport', 'url' => ['transport/index']];
 $this->params['breadcrumbs'][] = ['label' => 'Busstops', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="col-lg-4 col-sm-6 col-xs-12 pull-right pr0">
     <section class="panel" id="transport-icon-wrapper">

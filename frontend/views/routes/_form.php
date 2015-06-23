@@ -24,6 +24,8 @@ if(!$model->isNewRecord)
 
     <?= $form->field($model, 'route_code')->textInput(['maxlength' => 255]) ?>
 
+    <?= $form->field($model, 'autoplot')->inline()->radioList(['1' => 'Yes', '0' => 'No']) ?>
+
     <?= $form->field($model, 'destination_id')->dropDownList(\common\models\Busstops::getSpecificBusstops(['isactive' => 'Active']), [
         'data-placeholder' => 'Your Favorite Football Team',
         'id' => 'destination-select',
@@ -40,11 +42,8 @@ if(!$model->isNewRecord)
 
     <?= $form->field($model, 'isactive')->textInput(['maxlength' => 255]) ?>
 
-<div class="form-group">
-    <div class="col-md-2 control-label"></div>
-    <div class="col-md-8">
+    <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
-</div>
 
     <?php ActiveForm::end(); ?>

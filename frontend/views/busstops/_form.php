@@ -23,6 +23,8 @@ if(!$model->isNewRecord)
         'onkeydown' => "if(event.keyCode == 13) return false;",
     ]) ?>
 
+    <?= $form->field($model, 'stop_code')->textInput(['maxlength' => 255]) ?>
+
     <?= $form->field($model, 'lat_coords')->textInput(['readonly' => 'readonly',]) ?>
 
     <?= $form->field($model, 'lon_coords')->textInput(['readonly' => 'readonly',]) ?>

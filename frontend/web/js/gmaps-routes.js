@@ -67,8 +67,9 @@ function initialize() {
         stopWindow.open(overviewMap,marker);
     });
 
-    //Initialize the route on update
-    pinDestination($('#destination-select').val());
+    //Update route stops in Update form
+    updateRouteStops();
+
 }
 
 google.maps.event.addDomListener(window, "load", initialize);
@@ -139,7 +140,6 @@ function onClickBusStop(stop_id, lat, lng){
 
 //Unpin the marker as soon as it's deselcted from the bus stop list in a route
 function unPinMap(pinId){
-    console.log(oldMarker[pinId].getTitle());
     oldMarker[pinId].setMap(null);
     var response = oldMarker[pinId].getPosition();
     removeWayPoint(response);
@@ -170,11 +170,9 @@ function renderDirections(){
     directionsService.route(request, function(response, status) {
         if (status == google.maps.DirectionsStatus.OK) {
             directionsDisplay.setDirections(response);
-            console.log(response.routes[0]);
-            console.log(response.routes[0].legs[0].distance.text);
         }
         else
-            alert ('failed to get directions');
+            alert ('Failed to get directions. Auto plot is possible for 10 waypoints only. Please deselect the Auto Plot Route option if you choose more than 10 way points (Including Origin and Destination).');
     });
 }
 
@@ -182,6 +180,7 @@ function renderDirections(){
 function addWayPoint(response){
     wayPoints.push({location: response});
     directionsDisplay.setMap(null);
+    if($("input[name='Routes[autoplot]']:checked").val() == 1)
     renderDirections();
 }
 
@@ -190,6 +189,7 @@ function removeWayPoint(response){
     var waypointIndex = functiontofindIndexByKeyValue(wayPoints, 'location', response);
     wayPoints.splice(waypointIndex, 1);
     directionsDisplay.setMap(null);
+    if($("input[name='Routes[autoplot]']:checked").val() == 1)
     renderDirections();
 }
 
@@ -229,7 +229,7 @@ function pinDestination(pinId){
                 stopWindow.open(overviewMap, routeDestination);
             }
         })(routeDestination, response));
-
+        if($("input[name='Routes[autoplot]']:checked").val() == 1)
         renderDirections();
     });
 
@@ -244,3 +244,4 @@ function pinDestination(pinId){
     });
 
 }
+

@@ -43,18 +43,6 @@ class BusstopsController extends Controller
     }
 
     /**
-     * Displays a single Busstops model.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
      * Creates a new Busstops model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -65,7 +53,7 @@ class BusstopsController extends Controller
         $model = new Busstops();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -85,7 +73,7 @@ class BusstopsController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('update', [
                 'model' => $model,

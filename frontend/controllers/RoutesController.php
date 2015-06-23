@@ -76,12 +76,14 @@ class RoutesController extends Controller
         $i = 0;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            while($i < count($model->stops)){
-                $stopsModel = new Routestops();
-                $stopsModel->route_id = $model->id;
-                $stopsModel->stop_id = $model->stops[$i];
-                $stopsModel->save();
-                $i++;
+            if($model->stops){
+                while($i < count($model->stops)){
+                    $stopsModel = new Routestops();
+                    $stopsModel->route_id = $model->id;
+                    $stopsModel->stop_id = $model->stops[$i];
+                    $stopsModel->save();
+                    $i++;
+                }
             }
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
@@ -99,6 +101,7 @@ class RoutesController extends Controller
      */
     public function actionUpdate($id)
     {
+        $this->layout = 'googlemaps';
         $model = $this->findModel($id);
         $i = 0;
 
@@ -128,8 +131,9 @@ class RoutesController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
         Routestops::deleteAll(['route_id' => $model->id]);
+        $model->delete();
 
         return $this->redirect(['index']);
     }
