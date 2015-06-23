@@ -18,6 +18,7 @@ use Yii;
  * @property integer $created_by
  * @property string $updated_at
  * @property integer $updated_by
+ * @property string $stop_code
  *
  * @property User $createdBy
  * @property User $updatedBy
@@ -25,7 +26,7 @@ use Yii;
  * @property Routestops[] $routestops
  * @property Subscriptions[] $subscriptions
  */
-class Busstops extends \yii\db\ActiveRecord
+class Busstops extends GeneralRecord
 {
     /**
      * @inheritdoc
@@ -41,11 +42,10 @@ class Busstops extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['created_by', 'updated_by'], 'integer'],
             [['distance'], 'number'],
             [['notes'], 'string'],
-            [['stop_name', 'lat_coords', 'lon_coords', 'isactive', 'created_at', 'updated_at'], 'string', 'max' => 255],
-            [['stop_name', 'lat_coords', 'lon_coords', 'distance', 'isactive'], 'required'],
+            [['created_by', 'updated_by'], 'integer'],
+            [['stop_name', 'lat_coords', 'lon_coords', 'isactive', 'created_at', 'updated_at', 'stop_code'], 'string', 'max' => 255],
         ];
     }
 
@@ -66,6 +66,7 @@ class Busstops extends \yii\db\ActiveRecord
             'createdBy.username' => 'Created By',
             'updated_at' => 'Updated At',
             'updatedBy.username' => 'Updated By',
+            'stop_code' => 'Stop Code',
         ];
     }
 
@@ -92,12 +93,12 @@ class Busstops extends \yii\db\ActiveRecord
 
         $multiArray =  Busstops::find()
             ->asArray()
-            ->select(['id', 'stop_name', 'distance'])
+            ->select(['id', 'stop_name', 'distance', 'stop_code'])
             ->where($filter)
             ->all();
 
         foreach($multiArray as $singleArray)
-            $stops[$singleArray['id']] = $singleArray['stop_name'] .' ('. $singleArray['distance'].'kms)';
+            $stops[$singleArray['id']] = $singleArray['stop_name'] .' - '. $singleArray['stop_code'] .' ('. $singleArray['distance'].'kms)';
         return $stops;
     }
 

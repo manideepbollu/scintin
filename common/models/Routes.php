@@ -16,6 +16,7 @@ use Yii;
  * @property integer $created_by
  * @property string $updated_at
  * @property integer $updated_by
+ * @property integer $autoplot
  *
  * @property User $createdBy
  * @property Busstops $destination
@@ -42,7 +43,7 @@ class Routes extends GeneralRecord
     public function rules()
     {
         return [
-            [['destination_id', 'created_by', 'updated_by'], 'integer'],
+            [['destination_id', 'created_by', 'updated_by', 'autoplot'], 'integer'],
             [['notes'], 'string'],
             [['route_code', 'isactive', 'created_at', 'updated_at'], 'string', 'max' => 255],
             [['stops'], 'safe'],
@@ -64,6 +65,7 @@ class Routes extends GeneralRecord
             'created_by' => 'Created By',
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
+            'autoplot' => 'Auto plot',
         ];
     }
 
