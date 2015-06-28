@@ -68,6 +68,9 @@ use yii\web\UploadedFile;
  * @property string $imgpath
  * @property boolean $copyPresentAddress
  *
+ * @property DriverAdditionalDetails[] $driverAdditionalDetails
+ * @property Vehicles[] $vehicles
+ *
  * @property User $updatedBy
  * @property User $createdBy
  */
@@ -130,7 +133,7 @@ class Employees extends GeneralRecord
             [['email'],'email'],
             [['file'], 'file', 'extensions' => 'jpg, png', 'mimeTypes' => 'image/jpeg, image/png',  'maxSize' => 4000000],
             [['employee_id', 'joining_date', 'first_name', 'middle_name', 'last_name', 'job_title', 'qualification', 'father_name', 'mother_name', 'spouse_name', 'date_of_birth', 'gender', 'marital_status', 'blood_group', 'birth_place', 'language', 'religion', 'present_address_line1', 'present_address_line2', 'present_city', 'present_state', 'present_phone1', 'present_phone2', 'present_mobile', 'email', 'fax', 'permanent_address_line1', 'permanent_address_line2', 'permanent_city', 'permanent_state', 'permanent_phone1', 'permanent_phone2', 'photo_file_name', 'photo_file_type', 'isactive'], 'string', 'max' => 255],
-            [['employee_id','first_name','last_name','job_title','employee_category','employee_position_id','employee_department_id','reporting_manager_id','employee_grade_id','joining_date','qualification','experience_years','experience_months','father_name','date_of_birth','gender','nationality_id','present_address_line1','present_city', 'present_state','present_country_id','present_phone1','email'],'required']
+            [['employee_id','first_name','last_name','job_title','employee_department_id','employee_grade_id','joining_date','date_of_birth','gender','present_address_line1','present_city', 'present_state','present_country_id','present_mobile'],'required']
         ];
     }
 
@@ -268,6 +271,21 @@ class Employees extends GeneralRecord
         return count($employees);
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDriverAdditionalDetails()
+    {
+        return $this->hasMany(DriverAdditionalDetails::className(), ['employee_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getVehicles()
+    {
+        return $this->hasMany(Vehicles::className(), ['assigned_driver' => 'id']);
+    }
 
     /**
      * @return array
