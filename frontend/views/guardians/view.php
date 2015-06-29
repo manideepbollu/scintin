@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model common\models\Guardians */
 
 $this->title = $model->first_name;
-$this->params['breadcrumbs'][] = ['label' => 'User Management', 'url' => ['usermanagement/index']];
+$this->params['breadcrumbs'][] = ['label' => 'User Management', 'url' => ['user-management/index']];
 $this->params['breadcrumbs'][] = ['label' => 'Guardians', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

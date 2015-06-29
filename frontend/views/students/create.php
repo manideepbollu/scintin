@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $model common\models\Students */
 
 $this->title = 'Create Students';
-$this->params['breadcrumbs'][] = ['label' => 'User Management', 'url' => ['usermanagement/index']];
+$this->params['breadcrumbs'][] = ['label' => 'User Management', 'url' => ['user-management/index']];
 $this->params['breadcrumbs'][] = ['label' => 'Students', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

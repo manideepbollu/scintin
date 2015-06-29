@@ -8,7 +8,7 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Employees';
-$this->params['breadcrumbs'][] = ['label' => 'User Management', 'url' => ['usermanagement/index']];
+$this->params['breadcrumbs'][] = ['label' => 'User Management', 'url' => ['user-management/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <!-- New version -->

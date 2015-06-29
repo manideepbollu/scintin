@@ -94,7 +94,7 @@ $this->registerJs('jQuery(function ($) {
 
         <?php if($rbac->checkAccess($webUser->id, 'view-electivegroup')){ ?>
         <div class="col-sm-4 col-xs-6 text-center icon-box mb25 mt25">
-            <a href="<?= Yii::$app->urlManager->createUrl('electivegroups/index') ?>" class="big-icon-links">
+            <a href="<?= Yii::$app->urlManager->createUrl('elective-groups/index') ?>" class="big-icon-links">
                 <i class="flaticon-clipboard74 flx4"></i>
                 <div>Elective Groups</div>
             </a>

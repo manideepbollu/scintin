@@ -11,7 +11,7 @@ $this->registerAssetBundle('app\assets\FlatIconsAsset');
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Users';
-$this->params['breadcrumbs'][] = ['label' => 'User Management', 'url' => Yii::$app->urlManager->createUrl('usermanagement/index')];
+$this->params['breadcrumbs'][] = ['label' => 'User Management', 'url' => Yii::$app->urlManager->createUrl('user-management/index')];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <!-- New version -->

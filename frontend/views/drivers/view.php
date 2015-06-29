@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $employeeModel common\models\Employees */
 
 $this->title = $employeeModel->first_name;
-$this->params['breadcrumbs'][] = ['label' => 'User Management', 'url' => ['usermanagement/index']];
+$this->params['breadcrumbs'][] = ['label' => 'User Management', 'url' => ['user-management/index']];
 $this->params['breadcrumbs'][] = ['label' => 'Drivers', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
