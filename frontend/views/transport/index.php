@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 //AssetBundle specific to FlatIcons is loaded
 $this->registerAssetBundle('app\assets\FlatIconsAsset');
-$this->registerJsFile(Yii::$app->urlManager->baseUrl.'/js/gmaps-overview.js', ['depends' => 'app\assets\googleMapsAsset']);
+$this->registerJsFile(Yii::$app->urlManager->baseUrl.'/js/gmaps-overview.js', ['depends' => 'app\assets\GoogleMapsAsset']);
 $this->registerJs("
     var jsonDataUrl = '".Yii::$app->urlManager->createUrl('busstops/json-data')."';
     var schoolIcon = '".Yii::$app->urlManager->baseUrl."/img/university.png';

@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->registerJsFile(Yii::$app->urlManager->baseUrl.'/js/gmaps-busstop.js', ['depends' => 'app\assets\googleMapsAsset']);
+$this->registerJsFile(Yii::$app->urlManager->baseUrl.'/js/gmaps-busstop.js', ['depends' => 'app\assets\GoogleMapsAsset']);
 $this->registerJs("
     var jsonDataUrl = '".Yii::$app->urlManager->createUrl('busstops/json-data')."';
     var schoolIcon = '".Yii::$app->urlManager->baseUrl."/img/university.png';

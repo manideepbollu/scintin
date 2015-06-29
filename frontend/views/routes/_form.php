@@ -6,7 +6,7 @@ use yii\bootstrap\ActiveForm;
 //AssetBundle specific to RouteStop selection is loaded
 $this->registerAssetBundle('app\assets\RoutesFormAsset');
 $this->registerCssFile('plugins\chosen\chosen.min.css');
-$this->registerJsFile(Yii::$app->urlManager->baseUrl.'/js/gmaps-routes.js', ['depends' => 'app\assets\googleMapsAsset']);
+$this->registerJsFile(Yii::$app->urlManager->baseUrl.'/js/gmaps-routes.js', ['depends' => 'app\assets\GoogleMapsAsset']);
 $this->registerJs("
     var jsonDataUrl = '".Yii::$app->urlManager->createUrl('busstops/point-json-data')."';
     var schoolIcon = '".Yii::$app->urlManager->baseUrl."/img/university.png';
