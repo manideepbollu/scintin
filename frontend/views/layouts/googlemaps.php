@@ -236,7 +236,7 @@ GoogleMapsAsset::register($this);
         </a>
         <ul class="sub-menu">
             <li>
-                <a href="<?= Yii::$app->urlManager->createUrl('usermanagement') ?>">
+                <a href="<?= Yii::$app->urlManager->createUrl('user-management') ?>">
                     <span>Overview</span>
                 </a>
             </li>

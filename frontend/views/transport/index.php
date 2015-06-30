@@ -1,5 +1,7 @@
 <?php
 
+$this->title = 'Transport';
+
 use yii\helpers\Html;
 
 //AssetBundle specific to FlatIcons is loaded

@@ -1,5 +1,7 @@
 <?php
 
+$this->title = 'User management';
+
 //AssetBundle specific to FlatIcons is loaded
 $this->registerAssetBundle('app\assets\FlatIconsAsset');
 

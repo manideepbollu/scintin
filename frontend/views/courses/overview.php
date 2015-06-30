@@ -2,6 +2,8 @@
 
 /* @var $this yii\web\View */
 
+$this->title = 'Courses + Batches';
+
 $rbac = Yii::$app->authManager;
 $webUser = Yii::$app->user;
 
