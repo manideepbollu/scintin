@@ -24,7 +24,7 @@ $this->registerJs("
                 </a>
             </div>
             <div class="col-lg-2 col-md-3 col-xs-6 text-center icon-box mb25 mt25">
-                <a href="<?= Yii::$app->urlManager->createUrl('bus-stops/index') ?>" class="big-icon-links">
+                <a href="<?= Yii::$app->urlManager->createUrl('busstops/index') ?>" class="big-icon-links">
                     <i class="flaticon-route flx3"></i>
                     <div>Bus Stops</div>
                 </a>

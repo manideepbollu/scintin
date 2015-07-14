@@ -61,7 +61,7 @@ CoreAsset::register($this);
                     <p class="text-center">
                         Copyright &copy;
                         <span id="year" class="mr5"></span>
-                        <span>MiniScintin - A product of TES</span>
+                        <span>Project Scintin</span>
                     </p>
                 </div>
             </div>

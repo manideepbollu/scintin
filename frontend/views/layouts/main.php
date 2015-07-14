@@ -184,11 +184,19 @@ CoreAsset::register($this);
 <nav class="main-navigation" data-height="auto" data-size="6px" data-distance="0" data-rail-visible="true" data-wheel-step="10">
 <p class="nav-title">MENU</p>
 <ul class="nav">
-    <!-- dashboard -->
+    <!-- Introduction -->
     <li>
         <a href="<?= Yii::getAlias('@web')?>">
+            <i class="ti-heart"></i>
+            <span>Introduction</span>
+        </a>
+    </li>
+    <!-- /Introduction -->
+    <!-- dashboard -->
+    <li>
+        <a href="<?= Yii::$app->urlManager->createUrl('site/dashboard') ?>">
             <i class="ti-home"></i>
-            <span>Dashboard</span>
+            <span>Dashboard (Sample)</span>
         </a>
     </li>
     <!-- /dashboard -->

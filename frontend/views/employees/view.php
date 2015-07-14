@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="panel-body p25">
                 <div class="col-md-3">
                     <?php if($model->photo_file_name) {
-                        $model->imgPath = Yii::$app->urlManager->createUrl(['employees/load-image', 'id' => $model->id]);
+                        $model->imgPath = Yii::$app->urlManager->createAbsoluteUrl(['employees/load-image', 'id' => $model->id]);
                     }
                     else
                         $model->imgPath = Yii::$app->urlManager->baseUrl.'/img/default_'.$model->gender.'.jpg';

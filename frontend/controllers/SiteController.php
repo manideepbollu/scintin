@@ -113,9 +113,9 @@ class SiteController extends Controller
         }
     }
 
-    public function actionAbout()
+    public function actionDashboard()
     {
-        return $this->render('about');
+        return $this->render('dashboard');
     }
 
 

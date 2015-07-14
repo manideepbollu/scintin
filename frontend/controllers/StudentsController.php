@@ -123,7 +123,7 @@ class StudentsController extends Controller
     {
         $model = $this->findModel($id);
 
-        header("content-type: " + $model->photo_file_type);
+        //header("content-type: " + $model->photo_file_type);
         echo $model->photo_element_data;
 
     }
