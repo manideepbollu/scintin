@@ -72,7 +72,8 @@ $this->title = 'Introduction';
 
                     <p id="credentials"><b>A joint effort of</b><br>
                         Manideep Bollu - m​anideep@msn.com​ <br>
-                        Kalyan Venkat - k​alyan.venkat21@gmail.com
+                        Kalyan Venkat - k​alyan.venkat21@gmail.com <br>
+                        Reddy Girish Gaddam - gaddamreddygirish@gmail.com
                     ​</p>
             </div>
             <div class="col-lg-4">

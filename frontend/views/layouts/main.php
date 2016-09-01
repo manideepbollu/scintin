@@ -286,6 +286,16 @@ CoreAsset::register($this);
         <!-- inner content wrapper - View content i.e. $content is being passed here -->
         <div class="wrapper">
 
+            <div>
+                <!-- Begin flash messages if any -->
+                <?php
+                foreach (Yii::$app->session->getAllFlashes() as $key => $message) {
+                    echo '<div class="alert text-center bg-'. $key .'">' . $message . '</div>';
+                }
+                ?>
+                <!-- End flash messages -->
+            </div>
+
             <?= Breadcrumbs::widget([
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
             ]) ?>

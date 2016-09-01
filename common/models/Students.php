@@ -64,6 +64,8 @@ class Students extends GeneralRecord
      */
     public $file;
 
+    const STATUS_ACTIVE = 'Active';
+
     /**
      * @vars photo crop parameters
      */
@@ -104,8 +106,25 @@ class Students extends GeneralRecord
                 return false;
             }
         }
+        $this->isactive = self::STATUS_ACTIVE;
 
         return parent::beforeSave($params);
+    }
+
+    public function beforeDelete()
+    {
+        $user = User::findOne(Yii::$app->user->identity->getId());
+        if ($user->sid != $this->admission_id) {
+            if (parent::beforeDelete()) {
+                if ($associatedUser = User::findOne(['sid' => $this->admission_id]))
+                    $associatedUser->delete();
+                return true;
+            } else {
+                return false;
+            }
+        }else {
+            return false;
+        }
     }
 
     /**

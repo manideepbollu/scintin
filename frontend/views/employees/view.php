@@ -20,8 +20,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?php if($model->photo_file_name) {
                         $model->imgPath = Yii::$app->urlManager->createAbsoluteUrl(['employees/load-image', 'id' => $model->id]);
                     }
-                    else
-                        $model->imgPath = Yii::$app->urlManager->baseUrl.'/img/default_'.$model->gender.'.jpg';
+                    else{
+                        if($model->gender == 'Female')
+                            $model->imgPath = 'http://s3.postimg.org/ptksq2olb/default_female.jpg';
+                        else
+                            $model->imgPath = 'http://s16.postimg.org/z26pdgnzl/default_male.jpg';
+                    }
                     ?>
                     <a href="javascript:;" class="show text-center">
                         <img src="<?= $model->imgPath  ?>" class="avatar avatar-lg img-circle" alt="">

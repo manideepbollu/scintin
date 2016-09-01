@@ -81,6 +81,8 @@ class Employees extends GeneralRecord
      */
     public $file;
 
+    const STATUS_ACTIVE = 'Active';
+
     /**
      * @var default image for users
      */
@@ -117,7 +119,25 @@ class Employees extends GeneralRecord
             }
         }
 
+        $this->isactive = self::STATUS_ACTIVE;
+
         return parent::beforeSave($params);
+    }
+
+    public function beforeDelete()
+    {
+        $user = User::findOne(Yii::$app->user->identity->getId());
+        if ($user->sid != $this->employee_id) {
+            if (parent::beforeDelete()) {
+                if ($associatedUser = User::findOne(['sid' => $this->employee_id]))
+                    $associatedUser->delete();
+                return true;
+            } else {
+                return false;
+            }
+        }else {
+            return false;
+        }
     }
 
 

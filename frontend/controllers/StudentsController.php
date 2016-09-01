@@ -98,9 +98,13 @@ class StudentsController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if ($this->findModel($id)->delete())
+            return $this->redirect(['index']);
+        else{
+            Yii::$app->getSession()->setFlash('danger', 'Sorry, we are unable to process your request. Please make sure that the currently logged in User ID is not associated with the student record you want to delete.');
+            return $this->redirect(['index']);
+        }
 
-        return $this->redirect(['index']);
     }
 
     /**
